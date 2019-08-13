@@ -10,12 +10,13 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-    let dataBase = DataBase(context: AppDelegate.viewContext)
+//    let dataBase = DataBase(context: AppDelegate.viewContext)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let m = CoreDataManager.managerForApplication
     }
 
     override var representedObject: Any? {

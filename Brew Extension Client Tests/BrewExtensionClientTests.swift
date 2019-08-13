@@ -7,7 +7,7 @@
 //
 
 import XCTest
-//@testable import BrewExtensionClient
+@testable import BrewExtensionClient
 
 class Brew_ExtensionTests: XCTestCase {
 
