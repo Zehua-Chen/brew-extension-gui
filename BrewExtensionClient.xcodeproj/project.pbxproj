@@ -10,10 +10,10 @@
 		4620FB5797C2CB32435AD3D4 /* Pods_Brew_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2F05D0ABB8E182547DF42E /* Pods_Brew_Extension.framework */; };
 		6785F2BD230230F600AA43D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2BC230230F600AA43D5 /* AppDelegate.swift */; };
 		6785F2BF230230F600AA43D5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2BE230230F600AA43D5 /* ViewController.swift */; };
-		6785F2C2230230F600AA43D5 /* Brew_Extension.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2C0230230F600AA43D5 /* Brew_Extension.xcdatamodeld */; };
+		6785F2C2230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */; };
 		6785F2C4230230F700AA43D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6785F2C3230230F700AA43D5 /* Assets.xcassets */; };
 		6785F2C7230230F700AA43D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6785F2C5230230F700AA43D5 /* Main.storyboard */; };
-		6785F2D3230230F700AA43D5 /* Brew_ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2D2230230F700AA43D5 /* Brew_ExtensionTests.swift */; };
+		6785F2D3230230F700AA43D5 /* BrewExtensionClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2D2230230F700AA43D5 /* BrewExtensionClientTests.swift */; };
 		6785F2DE230230F700AA43D5 /* Brew_ExtensionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2DD230230F700AA43D5 /* Brew_ExtensionUITests.swift */; };
 		6785F2EC230233AD00AA43D5 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EB230233AD00AA43D5 /* DataBase.swift */; };
 		6785F2EF23026D9800AA43D5 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EE23026D9800AA43D5 /* Label.swift */; };
@@ -43,18 +43,18 @@
 
 /* Begin PBXFileReference section */
 		5CEC76EE78A1392B318DF84A /* Pods-Brew Extension-Brew ExtensionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension-Brew ExtensionTests.release.xcconfig"; path = "Target Support Files/Pods-Brew Extension-Brew ExtensionTests/Pods-Brew Extension-Brew ExtensionTests.release.xcconfig"; sourceTree = "<group>"; };
-		6785F2B9230230F600AA43D5 /* Brew Extension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brew Extension.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6785F2B9230230F600AA43D5 /* BrewExtensionClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewExtensionClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6785F2BC230230F600AA43D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6785F2BE230230F600AA43D5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6785F2C1230230F600AA43D5 /* Brew_Extension.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Brew_Extension.xcdatamodel; sourceTree = "<group>"; };
 		6785F2C3230230F700AA43D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6785F2C6230230F700AA43D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6785F2C8230230F700AA43D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6785F2C9230230F700AA43D5 /* Brew_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Brew_Extension.entitlements; sourceTree = "<group>"; };
-		6785F2CE230230F700AA43D5 /* Brew ExtensionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brew ExtensionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6785F2D2230230F700AA43D5 /* Brew_ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brew_ExtensionTests.swift; sourceTree = "<group>"; };
+		6785F2C9230230F700AA43D5 /* BrewExtensionClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BrewExtensionClient.entitlements; sourceTree = "<group>"; };
+		6785F2CE230230F700AA43D5 /* BrewExtensionClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrewExtensionClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6785F2D2230230F700AA43D5 /* BrewExtensionClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewExtensionClientTests.swift; sourceTree = "<group>"; };
 		6785F2D4230230F700AA43D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6785F2D9230230F700AA43D5 /* Brew ExtensionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brew ExtensionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6785F2D9230230F700AA43D5 /* BrewExtensionClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrewExtensionClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6785F2DD230230F700AA43D5 /* Brew_ExtensionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brew_ExtensionUITests.swift; sourceTree = "<group>"; };
 		6785F2DF230230F700AA43D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6785F2EB230233AD00AA43D5 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		6785F2B0230230F600AA43D5 = {
 			isa = PBXGroup;
 			children = (
-				6785F2BB230230F600AA43D5 /* Brew Extension */,
+				6785F2BB230230F600AA43D5 /* BrewExtensionClient */,
 				6785F2D1230230F700AA43D5 /* Brew ExtensionTests */,
 				6785F2DC230230F700AA43D5 /* Brew ExtensionUITests */,
 				6785F2BA230230F600AA43D5 /* Products */,
@@ -123,14 +123,14 @@
 		6785F2BA230230F600AA43D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6785F2B9230230F600AA43D5 /* Brew Extension.app */,
-				6785F2CE230230F700AA43D5 /* Brew ExtensionTests.xctest */,
-				6785F2D9230230F700AA43D5 /* Brew ExtensionUITests.xctest */,
+				6785F2B9230230F600AA43D5 /* BrewExtensionClient.app */,
+				6785F2CE230230F700AA43D5 /* BrewExtensionClientTests.xctest */,
+				6785F2D9230230F700AA43D5 /* BrewExtensionClientUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6785F2BB230230F600AA43D5 /* Brew Extension */ = {
+		6785F2BB230230F600AA43D5 /* BrewExtensionClient */ = {
 			isa = PBXGroup;
 			children = (
 				6785F2ED23026D8300AA43D5 /* Core Data */,
@@ -139,15 +139,15 @@
 				6785F2C3230230F700AA43D5 /* Assets.xcassets */,
 				6785F2C5230230F700AA43D5 /* Main.storyboard */,
 				6785F2C8230230F700AA43D5 /* Info.plist */,
-				6785F2C9230230F700AA43D5 /* Brew_Extension.entitlements */,
+				6785F2C9230230F700AA43D5 /* BrewExtensionClient.entitlements */,
 			);
-			path = "Brew Extension";
+			path = BrewExtensionClient;
 			sourceTree = "<group>";
 		};
 		6785F2D1230230F700AA43D5 /* Brew ExtensionTests */ = {
 			isa = PBXGroup;
 			children = (
-				6785F2D2230230F700AA43D5 /* Brew_ExtensionTests.swift */,
+				6785F2D2230230F700AA43D5 /* BrewExtensionClientTests.swift */,
 				6785F2F22302730100AA43D5 /* DataBaseTest.swift */,
 				6785F2D4230230F700AA43D5 /* Info.plist */,
 			);
@@ -166,7 +166,7 @@
 		6785F2ED23026D8300AA43D5 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				6785F2C0230230F600AA43D5 /* Brew_Extension.xcdatamodeld */,
+				6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */,
 				6785F2EE23026D9800AA43D5 /* Label.swift */,
 				6785F2F023026DBB00AA43D5 /* Formulae.swift */,
 				6785F2EB230233AD00AA43D5 /* DataBase.swift */,
@@ -190,9 +190,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6785F2B8230230F600AA43D5 /* Brew Extension */ = {
+		6785F2B8230230F600AA43D5 /* BrewExtensionClient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6785F2E2230230F700AA43D5 /* Build configuration list for PBXNativeTarget "Brew Extension" */;
+			buildConfigurationList = 6785F2E2230230F700AA43D5 /* Build configuration list for PBXNativeTarget "BrewExtensionClient" */;
 			buildPhases = (
 				21B7E8D51B4BFF68DF1FA1AF /* [CP] Check Pods Manifest.lock */,
 				6785F2B5230230F600AA43D5 /* Sources */,
@@ -204,14 +204,14 @@
 			);
 			dependencies = (
 			);
-			name = "Brew Extension";
+			name = BrewExtensionClient;
 			productName = "Brew Extension";
-			productReference = 6785F2B9230230F600AA43D5 /* Brew Extension.app */;
+			productReference = 6785F2B9230230F600AA43D5 /* BrewExtensionClient.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6785F2CD230230F700AA43D5 /* Brew ExtensionTests */ = {
+		6785F2CD230230F700AA43D5 /* BrewExtensionClientTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6785F2E5230230F700AA43D5 /* Build configuration list for PBXNativeTarget "Brew ExtensionTests" */;
+			buildConfigurationList = 6785F2E5230230F700AA43D5 /* Build configuration list for PBXNativeTarget "BrewExtensionClientTests" */;
 			buildPhases = (
 				2D81DC653A59EFFA3CA68271 /* [CP] Check Pods Manifest.lock */,
 				6785F2CA230230F700AA43D5 /* Sources */,
@@ -224,14 +224,14 @@
 			dependencies = (
 				6785F2D0230230F700AA43D5 /* PBXTargetDependency */,
 			);
-			name = "Brew ExtensionTests";
+			name = BrewExtensionClientTests;
 			productName = "Brew ExtensionTests";
-			productReference = 6785F2CE230230F700AA43D5 /* Brew ExtensionTests.xctest */;
+			productReference = 6785F2CE230230F700AA43D5 /* BrewExtensionClientTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6785F2D8230230F700AA43D5 /* Brew ExtensionUITests */ = {
+		6785F2D8230230F700AA43D5 /* BrewExtensionClientUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6785F2E8230230F700AA43D5 /* Build configuration list for PBXNativeTarget "Brew ExtensionUITests" */;
+			buildConfigurationList = 6785F2E8230230F700AA43D5 /* Build configuration list for PBXNativeTarget "BrewExtensionClientUITests" */;
 			buildPhases = (
 				6785F2D5230230F700AA43D5 /* Sources */,
 				6785F2D6230230F700AA43D5 /* Frameworks */,
@@ -242,9 +242,9 @@
 			dependencies = (
 				6785F2DB230230F700AA43D5 /* PBXTargetDependency */,
 			);
-			name = "Brew ExtensionUITests";
+			name = BrewExtensionClientUITests;
 			productName = "Brew ExtensionUITests";
-			productReference = 6785F2D9230230F700AA43D5 /* Brew ExtensionUITests.xctest */;
+			productReference = 6785F2D9230230F700AA43D5 /* BrewExtensionClientUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -270,7 +270,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6785F2B4230230F600AA43D5 /* Build configuration list for PBXProject "Brew Extension" */;
+			buildConfigurationList = 6785F2B4230230F600AA43D5 /* Build configuration list for PBXProject "BrewExtensionClient" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -283,9 +283,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6785F2B8230230F600AA43D5 /* Brew Extension */,
-				6785F2CD230230F700AA43D5 /* Brew ExtensionTests */,
-				6785F2D8230230F700AA43D5 /* Brew ExtensionUITests */,
+				6785F2B8230230F600AA43D5 /* BrewExtensionClient */,
+				6785F2CD230230F700AA43D5 /* BrewExtensionClientTests */,
+				6785F2D8230230F700AA43D5 /* BrewExtensionClientUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -407,7 +407,7 @@
 				6785F2BD230230F600AA43D5 /* AppDelegate.swift in Sources */,
 				6785F2EC230233AD00AA43D5 /* DataBase.swift in Sources */,
 				6785F2EF23026D9800AA43D5 /* Label.swift in Sources */,
-				6785F2C2230230F600AA43D5 /* Brew_Extension.xcdatamodeld in Sources */,
+				6785F2C2230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +417,7 @@
 			files = (
 				6785F30323027BAB00AA43D5 /* Formulae.swift in Sources */,
 				6785F2F32302730100AA43D5 /* DataBaseTest.swift in Sources */,
-				6785F2D3230230F700AA43D5 /* Brew_ExtensionTests.swift in Sources */,
+				6785F2D3230230F700AA43D5 /* BrewExtensionClientTests.swift in Sources */,
 				6785F30223027BAB00AA43D5 /* Label.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,12 +435,12 @@
 /* Begin PBXTargetDependency section */
 		6785F2D0230230F700AA43D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6785F2B8230230F600AA43D5 /* Brew Extension */;
+			target = 6785F2B8230230F600AA43D5 /* BrewExtensionClient */;
 			targetProxy = 6785F2CF230230F700AA43D5 /* PBXContainerItemProxy */;
 		};
 		6785F2DB230230F700AA43D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6785F2B8230230F600AA43D5 /* Brew Extension */;
+			target = 6785F2B8230230F600AA43D5 /* BrewExtensionClient */;
 			targetProxy = 6785F2DA230230F700AA43D5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -577,16 +577,17 @@
 			baseConfigurationReference = 9730042129F9E5BFC651756D /* Pods-Brew Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Brew Extension/Brew_Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = BrewExtensionClient/BrewExtensionClient.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SYDGB25RXW;
-				INFOPLIST_FILE = "Brew Extension/Info.plist";
+				INFOPLIST_FILE = BrewExtensionClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "zehuachen.Brew-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "zehuachen.Brew-Extension-Client";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -597,16 +598,17 @@
 			baseConfigurationReference = D4022EEBEA7A29D2293DD426 /* Pods-Brew Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Brew Extension/Brew_Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = BrewExtensionClient/BrewExtensionClient.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SYDGB25RXW;
-				INFOPLIST_FILE = "Brew Extension/Info.plist";
+				INFOPLIST_FILE = BrewExtensionClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "zehuachen.Brew-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "zehuachen.Brew-Extension-Client";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -630,7 +632,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "zehuachen.Brew-ExtensionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Brew Extension.app/Contents/MacOS/Brew Extension";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BrewExtensionClient.app/Contents/MacOS/BrewExtensionClient";
 			};
 			name = Debug;
 		};
@@ -652,7 +654,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "zehuachen.Brew-ExtensionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Brew Extension.app/Contents/MacOS/Brew Extension";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BrewExtensionClient.app/Contents/MacOS/BrewExtensionClient";
 			};
 			name = Release;
 		};
@@ -699,7 +701,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6785F2B4230230F600AA43D5 /* Build configuration list for PBXProject "Brew Extension" */ = {
+		6785F2B4230230F600AA43D5 /* Build configuration list for PBXProject "BrewExtensionClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6785F2E0230230F700AA43D5 /* Debug */,
@@ -708,7 +710,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6785F2E2230230F700AA43D5 /* Build configuration list for PBXNativeTarget "Brew Extension" */ = {
+		6785F2E2230230F700AA43D5 /* Build configuration list for PBXNativeTarget "BrewExtensionClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6785F2E3230230F700AA43D5 /* Debug */,
@@ -717,7 +719,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6785F2E5230230F700AA43D5 /* Build configuration list for PBXNativeTarget "Brew ExtensionTests" */ = {
+		6785F2E5230230F700AA43D5 /* Build configuration list for PBXNativeTarget "BrewExtensionClientTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6785F2E6230230F700AA43D5 /* Debug */,
@@ -726,7 +728,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6785F2E8230230F700AA43D5 /* Build configuration list for PBXNativeTarget "Brew ExtensionUITests" */ = {
+		6785F2E8230230F700AA43D5 /* Build configuration list for PBXNativeTarget "BrewExtensionClientUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6785F2E9230230F700AA43D5 /* Debug */,
@@ -738,13 +740,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		6785F2C0230230F600AA43D5 /* Brew_Extension.xcdatamodeld */ = {
+		6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				6785F2C1230230F600AA43D5 /* Brew_Extension.xcdatamodel */,
 			);
 			currentVersion = 6785F2C1230230F600AA43D5 /* Brew_Extension.xcdatamodel */;
-			path = Brew_Extension.xcdatamodeld;
+			path = BrewExtensionClient.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

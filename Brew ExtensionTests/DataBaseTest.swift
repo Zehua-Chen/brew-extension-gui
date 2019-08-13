@@ -8,12 +8,12 @@
 
 import XCTest
 import CoreData
-//import BrewExtension
+@testable import BrewExtensionClient
 
 class DataBaseTest: XCTestCase {
 
     fileprivate func _makeInMemoryDataBase() {
-        
+//        let db = Database
     }
 
     override func setUp() {

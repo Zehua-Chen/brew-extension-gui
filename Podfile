@@ -2,7 +2,7 @@ platform :osx, '10.14'
 
 pod 'BrewExtension', :git => 'https://github.com/Zehua-Chen/brew-extension', :branch => 'cocoapods'
 
-target 'Brew Extension' do
+target 'BrewExtensionClient' do
   use_frameworks!
 end
 
