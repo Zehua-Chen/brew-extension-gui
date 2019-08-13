@@ -1,11 +1,10 @@
 platform :osx, '10.14'
 
-pod 'BrewExtension', :git => 'https://github.com/Zehua-Chen/brew-extension', :branch => 'cocoapods'
-
-target 'BrewExtensionClient' do
+target 'Brew Extension Client' do
   use_frameworks!
-end
+  pod 'BrewExtension', :git => 'https://github.com/Zehua-Chen/brew-extension', :branch => 'cocoapods'
 
-target 'Brew ExtensionTests' do
-  use_frameworks!
+  target 'Brew Extension Client Tests' do
+    inherit! :search_paths
+  end
 end

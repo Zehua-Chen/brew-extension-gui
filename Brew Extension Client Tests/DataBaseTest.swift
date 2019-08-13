@@ -8,7 +8,7 @@
 
 import XCTest
 import CoreData
-@testable import BrewExtensionClient
+//@testable import Brew
 
 class DataBaseTest: XCTestCase {
 
