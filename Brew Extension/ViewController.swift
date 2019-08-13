@@ -10,6 +10,8 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    let dataBase = DataBase(context: AppDelegate.viewContext)
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
