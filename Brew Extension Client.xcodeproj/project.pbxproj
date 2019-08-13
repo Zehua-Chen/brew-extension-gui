@@ -12,12 +12,11 @@
 		6785F2C2230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */; };
 		6785F2C4230230F700AA43D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6785F2C3230230F700AA43D5 /* Assets.xcassets */; };
 		6785F2C7230230F700AA43D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6785F2C5230230F700AA43D5 /* Main.storyboard */; };
-		6785F2D3230230F700AA43D5 /* BrewExtensionClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2D2230230F700AA43D5 /* BrewExtensionClientTests.swift */; };
+		6785F2D3230230F700AA43D5 /* DataBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2D2230230F700AA43D5 /* DataBaseTests.swift */; };
 		6785F2DE230230F700AA43D5 /* Brew_ExtensionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2DD230230F700AA43D5 /* Brew_ExtensionUITests.swift */; };
 		6785F2EC230233AD00AA43D5 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EB230233AD00AA43D5 /* DataBase.swift */; };
 		6785F2EF23026D9800AA43D5 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EE23026D9800AA43D5 /* Label.swift */; };
 		6785F2F123026DBB00AA43D5 /* Formulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2F023026DBB00AA43D5 /* Formulae.swift */; };
-		6785F2F32302730100AA43D5 /* DataBaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2F22302730100AA43D5 /* DataBaseTest.swift */; };
 		6785F30223027BAB00AA43D5 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EE23026D9800AA43D5 /* Label.swift */; };
 		6785F30323027BAB00AA43D5 /* Formulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2F023026DBB00AA43D5 /* Formulae.swift */; };
 		6785F3052302A56B00AA43D5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F3042302A56B00AA43D5 /* CoreDataManager.swift */; };
@@ -57,7 +56,7 @@
 		6785F2C8230230F700AA43D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6785F2C9230230F700AA43D5 /* Brew Extension Client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Brew Extension Client.entitlements"; sourceTree = "<group>"; };
 		6785F2CE230230F700AA43D5 /* Brew Extension Client Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brew Extension Client Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6785F2D2230230F700AA43D5 /* BrewExtensionClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewExtensionClientTests.swift; sourceTree = "<group>"; };
+		6785F2D2230230F700AA43D5 /* DataBaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseTests.swift; sourceTree = "<group>"; };
 		6785F2D4230230F700AA43D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6785F2D9230230F700AA43D5 /* Brew Extension Client UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brew Extension Client UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6785F2DD230230F700AA43D5 /* Brew_ExtensionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brew_ExtensionUITests.swift; sourceTree = "<group>"; };
@@ -65,7 +64,6 @@
 		6785F2EB230233AD00AA43D5 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		6785F2EE23026D9800AA43D5 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		6785F2F023026DBB00AA43D5 /* Formulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formulae.swift; sourceTree = "<group>"; };
-		6785F2F22302730100AA43D5 /* DataBaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseTest.swift; sourceTree = "<group>"; };
 		6785F2F82302740400AA43D5 /* BrewExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BrewExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6785F3042302A56B00AA43D5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		893027BBECC609B4CE7FDDB2 /* Pods-Brew Extension Client Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension Client Tests.release.xcconfig"; path = "Target Support Files/Pods-Brew Extension Client Tests/Pods-Brew Extension Client Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -153,8 +151,7 @@
 		6785F2D1230230F700AA43D5 /* Brew Extension Client Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6785F2D2230230F700AA43D5 /* BrewExtensionClientTests.swift */,
-				6785F2F22302730100AA43D5 /* DataBaseTest.swift */,
+				6785F2D2230230F700AA43D5 /* DataBaseTests.swift */,
 				6785F2D4230230F700AA43D5 /* Info.plist */,
 			);
 			path = "Brew Extension Client Tests";
@@ -410,8 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6785F30323027BAB00AA43D5 /* Formulae.swift in Sources */,
-				6785F2F32302730100AA43D5 /* DataBaseTest.swift in Sources */,
-				6785F2D3230230F700AA43D5 /* BrewExtensionClientTests.swift in Sources */,
+				6785F2D3230230F700AA43D5 /* DataBaseTests.swift in Sources */,
 				6785F30223027BAB00AA43D5 /* Label.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

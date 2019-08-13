@@ -98,7 +98,7 @@ class DataBase: BrewExtensionDataBase {
         labels[0].addToFormulaes(formulaes[0])
     }
 
-    func createLabel(_ label: String) {
+    func addLabel(_ label: String) {
         let l = Label(context: self.context)
         l.name = label
     }
@@ -112,7 +112,7 @@ class DataBase: BrewExtensionDataBase {
         self.context.delete(labels[0] as NSManagedObject)
     }
 
-    func hasLabel(_ label: String) -> Bool {
+    func containsLabel(_ label: String) -> Bool {
         let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
@@ -132,13 +132,25 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func containsFormulae(_ formulae: String) -> Bool {
-        return false
+        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
+
+        let formulaes = try! self.context.fetch(formulaeFetchRequest)
+
+        return !formulaes.isEmpty
     }
 
     func addFormulae(_ formulae: String) {
+        let f = Formulae(context: self.context)
+        f.name = formulae
     }
 
     func removeFormulae(_ formulae: String) {
+        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
+
+        let formulae = try! self.context.fetch(formulaeFetchRequest)[0]
+        self.context.delete(formulae as NSManagedObject)
     }
 
     func formulaes() -> [String] {
@@ -148,7 +160,7 @@ class DataBase: BrewExtensionDataBase {
     func addDependency(from: String, to: String) {
     }
 
-    func hasDependency(from: String, to: String) -> Bool {
+    func containsDependency(from: String, to: String) -> Bool {
         return false
     }
 
@@ -158,11 +170,6 @@ class DataBase: BrewExtensionDataBase {
 
     func incomingDependencies(for formulae: String) -> Set<String> {
         return .init()
-    }
-
-
-    deinit {
-        self.write()
     }
 
     func write() {
