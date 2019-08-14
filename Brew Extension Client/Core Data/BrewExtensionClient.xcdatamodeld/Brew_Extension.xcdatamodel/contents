@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Formulae" representedClassName=".Formulae" syncable="YES" codeGenerationType="category">
+        <attribute name="isProtected" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="incomings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Formulae" inverseName="outcomings" inverseEntity="Formulae" syncable="YES"/>
+        <relationship name="labels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Label" inverseName="formulaes" inverseEntity="Label" syncable="YES"/>
+        <relationship name="outcomings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Formulae" inverseName="incomings" inverseEntity="Formulae" syncable="YES"/>
+    </entity>
+    <entity name="Label" representedClassName=".Label" syncable="YES" codeGenerationType="category">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="formulaes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Formulae" inverseName="labels" inverseEntity="Formulae" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Formulae" positionX="-174.46484375" positionY="40.1484375" width="128" height="120"/>
+        <element name="Label" positionX="29.9375" positionY="41.79296875" width="128" height="75"/>
+    </elements>
+</model>
