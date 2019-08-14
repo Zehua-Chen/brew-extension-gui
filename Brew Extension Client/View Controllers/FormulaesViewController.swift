@@ -12,10 +12,10 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     @IBOutlet weak var tableView: NSTableView!
     var notificationCenter = NotificationCenter.default
-    var labelFilter: String?
-    var brewExt = AppDelegate.shared.brewExtension
 
+    var brewExt = AppDelegate.shared.brewExtension
     var formulaes = [String]()
+    var labelFilter: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +27,12 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             queue: nil,
             using: self.onLabelClicked)
 
+        self.notificationCenter.addObserver(
+            forName: .formulaeProtectionChanged,
+            object: nil,
+            queue: nil,
+            using: self.onFormulaeProtectionChanged)
+
         self.formulaes = self.brewExt.formulaes()
     }
 
@@ -36,14 +42,18 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         }
     }
 
+    // MARK: Event handlers
+
     func onLabelClicked(_ notification: Notification) {
         guard let newLabel = notification.userInfo?["label"] as? String else {
             self.formulaes = self.brewExt.formulaes()
             self.tableView.reloadData()
+            self.labelFilter = nil
             return
         }
 
         self.formulaes = []
+        self.labelFilter = newLabel
 
         for formulae in self.brewExt.formulaes(under: newLabel) {
             self.formulaes.append(formulae)
@@ -56,19 +66,40 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         }
     }
 
-    func removeFormulae(_ action: NSTableViewRowAction, _ row: Int) {
+    func onFormulaeProtectionChanged(_ notification: Notification) {
+        self.tableView.reloadData()
+    }
+
+    func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
 
     }
+
+    func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
+        self.brewExt.protectFormulae(self.formulaes[row])
+    }
+
+    func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
+        self.brewExt.unprotectFormulae(self.formulaes[row])
+    }
+
+    // MAKR: NSTableView protocols conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         return formulaes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        let formulae = self.formulaes[row]
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
-        view.titleTextField.stringValue = self.formulaes[row]
+
+        view.titleTextField.stringValue = formulae
         view.labelsTextField.stringValue = "Label: \(self.labelFilter ?? "")"
-        view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
+
+        if self.brewExt.dataBase?.protectsFormulae(formulae) ?? false {
+            view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
+        } else {
+            view.protectionIcon.image = NSImage(named: NSImage.lockUnlockedTemplateName)
+        }
 
         return view
     }
@@ -76,9 +107,14 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {
         switch edge {
         case .leading:
-            return []
+            return [
+                .init(style: .regular, title: "Protect", handler: self.onProtectFormulae),
+                .init(style: .destructive, title: "Unprotect", handler: self.onUnprotectFormulae),
+            ]
         case .trailing:
-            return [.init(style: .destructive, title: "Remove", handler: self.removeFormulae)]
+            return [
+                .init(style: .destructive, title: "Remove", handler: self.onRemoveFormulae),
+            ]
         @unknown default:
             return []
         }
