@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Dispatch
 
 class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
@@ -67,18 +68,23 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func onFormulaeProtectionChanged(_ notification: Notification) {
-        self.tableView.reloadData()
+        // Otherwise the slide back animation does not play
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.tableView.reloadData()
+        }
     }
 
     func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
-
+        // TODO: Remove formulae
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
+        self.tableView.rowActionsVisible = false
         self.brewExt.protectFormulae(self.formulaes[row])
     }
 
     func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
+        self.tableView.rowActionsVisible = false
         self.brewExt.unprotectFormulae(self.formulaes[row])
     }
 

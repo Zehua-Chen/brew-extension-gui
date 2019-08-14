@@ -69,12 +69,14 @@ class FormulaeViewController: NSViewController {
         }
     }
 
+    @IBOutlet weak var isProtectedCheckBox: NSButton!
     @IBOutlet weak var formulaeTitleLabel: NSTextField!
     @IBOutlet weak var dependencyTableView: NSTableView!
     @IBOutlet weak var labelTableView: NSTableView!
     
     var notificationCenter = NotificationCenter.default
     var formulae: String?
+    var brewExt = AppDelegate.shared.brewExtension
 
     var dependencyDelegateAndDataSource = DependencyDelegateAndDataSource()
     var labelDelegateAndDataSource = LabelDelegateAndDataSource()
@@ -87,7 +89,13 @@ class FormulaeViewController: NSViewController {
             forName: .formulaeSelected,
             object: nil,
             queue: nil,
-            using: self.formulaeClicked)
+            using: self.formulaeSelected)
+
+        self.notificationCenter.addObserver(
+            forName: .formulaeProtectionChanged,
+            object: nil,
+            queue: nil,
+            using: self.formulaeProtectionChanged)
 
         self.dependencyTableView.delegate = self.dependencyDelegateAndDataSource
         self.dependencyTableView.dataSource = self.dependencyDelegateAndDataSource
@@ -96,7 +104,7 @@ class FormulaeViewController: NSViewController {
         self.labelTableView.dataSource = self.labelDelegateAndDataSource
     }
 
-    func formulaeClicked(_ notification: Notification) {
+    func formulaeSelected(_ notification: Notification) {
         self.formulae = notification.userInfo?["formulae"] as? String
 
         if self.formulae != nil {
@@ -107,6 +115,31 @@ class FormulaeViewController: NSViewController {
 
             self.dependencyTableView.reloadData()
             self.labelTableView.reloadData()
+
+            self.isProtectedCheckBox.state = _isCurrentFormulaeProtected() ? .on : .off
         }
+    }
+
+    func formulaeProtectionChanged(_ notification: Notification) {
+        guard let changedFormulae = notification.userInfo?["formulae"] as? String else { return }
+        guard let currentFormulae = self.formulae else { return }
+
+        if currentFormulae == changedFormulae {
+            self.isProtectedCheckBox.state = _isCurrentFormulaeProtected() ? .on : .off
+        }
+    }
+
+    @IBAction func onIsProtectedClicked(_ sender: Any) {
+        guard let formulae = self.formulae else { return }
+
+        if _isCurrentFormulaeProtected() {
+            self.brewExt.unprotectFormulae(formulae)
+        } else {
+            self.brewExt.protectFormulae(formulae)
+        }
+    }
+
+    fileprivate func _isCurrentFormulaeProtected() -> Bool {
+        return self.brewExt.dataBase?.protectsFormulae(self.formulae!) ?? false
     }
 }
