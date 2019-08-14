@@ -63,10 +63,10 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="mHZ-5w-3sG"/>
-                                        <menuItem title="Sync" id="Was-JA-tGl">
+                                        <menuItem title="Sync With Homebrew" id="Was-JA-tGl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
+                                                <action selector="syncBrewExtension:" target="Ady-hI-5gd" id="Lxt-Tj-4CU"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
@@ -638,12 +638,12 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="77" y="-126"/>
+            <point key="canvasLocation" x="24" y="-91"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Brew Extension Client" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -660,6 +660,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="syncBrewExtension:" target="Oky-zY-oP4" id="yQQ-Rx-Xo6"/>
+                                        </connections>
                                     </button>
                                 </toolbarItem>
                             </allowedToolbarItems>
@@ -677,12 +680,39 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="21" y="258"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Sync View Controller-->
+        <scene sceneID="Anw-8k-lIS">
+            <objects>
+                <viewController storyboardIdentifier="syncViewController" id="hBt-L4-tdb" customClass="SyncViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="KzE-EP-P9A">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="178"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="woe-O7-ods">
+                                <rect key="frame" x="134" y="81" width="183" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Syncing Data with Homebrew" id="AI8-E5-6yK">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="woe-O7-ods" firstAttribute="centerX" secondItem="KzE-EP-P9A" secondAttribute="centerX" id="obq-3D-iXy"/>
+                            <constraint firstItem="woe-O7-ods" firstAttribute="centerY" secondItem="KzE-EP-P9A" secondAttribute="centerY" id="sgD-Ab-sNG"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="WxE-6r-Ad5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="539" y="173"/>
+        </scene>
+        <!--Main Split View Controller-->
         <scene sceneID="akK-Rf-D1g">
             <objects>
-                <splitViewController id="sJv-u8-Nbi" sceneMemberID="viewController">
+                <splitViewController id="sJv-u8-Nbi" customClass="MainSplitViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="f25-AS-wrb" userLabel="Split View Item"/>
                         <splitViewItem id="tCG-dq-gQz"/>
