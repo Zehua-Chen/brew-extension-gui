@@ -1132,13 +1132,13 @@ Gw
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="412" height="143"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="143"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn width="118" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
+                                                        <tableColumn width="200" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depending on">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1151,13 +1151,12 @@ Gw
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="t47-7Y-QqV">
-                                                                    <rect key="frame" x="1" y="1" width="118" height="17"/>
+                                                                <tableCellView identifier="dependencyCellView" id="t47-7Y-QqV">
+                                                                    <rect key="frame" x="1" y="1" width="200" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ECa-hH-AIQ">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="118" height="17"/>
-                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ECa-hH-AIQ">
+                                                                            <rect key="frame" x="-2" y="0.0" width="204" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="lk0-WY-6mk">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1165,13 +1164,19 @@ Gw
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="bottom" secondItem="ECa-hH-AIQ" secondAttribute="bottom" id="jNr-IJ-tsF"/>
+                                                                        <constraint firstItem="ECa-hH-AIQ" firstAttribute="leading" secondItem="t47-7Y-QqV" secondAttribute="leading" id="kV9-ao-RsU"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="ECa-hH-AIQ" secondAttribute="trailing" id="mdP-dk-ZlD"/>
+                                                                        <constraint firstItem="ECa-hH-AIQ" firstAttribute="top" secondItem="t47-7Y-QqV" secondAttribute="top" id="xhQ-jx-Rko"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="ECa-hH-AIQ" id="PaL-TB-dZ2"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
-                                                        <tableColumn width="288" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
+                                                        <tableColumn identifier="dependencyCellView" width="201" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depended by">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1185,12 +1190,11 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="8uq-u0-zo7">
-                                                                    <rect key="frame" x="122" y="1" width="288" height="17"/>
+                                                                    <rect key="frame" x="204" y="1" width="201" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gsa-u8-bU2">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="288" height="17"/>
-                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Gsa-u8-bU2">
+                                                                            <rect key="frame" x="-2" y="0.0" width="205" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="6aO-A2-sNQ">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1198,6 +1202,12 @@ Gw
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="Gsa-u8-bU2" firstAttribute="top" secondItem="8uq-u0-zo7" secondAttribute="top" id="1sy-mU-WFN"/>
+                                                                        <constraint firstItem="Gsa-u8-bU2" firstAttribute="leading" secondItem="8uq-u0-zo7" secondAttribute="leading" id="THs-n1-gGP"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="Gsa-u8-bU2" secondAttribute="bottom" id="kXk-If-Dcg"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="Gsa-u8-bU2" secondAttribute="trailing" id="uje-cC-h22"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="Gsa-u8-bU2" id="FAr-fa-MLR"/>
                                                                     </connections>
@@ -1208,7 +1218,7 @@ Gw
                                                 </tableView>
                                             </subviews>
                                         </clipView>
-                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="hkZ-Hm-oiP">
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="hkZ-Hm-oiP">
                                             <rect key="frame" x="1" y="152" width="408" height="16"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -1217,7 +1227,7 @@ Gw
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" wantsLayer="YES" id="1B4-Hg-fiV">
-                                            <rect key="frame" x="0.0" y="0.0" width="412" height="25"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
                                     </scrollView>
@@ -1309,7 +1319,9 @@ Gw
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dependencyTableView" destination="n4S-Zo-hRk" id="cEr-hM-alb"/>
                         <outlet property="formulaeTitleLabel" destination="IGx-ln-h8e" id="L9l-7d-efJ"/>
+                        <outlet property="labelTableView" destination="Uar-FZ-Ebj" id="TGz-FU-cZU"/>
                     </connections>
                 </viewController>
                 <customObject id="Y7B-1P-7xB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
