@@ -23,27 +23,18 @@ class DataBase: BrewExtensionDataBase {
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
-        var set = Set<String>()
 
-        for label in formulaes[0].labels! {
-            set.insert((label as! Label).name!)
-        }
-
-        return set
+        return Set(formulaes[0].labels!.lazy.map { return ($0 as! Label).name! })
     }
 
     func labels() -> [String] {
-        var labelStrings = [String]()
-
         let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
         labelFetchRequest.propertiesToFetch = ["name"]
         labelFetchRequest.returnsDistinctResults = true
 
-        for label in try! self.context.fetch(labelFetchRequest) {
-            labelStrings.append(label.name!)
+        return try! self.context.fetch(labelFetchRequest).map { label in
+            return label.name!
         }
-
-        return labelStrings
     }
 
     func formulaes(under label: String) -> Set<String> {
@@ -51,15 +42,9 @@ class DataBase: BrewExtensionDataBase {
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
-        guard !labels.isEmpty else { return .init() }
-        
-        var set = Set<String>()
+        guard labels.count == 1 else { return .init() }
 
-        for formulae in labels[0].formulaes! {
-            set.insert((formulae as! Formulae).name!)
-        }
-
-        return set
+        return Set(labels[0].formulaes!.lazy.map{ return ($0 as! Formulae).name! })
     }
 
     func removeLabel(_ label: String, from formulae: String) {
@@ -68,14 +53,14 @@ class DataBase: BrewExtensionDataBase {
 
         let labels = try! self.context.fetch(labelFetchRequest)
 
-        guard !labels.isEmpty else { return }
+        guard labels.count == 1 else { return }
 
         let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        labelFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
+        formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
 
-        guard !formulaes.isEmpty else { return }
+        guard formulaes.count == 1 else { return }
 
         formulaes[0].removeFromLabels(labels[0])
         labels[0].removeFromFormulaes(formulaes[0])
@@ -87,14 +72,14 @@ class DataBase: BrewExtensionDataBase {
 
         let labels = try! self.context.fetch(labelFetchRequest)
 
-        guard !labels.isEmpty else { return }
+        guard labels.count == 1 else { return }
 
         let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
 
-        guard !formulaes.isEmpty else { return }
+        guard formulaes.count == 1 else { return }
 
         formulaes[0].addToLabels(labels[0])
     }
@@ -110,7 +95,7 @@ class DataBase: BrewExtensionDataBase {
 
         let labels = try! self.context.fetch(labelFetchRequest)
 
-        guard !labels.isEmpty else { return }
+        guard labels.count == 1 else { return }
         
         self.context.delete(labels[0] as NSManagedObject)
     }
@@ -130,7 +115,7 @@ class DataBase: BrewExtensionDataBase {
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
 
-        guard !formulaes.isEmpty else { return }
+        guard formulaes.count == 1 else { return }
 
         formulaes[0].isProtected = true
     }
@@ -141,7 +126,7 @@ class DataBase: BrewExtensionDataBase {
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
 
-        guard !formulaes.isEmpty else { return false }
+        guard formulaes.count == 1 else { return false }
 
         return formulaes[0].isProtected
     }
@@ -163,7 +148,7 @@ class DataBase: BrewExtensionDataBase {
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
 
-        return !formulaes.isEmpty
+        return formulaes.count == 1
     }
 
     func addFormulae(_ formulae: String) {
@@ -183,13 +168,7 @@ class DataBase: BrewExtensionDataBase {
         let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
         formulaeFetchRequest.propertiesToFetch = ["name"]
 
-        var formulaes = [String]()
-
-        for formulae in try! self.context.fetch(formulaeFetchRequest) {
-            formulaes.append(formulae.name!)
-        }
-
-        return formulaes
+        return try! self.context.fetch(formulaeFetchRequest).map{ return $0.name! }
     }
 
     func addDependency(from: String, to: String) {
@@ -197,13 +176,13 @@ class DataBase: BrewExtensionDataBase {
         fromRequest.predicate = NSPredicate(format: "name == %@", from)
 
         let froms = try! self.context.fetch(fromRequest)
-        guard !froms.isEmpty else { return }
+        guard froms.count == 1 else { return }
 
         let toRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
         toRequest.predicate = NSPredicate(format: "name == %@", to)
 
         let tos = try! self.context.fetch(toRequest)
-        guard !tos.isEmpty else { return }
+        guard tos.count == 1 else { return }
 
         froms[0].addToOutcomings(tos[0])
     }
@@ -213,13 +192,13 @@ class DataBase: BrewExtensionDataBase {
         fromRequest.predicate = NSPredicate(format: "name == %@", from)
 
         let froms = try! self.context.fetch(fromRequest)
-        guard !froms.isEmpty else { return false }
+        guard froms.count == 1 else { return false }
 
         let toRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
         toRequest.predicate = NSPredicate(format: "name == %@", to)
 
         let tos = try! self.context.fetch(toRequest)
-        guard !tos.isEmpty else { return false }
+        guard tos.count == 1 else { return false }
 
         return froms[0].outcomings!.contains(tos[0])
     }
@@ -230,15 +209,9 @@ class DataBase: BrewExtensionDataBase {
         formulaeRequest.propertiesToFetch = ["name"]
 
         let formulaes = try! context.fetch(formulaeRequest)
-        guard !formulaes.isEmpty else { return .init() }
+        guard formulaes.count == 1 else { return .init() }
 
-        var set = Set<String>()
-
-        for outcomings in formulaes[0].outcomings! {
-            set.insert((outcomings as! Formulae).name!)
-        }
-
-        return set
+        return Set(formulaes[0].outcomings!.lazy.map{ return ($0 as! Formulae).name! })
     }
 
     func incomingDependencies(for formulae: String) -> Set<String> {
@@ -247,15 +220,9 @@ class DataBase: BrewExtensionDataBase {
         formulaeRequest.propertiesToFetch = ["name"]
 
         let formulaes = try! context.fetch(formulaeRequest)
-        guard !formulaes.isEmpty else { return .init() }
+        guard formulaes.count == 1 else { return .init() }
 
-        var set = Set<String>()
-
-        for outcomings in formulaes[0].incomings! {
-            set.insert((outcomings as! Formulae).name!)
-        }
-
-        return set
+        return Set(formulaes[0].incomings!.lazy.map{ return ($0 as! Formulae).name! })
     }
 
     func write() {

@@ -157,10 +157,9 @@
 		6785F2BB230230F600AA43D5 /* Brew Extension Client */ = {
 			isa = PBXGroup;
 			children = (
-				6787FC0123044A5000979758 /* Brew Extension */,
 				6785F30B2303B37300AA43D5 /* Views */,
 				6785F3082303B23A00AA43D5 /* View Controllers */,
-				6785F2ED23026D8300AA43D5 /* Core Data */,
+				6785F2ED23026D8300AA43D5 /* Data */,
 				6785F2BC230230F600AA43D5 /* AppDelegate.swift */,
 				6785F318230426FF00AA43D5 /* MainWindowController.swift */,
 				6785F2C3230230F700AA43D5 /* Assets.xcassets */,
@@ -189,16 +188,17 @@
 			path = "Brew Extension Client UITests";
 			sourceTree = "<group>";
 		};
-		6785F2ED23026D8300AA43D5 /* Core Data */ = {
+		6785F2ED23026D8300AA43D5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				6787FC0223044A6200979758 /* BrewExtensionWithNotification.swift */,
 				6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */,
 				6785F2EE23026D9800AA43D5 /* Label.swift */,
 				6785F2F023026DBB00AA43D5 /* Formulae.swift */,
 				6785F2EB230233AD00AA43D5 /* DataBase.swift */,
 				6785F3042302A56B00AA43D5 /* CoreDataManager.swift */,
 			);
-			path = "Core Data";
+			path = Data;
 			sourceTree = "<group>";
 		};
 		6785F3082303B23A00AA43D5 /* View Controllers */ = {
@@ -222,14 +222,6 @@
 				6787FBFF2304454E00979758 /* TextCellView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		6787FC0123044A5000979758 /* Brew Extension */ = {
-			isa = PBXGroup;
-			children = (
-				6787FC0223044A6200979758 /* BrewExtensionWithNotification.swift */,
-			);
-			path = "Brew Extension";
 			sourceTree = "<group>";
 		};
 		CED87AC79683D264BFDD3758 /* Pods */ = {
