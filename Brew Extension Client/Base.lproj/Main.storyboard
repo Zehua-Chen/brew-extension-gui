@@ -651,18 +651,7 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="E27B76B3-ECC5-429C-8F9B-421973B10FED" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="G3U-jZ-ElI">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="65092636-794B-43C4-932D-2E4E8AEEA556" label="Remove" paletteLabel="Remove" image="NSRemoveTemplate" sizingBehavior="auto" id="4AK-Zx-zqZ">
-                                    <nil key="toolTip"/>
-                                    <button key="view" verticalHuggingPriority="750" id="Dma-ln-OfG">
-                                        <rect key="frame" x="2" y="14" width="45" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lHM-95-Lp2">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="D6328673-640B-44FD-B924-FB9C102B6F70" label="Sync" paletteLabel="Sync" image="NSRefreshTemplate" sizingBehavior="auto" id="gH1-ur-J7B">
+                                <toolbarItem implicitItemIdentifier="55BE5B12-BD60-467B-B8A4-55DACFAEC48F" label="Sync" paletteLabel="Sync" image="NSRefreshTemplate" sizingBehavior="auto" id="gH1-ur-J7B">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="ZiK-i5-ZMZ">
                                         <rect key="frame" x="0.0" y="14" width="45" height="25"/>
@@ -673,9 +662,22 @@
                                         </buttonCell>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="65092636-794B-43C4-932D-2E4E8AEEA556" label="Add Label" paletteLabel="Add Label" image="NSAddTemplate" sizingBehavior="auto" id="4AK-Zx-zqZ">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="Dma-ln-OfG">
+                                        <rect key="frame" x="8" y="14" width="45" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lHM-95-Lp2">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="PYE-hF-Wfu"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="gH1-ur-J7B"/>
+                                <toolbarItem reference="PYE-hF-Wfu"/>
                                 <toolbarItem reference="4AK-Zx-zqZ"/>
                             </defaultToolbarItems>
                         </toolbar>
@@ -721,23 +723,23 @@
             <objects>
                 <viewController id="sen-sJ-aUU" customClass="LabelsViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <visualEffectView key="view" appearanceType="inheritedVibrantLight" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" id="a9i-3o-uaE">
-                        <rect key="frame" x="0.0" y="0.0" width="289" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="148" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="38" horizontalPageScroll="10" verticalLineScroll="38" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXg-HK-Fa4">
-                                <rect key="frame" x="0.0" y="0.0" width="289" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="148" height="300"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="iij-n4-HT4">
-                                    <rect key="frame" x="1" y="1" width="287" height="298"/>
+                                    <rect key="frame" x="1" y="1" width="146" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="36" rowSizeStyle="large" viewBased="YES" id="wM9-Wm-mvY">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="298"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="146" height="298"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="284" minWidth="40" maxWidth="1000" id="ao3-qj-IfX">
+                                                <tableColumn width="143" minWidth="40" maxWidth="1000" id="ao3-qj-IfX">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -751,11 +753,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="labelCellView" id="gXV-Ji-nu4" customClass="LabelCellView" customModule="BrewExtensionClient" customModuleProvider="target">
-                                                            <rect key="frame" x="1" y="1" width="284" height="39"/>
+                                                            <rect key="frame" x="1" y="1" width="143" height="39"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Vv-e3-Ii3">
-                                                                    <rect key="frame" x="20" y="0.0" width="244" height="36"/>
+                                                                    <rect key="frame" x="20" y="0.0" width="103" height="36"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V8f-ba-0Wd">
                                                                             <rect key="frame" x="-2" y="19" width="67" height="17"/>
@@ -807,7 +809,7 @@
                                     <nil key="backgroundColor"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="nPT-0E-gs4">
-                                    <rect key="frame" x="1" y="283" width="287" height="16"/>
+                                    <rect key="frame" x="1" y="283" width="146" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="L2P-O6-FO5">
@@ -823,23 +825,26 @@
                             <constraint firstItem="vXg-HK-Fa4" firstAttribute="leading" secondItem="a9i-3o-uaE" secondAttribute="leading" id="hHC-ta-LE6"/>
                         </constraints>
                     </visualEffectView>
+                    <connections>
+                        <outlet property="tableView" destination="wM9-Wm-mvY" id="7wj-Jh-Sm4"/>
+                    </connections>
                 </viewController>
                 <customObject id="juS-7s-pvN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-253.5" y="1239"/>
+            <point key="canvasLocation" x="-136" y="1233"/>
         </scene>
-        <!--View Controller-->
+        <!--Formulaes View Controller-->
         <scene sceneID="LJe-dV-qhr">
             <objects>
-                <viewController id="jVI-L8-GDA" sceneMemberID="viewController">
-                    <scrollView key="view" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="LMe-vC-xKE">
+                <viewController id="jVI-L8-GDA" customClass="FormulaesViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <scrollView key="view" autohidesScrollers="YES" horizontalLineScroll="38" horizontalPageScroll="10" verticalLineScroll="38" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="LMe-vC-xKE">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="jd3-ve-oDS">
                             <rect key="frame" x="1" y="1" width="448" height="298"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="9Sv-nH-ZKM">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="36" rowSizeStyle="large" viewBased="YES" id="9Sv-nH-ZKM">
                                     <rect key="frame" x="0.0" y="0.0" width="448" height="298"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -859,13 +864,54 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="R9C-jf-3el">
-                                                    <rect key="frame" x="1" y="1" width="445" height="17"/>
+                                                <tableCellView identifier="formulaeCellView" id="R9C-jf-3el" customClass="FormulaeCellView" customModule="BrewExtensionClient" customModuleProvider="target">
+                                                    <rect key="frame" x="1" y="1" width="445" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5I6-f6-kxB">
+                                                            <rect key="frame" x="20" y="0.0" width="405" height="37"/>
+                                                            <subviews>
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NQ8-Y3-P5Q">
+                                                                    <rect key="frame" x="-2" y="20" width="91" height="17"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Formulae Title" id="Amk-bW-nVG">
+                                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kcm-bE-ism">
+                                                                    <rect key="frame" x="-2" y="0.0" width="93" height="14"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Labels: Life, C++" id="Vg4-qf-e6W">
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                            </subviews>
+                                                            <visibilityPriorities>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                            </visibilityPriorities>
+                                                            <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                            </customSpacing>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="5I6-f6-kxB" secondAttribute="trailing" constant="20" symbolic="YES" id="HfT-SF-r3h"/>
+                                                        <constraint firstItem="5I6-f6-kxB" firstAttribute="top" secondItem="R9C-jf-3el" secondAttribute="top" constant="3" id="cUK-Z3-Quf"/>
+                                                        <constraint firstItem="5I6-f6-kxB" firstAttribute="leading" secondItem="R9C-jf-3el" secondAttribute="leading" constant="20" symbolic="YES" id="huG-4v-KQ8"/>
+                                                        <constraint firstAttribute="bottom" secondItem="5I6-f6-kxB" secondAttribute="bottom" id="t8M-yX-qzy"/>
+                                                    </constraints>
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
                                     </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="jVI-L8-GDA" id="ve3-sa-HBj"/>
+                                        <outlet property="delegate" destination="jVI-L8-GDA" id="YDi-sx-1yC"/>
+                                    </connections>
                                 </tableView>
                             </subviews>
                         </clipView>
@@ -881,11 +927,11 @@
                 </viewController>
                 <customObject id="ywi-hk-XbR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="187" y="1239"/>
+            <point key="canvasLocation" x="196" y="1233"/>
         </scene>
     </scenes>
     <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>

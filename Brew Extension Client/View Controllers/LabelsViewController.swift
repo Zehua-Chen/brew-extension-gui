@@ -9,6 +9,8 @@
 import Cocoa
 
 class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+    
+    @IBOutlet weak var tableView: NSTableView!
 
     var labels = ["Life", "C++", "Unity"]
 
@@ -21,14 +23,10 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     func deleteRowActionClicked(_ action: NSTableViewRowAction, _ rowIndex: Int) {
     }
 
-    func starRowActionClicked(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-
-    }
-
     // MARK: NSTableViewDataSource Conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return labels.count
+        return labels.count + 1
     }
 
     // MARK: NSTableViewDelegate Conformance
@@ -39,7 +37,17 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         row: Int
     ) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("labelCellView"), owner: nil) as! LabelCellView
-        view.titleTextField.stringValue = labels[row]
+
+        if row == 0 {
+            view.titleTextField.stringValue = "All"
+            view.formulaesCountTextField.stringValue = "10 formulaes"
+
+            return view
+        }
+
+        let labelsIndex = row - 1
+
+        view.titleTextField.stringValue = labels[labelsIndex]
         view.formulaesCountTextField.stringValue = "2 formulaes"
 
         return view
@@ -50,13 +58,23 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         rowActionsForRow row: Int,
         edge: NSTableView.RowActionEdge
     ) -> [NSTableViewRowAction] {
+
+        if row == 0 {
+            return []
+        }
+
         switch edge {
         case .leading:
-            return [.init(style: .regular, title: "Star", handler: self.starRowActionClicked)]
+//            return [.init(style: .regular, title: "Star", handler: self.starRowActionClicked)]
+            return []
         case .trailing:
             return [.init(style: .destructive, title: "Delete", handler: self.deleteRowActionClicked)]
         @unknown default:
             return []
         }
+    }
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
+//        print("selection did change at \(self.tableView.selectedRow)")
     }
 }
