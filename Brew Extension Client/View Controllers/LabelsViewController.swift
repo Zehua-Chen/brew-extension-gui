@@ -11,12 +11,14 @@ import Cocoa
 class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
-
+    var notificationCenter = NotificationCenter.default
     var labels = ["Life", "C++", "Unity"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+
+        
     }
 
     // MARK: Event handlers
@@ -65,7 +67,6 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
         switch edge {
         case .leading:
-//            return [.init(style: .regular, title: "Star", handler: self.starRowActionClicked)]
             return []
         case .trailing:
             return [.init(style: .destructive, title: "Delete", handler: self.deleteRowActionClicked)]
@@ -75,6 +76,14 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-//        print("selection did change at \(self.tableView.selectedRow)")
+        let selectedRow = self.tableView.selectedRow
+        guard selectedRow > 0 else { return }
+
+        let label = self.labels[selectedRow - 1]
+        
+        self.notificationCenter.post(
+            name: .init("labelChanged"),
+            object: nil,
+            userInfo: ["label": label])
     }
 }

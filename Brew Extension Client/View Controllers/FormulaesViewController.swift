@@ -10,9 +10,24 @@ import Cocoa
 
 class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
+    @IBOutlet weak var tableView: NSTableView!
+    var notificationCenter = NotificationCenter.default
+    var labelFilter: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+
+        self.notificationCenter.addObserver(
+            forName: .init("labelChanged"),
+            object: nil,
+            queue: nil,
+            using: self.labelChanged)
+    }
+
+    func labelChanged(_ notification: Notification) {
+        self.labelFilter = notification.userInfo?["label"] as? String
+        self.tableView.reloadData()
     }
 
     func removeFormulae(_ action: NSTableViewRowAction, _ row: Int) {
@@ -24,7 +39,11 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        return tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil)
+        let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
+        view.labelsTextField.stringValue = "Label: \(self.labelFilter ?? "")"
+        view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
+
+        return view
     }
 
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {

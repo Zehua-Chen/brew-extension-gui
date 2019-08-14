@@ -9,4 +9,7 @@
 import Cocoa
 
 class FormulaeCellView: NSTableCellView {
+    @IBOutlet weak var titleTextField: NSTextField!
+    @IBOutlet weak var labelsTextField: NSTextField!
+    @IBOutlet weak var protectionIcon: NSImageView!
 }
