@@ -46,6 +46,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return CoreDataManager.shared.viewContext.undoManager
     }
 
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         // Save changes in the application's managed object context before the application terminates.
         let context = CoreDataManager.shared.viewContext
