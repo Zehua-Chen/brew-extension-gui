@@ -63,6 +63,10 @@ class FormulaeViewController: NSViewController {
 
             }
         }
+
+        func numberOfRows(in tableView: NSTableView) -> Int {
+            return 0
+        }
     }
 
     @IBOutlet weak var formulaeTitleLabel: NSTextField!
@@ -80,7 +84,7 @@ class FormulaeViewController: NSViewController {
         // Do view setup here.
 
         self.notificationCenter.addObserver(
-            forName: .formulaeClicked,
+            forName: .formulaeSelected,
             object: nil,
             queue: nil,
             using: self.formulaeClicked)

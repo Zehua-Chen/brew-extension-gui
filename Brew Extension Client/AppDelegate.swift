@@ -12,8 +12,8 @@ import BrewExtension
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    lazy var brewExtension: BrewExtension = {
-        let brewExt = BrewExtension()
+    lazy var brewExtension: BrewExtensionWithNotification = {
+        let brewExt = BrewExtensionWithNotification()
         brewExt.dataBase = self.brewExtensionDataBase
         
         return brewExt

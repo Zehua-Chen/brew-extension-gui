@@ -12,13 +12,11 @@ class AddLabelViewController: NSViewController {
 
     weak var hostViewController: NSViewController?
     var brewExt = AppDelegate.shared.brewExtension
-    var notificationCenter = NotificationCenter.default
     
     @IBOutlet weak var labelField: NSTextField!
     
     @IBAction func onAddLabelClick(_ sender: Any) {
         brewExt.addLabel(self.labelField.stringValue)
-        self.notificationCenter.post(name: .labelsChanged, object: nil)
         self.hostViewController?.dismiss(self)
     }
     

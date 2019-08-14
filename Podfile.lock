@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BrewExtension:
-    :commit: 112597a15fbadc09edbd9e6cb65f77359f00fe07
+    :commit: 50880116f2bd660464e6d0400392e181cdc42f96
     :git: https://github.com/Zehua-Chen/brew-extension
 
 SPEC CHECKSUMS:

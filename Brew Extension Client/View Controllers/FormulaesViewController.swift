@@ -22,7 +22,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         // Do view setup here.
 
         self.notificationCenter.addObserver(
-            forName: .labelsClicked,
+            forName: .labelsSelected,
             object: nil,
             queue: nil,
             using: self.onLabelClicked)
@@ -32,10 +32,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     override func viewDidAppear() {
         if !formulaes.isEmpty {
-            self.notificationCenter.post(
-                name: .formulaeClicked,
-                object: nil,
-                userInfo: ["formulae": self.formulaes[0]])
+            self.brewExt.selectFormulae(self.formulaes[0])
         }
     }
 
@@ -55,10 +52,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         self.tableView.reloadData()
 
         if !formulaes.isEmpty {
-            self.notificationCenter.post(
-                name: .formulaeClicked,
-                object: nil,
-                userInfo: ["formulae": self.formulaes[0]])
+            self.brewExt.selectFormulae(self.formulaes[0])
         }
     }
 
@@ -94,10 +88,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         let selectedRow = self.tableView.selectedRow
         let formulae = self.formulaes[selectedRow]
 
-        self.notificationCenter.post(
-            name: .formulaeClicked,
-            object: nil,
-            userInfo: ["formulae": formulae])
+        self.brewExt.selectFormulae(formulae)
     }
     
 }
