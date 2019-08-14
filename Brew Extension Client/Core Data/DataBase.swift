@@ -51,6 +51,8 @@ class DataBase: BrewExtensionDataBase {
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
+        guard !labels.isEmpty else { return .init() }
+        
         var set = Set<String>()
 
         for formulae in labels[0].formulaes! {

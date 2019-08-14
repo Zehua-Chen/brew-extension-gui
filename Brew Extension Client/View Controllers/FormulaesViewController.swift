@@ -13,6 +13,9 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     @IBOutlet weak var tableView: NSTableView!
     var notificationCenter = NotificationCenter.default
     var labelFilter: String?
+    var brewExt = AppDelegate.shared.brewExtension
+
+    var formulaes = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +26,23 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             object: nil,
             queue: nil,
             using: self.labelChanged)
+
+        self.formulaes = self.brewExt.formulaes()
     }
 
     func labelChanged(_ notification: Notification) {
-        self.labelFilter = notification.userInfo?["label"] as? String
+        guard let newLabel = notification.userInfo?["label"] as? String else {
+            self.formulaes = self.brewExt.formulaes()
+            self.tableView.reloadData()
+            return
+        }
+
+        self.formulaes = []
+
+        for formulae in self.brewExt.formulaes(under: newLabel) {
+            self.formulaes.append(formulae)
+        }
+
         self.tableView.reloadData()
     }
 
@@ -35,11 +51,12 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 10
+        return formulaes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
+        view.titleTextField.stringValue = self.formulaes[row]
         view.labelsTextField.stringValue = "Label: \(self.labelFilter ?? "")"
         view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
 

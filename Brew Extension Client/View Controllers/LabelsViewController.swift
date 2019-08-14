@@ -12,13 +12,13 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     @IBOutlet weak var tableView: NSTableView!
     var notificationCenter = NotificationCenter.default
-    var labels = ["Life", "C++", "Unity"]
+    var brewExt = AppDelegate.shared.brewExtension
+    var labels = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-
-        
+        self.labels = brewExt.labels()
     }
 
     // MARK: Event handlers
@@ -42,7 +42,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
         if row == 0 {
             view.titleTextField.stringValue = "All"
-            view.formulaesCountTextField.stringValue = "10 formulaes"
+            view.formulaesCountTextField.stringValue = "x formulaes"
 
             return view
         }
@@ -50,7 +50,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         let labelsIndex = row - 1
 
         view.titleTextField.stringValue = labels[labelsIndex]
-        view.formulaesCountTextField.stringValue = "2 formulaes"
+        view.formulaesCountTextField.stringValue = "x formulaes"
 
         return view
     }
@@ -77,7 +77,14 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
     func tableViewSelectionDidChange(_ notification: Notification) {
         let selectedRow = self.tableView.selectedRow
-        guard selectedRow > 0 else { return }
+
+        if selectedRow == 0 {
+            self.notificationCenter.post(
+                name: .init("labelChanged"),
+                object: nil,
+                userInfo: [:])
+            return
+        }
 
         let label = self.labels[selectedRow - 1]
         

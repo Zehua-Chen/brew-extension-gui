@@ -27,6 +27,7 @@
 		6785F319230426FF00AA43D5 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F318230426FF00AA43D5 /* MainWindowController.swift */; };
 		6785F31C230427D800AA43D5 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F31A230427D700AA43D5 /* SyncViewController.swift */; };
 		6785F31F2304288600AA43D5 /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F31E2304288600AA43D5 /* MainSplitViewController.swift */; };
+		6787FBFC2304390B00979758 /* AddLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FBFB2304390B00979758 /* AddLabelViewController.swift */; };
 		A31533AC37D63392EA7C74AA /* Pods_Brew_Extension_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5422436A993886EB7BC6D0EA /* Pods_Brew_Extension_Client.framework */; };
 		BF9869FFDD25A181A06F3F8A /* Pods_Brew_Extension_Client_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03CD95A99A4AB0C2092C3ED /* Pods_Brew_Extension_Client_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 		6785F318230426FF00AA43D5 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		6785F31A230427D700AA43D5 /* SyncViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewController.swift; sourceTree = "<group>"; };
 		6785F31E2304288600AA43D5 /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
+		6787FBFB2304390B00979758 /* AddLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLabelViewController.swift; sourceTree = "<group>"; };
 		893027BBECC609B4CE7FDDB2 /* Pods-Brew Extension Client Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension Client Tests.release.xcconfig"; path = "Target Support Files/Pods-Brew Extension Client Tests/Pods-Brew Extension Client Tests.release.xcconfig"; sourceTree = "<group>"; };
 		954A6B7BE4138650573BE3C4 /* Pods-Brew ExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew ExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-Brew ExtensionTests/Pods-Brew ExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9730042129F9E5BFC651756D /* Pods-Brew Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension.debug.xcconfig"; path = "Target Support Files/Pods-Brew Extension/Pods-Brew Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				6785F3092303B25200AA43D5 /* LabelsViewController.swift */,
+				6787FBFB2304390B00979758 /* AddLabelViewController.swift */,
 				6785F31A230427D700AA43D5 /* SyncViewController.swift */,
 				6785F30E2303BF3D00AA43D5 /* FormulaesViewController.swift */,
 				6785F3162303E75E00AA43D5 /* FormulaeViewController.swift */,
@@ -440,6 +443,7 @@
 				6785F30D2303B3A200AA43D5 /* LabelCellView.swift in Sources */,
 				6785F2BD230230F600AA43D5 /* AppDelegate.swift in Sources */,
 				6785F31C230427D800AA43D5 /* SyncViewController.swift in Sources */,
+				6787FBFC2304390B00979758 /* AddLabelViewController.swift in Sources */,
 				6785F3172303E75E00AA43D5 /* FormulaeViewController.swift in Sources */,
 				6785F2EC230233AD00AA43D5 /* DataBase.swift in Sources */,
 				6785F30F2303BF3D00AA43D5 /* FormulaesViewController.swift in Sources */,

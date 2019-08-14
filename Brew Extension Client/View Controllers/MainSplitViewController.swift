@@ -14,22 +14,36 @@ class MainSplitViewController: NSSplitViewController {
 
     var manager = CoreDataManager.shared
 
+    lazy var addLabelViewController: AddLabelViewController = {
+        let controller = self.storyboard?.instantiateController(withIdentifier: "addLabelViewController") as! AddLabelViewController
+        controller.hostViewController = self
+
+        return controller
+    }()
+
+    lazy var syncViewController: SyncViewController = {
+        return self.storyboard?.instantiateController(withIdentifier: "syncViewController") as! SyncViewController
+    }()
+
     @IBAction func syncBrewExtension(_ sender: Any) {
-        let controller = self.storyboard?.instantiateController(withIdentifier: "syncViewController") as! SyncViewController
-        self.presentAsSheet(controller)
+        self.presentAsSheet(self.syncViewController)
 
         let backgroundContext = self.manager.backgroundContext
 
         backgroundContext.perform {
             let database = DataBase(context: backgroundContext)
-            let ext = AppDelegate.shared.brewExtension
+            let ext = BrewExtension()
 
             ext.dataBase = database
             try! ext.sync()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.dismiss(controller)
+                self.dismiss(self.syncViewController)
             }
         }
+    }
+
+    @IBAction func addLabel(_ sender: Any) {
+        self.presentAsSheet(self.addLabelViewController)
     }
 }

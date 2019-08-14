@@ -13,7 +13,14 @@ import BrewExtension
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     lazy var brewExtension: BrewExtension = {
-        return BrewExtension()
+        let brewExt = BrewExtension()
+        brewExt.dataBase = self.brewExtensionDataBase
+        
+        return brewExt
+    }()
+
+    lazy var brewExtensionDataBase: DataBase = {
+        return DataBase(context: CoreDataManager.shared.viewContext)
     }()
 
     static var shared: AppDelegate {
