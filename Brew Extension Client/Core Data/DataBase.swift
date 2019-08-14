@@ -109,6 +109,8 @@ class DataBase: BrewExtensionDataBase {
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
+
+        guard !labels.isEmpty else { return }
         
         self.context.delete(labels[0] as NSManagedObject)
     }

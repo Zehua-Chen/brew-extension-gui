@@ -19,10 +19,26 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         super.viewDidLoad()
         // Do view setup here.
         self.labels = brewExt.labels()
+
+        self.notificationCenter.addObserver(
+            forName: .labelsChanged,
+            object: nil,
+            queue: nil,
+            using: self.labelsChanged)
     }
 
     // MARK: Event handlers
-    func deleteRowActionClicked(_ action: NSTableViewRowAction, _ rowIndex: Int) {
+
+    func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
+        try! self.brewExt.removeLabel(labels[rowIndex - 1])
+        
+        self.labels = self.brewExt.labels()
+        self.tableView.reloadData()
+    }
+
+    func labelsChanged(_ notification: Notification) {
+        self.labels = self.brewExt.labels()
+        self.tableView.reloadData()
     }
 
     // MARK: NSTableViewDataSource Conformance
@@ -69,7 +85,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         case .leading:
             return []
         case .trailing:
-            return [.init(style: .destructive, title: "Delete", handler: self.deleteRowActionClicked)]
+            return [.init(style: .destructive, title: "Delete", handler: self.onDeleteRowActionFired)]
         @unknown default:
             return []
         }
@@ -78,9 +94,9 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     func tableViewSelectionDidChange(_ notification: Notification) {
         let selectedRow = self.tableView.selectedRow
 
-        if selectedRow == 0 {
+        if selectedRow <= 0 {
             self.notificationCenter.post(
-                name: .init("labelChanged"),
+                name: .labelsClicked,
                 object: nil,
                 userInfo: [:])
             return
@@ -89,7 +105,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         let label = self.labels[selectedRow - 1]
         
         self.notificationCenter.post(
-            name: .init("labelChanged"),
+            name: .labelsClicked,
             object: nil,
             userInfo: ["label": label])
     }

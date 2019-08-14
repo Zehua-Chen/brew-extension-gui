@@ -1099,10 +1099,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="22" y="1248"/>
         </scene>
-        <!--View Controller-->
+        <!--Formulae View Controller-->
         <scene sceneID="wYK-0a-VzZ">
             <objects>
-                <viewController id="CTj-BJ-a8h" sceneMemberID="viewController">
+                <viewController id="CTj-BJ-a8h" customClass="FormulaeViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="zVN-bq-yCr">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="403"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1308,6 +1308,9 @@ Gw
                             <constraint firstAttribute="bottom" secondItem="qlp-Jl-zGk" secondAttribute="bottom" constant="20" symbolic="YES" id="x2m-fH-6IS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="formulaeTitleLabel" destination="IGx-ln-h8e" id="L9l-7d-efJ"/>
+                    </connections>
                 </viewController>
                 <customObject id="Y7B-1P-7xB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

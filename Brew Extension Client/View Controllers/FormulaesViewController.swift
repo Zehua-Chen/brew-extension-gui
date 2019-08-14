@@ -22,15 +22,24 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         // Do view setup here.
 
         self.notificationCenter.addObserver(
-            forName: .init("labelChanged"),
+            forName: .labelsClicked,
             object: nil,
             queue: nil,
-            using: self.labelChanged)
+            using: self.onLabelClicked)
 
         self.formulaes = self.brewExt.formulaes()
     }
 
-    func labelChanged(_ notification: Notification) {
+    override func viewDidAppear() {
+        if !formulaes.isEmpty {
+            self.notificationCenter.post(
+                name: .formulaeClicked,
+                object: nil,
+                userInfo: ["formulae": self.formulaes[0]])
+        }
+    }
+
+    func onLabelClicked(_ notification: Notification) {
         guard let newLabel = notification.userInfo?["label"] as? String else {
             self.formulaes = self.brewExt.formulaes()
             self.tableView.reloadData()
@@ -44,6 +53,13 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         }
 
         self.tableView.reloadData()
+
+        if !formulaes.isEmpty {
+            self.notificationCenter.post(
+                name: .formulaeClicked,
+                object: nil,
+                userInfo: ["formulae": self.formulaes[0]])
+        }
     }
 
     func removeFormulae(_ action: NSTableViewRowAction, _ row: Int) {
@@ -72,6 +88,16 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         @unknown default:
             return []
         }
+    }
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        let selectedRow = self.tableView.selectedRow
+        let formulae = self.formulaes[selectedRow]
+
+        self.notificationCenter.post(
+            name: .formulaeClicked,
+            object: nil,
+            userInfo: ["formulae": formulae])
     }
     
 }
