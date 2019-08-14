@@ -95,7 +95,6 @@ class DataBase: BrewExtensionDataBase {
         guard !formulaes.isEmpty else { return }
 
         formulaes[0].addToLabels(labels[0])
-        labels[0].addToFormulaes(formulaes[0])
     }
 
     func addLabel(_ label: String) {
@@ -122,13 +121,36 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func protectFormulae(_ formulae: String) {
+        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
+
+        let formulaes = try! self.context.fetch(formulaeFetchRequest)
+
+        guard !formulaes.isEmpty else { return }
+
+        formulaes[0].isProtected = true
     }
 
     func protectsFormulae(_ formulae: String) -> Bool {
-        return false
+        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
+
+        let formulaes = try! self.context.fetch(formulaeFetchRequest)
+
+        guard !formulaes.isEmpty else { return false }
+
+        return formulaes[0].isProtected
     }
 
     func unprotectFormulae(_ formulae: String) {
+        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
+
+        let formulaes = try! self.context.fetch(formulaeFetchRequest)
+
+        guard !formulaes.isEmpty else { return }
+
+        formulaes[0].isProtected = false
     }
 
     func containsFormulae(_ formulae: String) -> Bool {
@@ -154,22 +176,82 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func formulaes() -> [String] {
-        return .init()
+        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeFetchRequest.propertiesToFetch = ["name"]
+
+        var formulaes = [String]()
+
+        for formulae in try! self.context.fetch(formulaeFetchRequest) {
+            formulaes.append(formulae.name!)
+        }
+
+        return formulaes
     }
 
     func addDependency(from: String, to: String) {
+        let fromRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        fromRequest.predicate = NSPredicate(format: "name == %@", from)
+
+        let froms = try! self.context.fetch(fromRequest)
+        guard !froms.isEmpty else { return }
+
+        let toRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        toRequest.predicate = NSPredicate(format: "name == %@", to)
+
+        let tos = try! self.context.fetch(toRequest)
+        guard !tos.isEmpty else { return }
+
+        froms[0].addToOutcomings(tos[0])
     }
 
     func containsDependency(from: String, to: String) -> Bool {
-        return false
+        let fromRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        fromRequest.predicate = NSPredicate(format: "name == %@", from)
+
+        let froms = try! self.context.fetch(fromRequest)
+        guard !froms.isEmpty else { return false }
+
+        let toRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        toRequest.predicate = NSPredicate(format: "name == %@", to)
+
+        let tos = try! self.context.fetch(toRequest)
+        guard !tos.isEmpty else { return false }
+
+        return froms[0].outcomings!.contains(tos[0])
     }
 
     func outcomingDependencies(for formulae: String) -> Set<String> {
-        return .init()
+        let formulaeRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeRequest.predicate = NSPredicate(format: "name == %@", formulae)
+        formulaeRequest.propertiesToFetch = ["name"]
+
+        let formulaes = try! context.fetch(formulaeRequest)
+        guard !formulaes.isEmpty else { return .init() }
+
+        var set = Set<String>()
+
+        for outcomings in formulaes[0].outcomings! {
+            set.insert((outcomings as! Formulae).name!)
+        }
+
+        return set
     }
 
     func incomingDependencies(for formulae: String) -> Set<String> {
-        return .init()
+        let formulaeRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        formulaeRequest.predicate = NSPredicate(format: "name == %@", formulae)
+        formulaeRequest.propertiesToFetch = ["name"]
+
+        let formulaes = try! context.fetch(formulaeRequest)
+        guard !formulaes.isEmpty else { return .init() }
+
+        var set = Set<String>()
+
+        for outcomings in formulaes[0].incomings! {
+            set.insert((outcomings as! Formulae).name!)
+        }
+
+        return set
     }
 
     func write() {

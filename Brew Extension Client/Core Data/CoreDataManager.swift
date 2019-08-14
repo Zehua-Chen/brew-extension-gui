@@ -10,6 +10,8 @@ import Foundation
 import CoreData
 import AppKit
 
+/// An instance of a `CoreDataManager` represents the a unique "Core
+/// Data" database
 class CoreDataManager {
     struct PersistentStore: OptionSet {
         typealias RawValue = Int
@@ -89,11 +91,15 @@ class CoreDataManager {
         self.persistentStores = persistentStores
     }
 
-    static var managerForApplication: CoreDataManager = {
+    /// A shared data manager across the application
+    static var shared: CoreDataManager = {
         return CoreDataManager(managedDataModelName: "BrewExtensionClient", persistentStores: .sql)
     }()
 
-    static var managerForTesting: CoreDataManager = {
+    /// Construct a new manager for testing purpose
+    ///
+    /// - Returns: a new core data manager
+    static func makeManagerForTesting() -> CoreDataManager {
         return CoreDataManager(managedDataModelName: "BrewExtensionClient", persistentStores: .inMemory)
-    }()
+    }
 }

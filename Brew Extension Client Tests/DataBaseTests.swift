@@ -12,30 +12,101 @@ import XCTest
 class DataBaseTests: XCTestCase {
 
     func testFormulaes() {
-        
+        let manager = CoreDataManager.makeManagerForTesting()
+        let database = DataBase(context: manager.viewContext)
+
+        database.addFormulae("cmake")
+        database.addFormulae("llvm")
+
+        XCTAssertTrue(database.containsFormulae("cmake"))
+        XCTAssertTrue(database.containsFormulae("llvm"))
+        XCTAssertEqual(database.formulaes().count, 2)
+
+        database.removeFormulae("cmake")
+        XCTAssertFalse(database.containsFormulae("cmake"))
+
+        database.removeFormulae("llvm")
+        XCTAssertFalse(database.containsFormulae("llvm"))
+
+        XCTAssertEqual(database.formulaes().count, 0)
+    }
+
+    func testDependencies() {
+        let manager = CoreDataManager.makeManagerForTesting()
+        let database = DataBase(context: manager.viewContext)
+
+        database.addFormulae("cmake")
+        database.addFormulae("llvm")
+        database.addFormulae("open_cv")
+
+        database.addDependency(from: "llvm", to: "cmake")
+        XCTAssertTrue(database.containsDependency(from: "llvm", to: "cmake"))
+        XCTAssertFalse(database.containsDependency(from: "cmake", to: "llvm"))
+
+        database.addDependency(from: "cmake", to: "llvm")
+        XCTAssertTrue(database.containsDependency(from: "cmake", to: "llvm"))
+
+        database.addDependency(from: "open_cv", to: "llvm")
+
+        let llvmIncomings = database.incomingDependencies(for: "llvm")
+        XCTAssertEqual(llvmIncomings.count, 2)
+        XCTAssertTrue(llvmIncomings.contains("cmake"))
+        XCTAssertTrue(llvmIncomings.contains("open_cv"))
+
+        database.addDependency(from: "cmake", to: "open_cv")
+        let cmakeOutcomings = database.outcomingDependencies(for: "cmake")
+        XCTAssertEqual(cmakeOutcomings.count, 2)
+        XCTAssertTrue(cmakeOutcomings.contains("llvm"))
+        XCTAssertTrue(cmakeOutcomings.contains("open_cv"))
+    }
+
+    func testProtection() {
+        let manager = CoreDataManager.makeManagerForTesting()
+        let database = DataBase(context: manager.viewContext)
+
+        database.addFormulae("cmake")
+
+        database.protectFormulae("cmake")
+        XCTAssertTrue(database.protectsFormulae("cmake"))
+
+        database.unprotectFormulae("cmake")
+        XCTAssertFalse(database.protectsFormulae("cmake"))
     }
 
     func testLabels() {
-        let manager = CoreDataManager.managerForTesting
+        let manager = CoreDataManager.makeManagerForTesting()
         let database = DataBase(context: manager.viewContext)
+
+        // MARK: Setup formulaes
+
+        database.addFormulae("valgrind")
+        database.addFormulae("aria2")
+        database.addFormulae("cmake")
+
+        // MARK: Setup labels
 
         database.addLabel("life")
         XCTAssertTrue(database.containsLabel("life"))
 
-        database.addLabel("cs241")
-        XCTAssertTrue(database.containsLabel("cs241"))
-
+        database.addLabel("c++")
         XCTAssertEqual(database.labels().count, 2)
 
-        database.removeLabel("life")
-        XCTAssertFalse(database.containsLabel("life"))
-    }
+        database.addLabel("c++", to: "cmake")
+        database.addLabel("c++", to: "valgrind")
+        database.addLabel("life", to: "aria2")
+        database.addLabel("life", to: "valgrind")
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+        // MAKR: Test
 
+        XCTAssertEqual(database.labels(of: "cmake").count, 1)
+        XCTAssertEqual(database.labels(of: "valgrind").count, 2)
+
+
+        database.removeLabel("c++")
+        XCTAssertEqual(database.labels(of: "cmake").count, 0)
+        XCTAssertEqual(database.labels(of: "valgrind").count, 1)
+
+        database.removeLabel("life", from: "valgrind")
+        XCTAssertEqual(database.labels(of: "valgrind").count, 0)
+    }
 }

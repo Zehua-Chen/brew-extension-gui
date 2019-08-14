@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func saveAction(_ sender: AnyObject?) {
         // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-        let context = CoreDataManager.managerForApplication.viewContext
+        let context = CoreDataManager.shared.viewContext
 
         if !context.commitEditing() {
             NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
@@ -43,12 +43,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
         // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-        return CoreDataManager.managerForApplication.viewContext.undoManager
+        return CoreDataManager.shared.viewContext.undoManager
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         // Save changes in the application's managed object context before the application terminates.
-        let context = CoreDataManager.managerForApplication.viewContext
+        let context = CoreDataManager.shared.viewContext
         
         if !context.commitEditing() {
             NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing to terminate")
