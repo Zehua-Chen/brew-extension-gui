@@ -8,14 +8,25 @@
 
 import Cocoa
 import Dispatch
+import BrewExtension
 
 class MainSplitViewController: NSSplitViewController {
+
+    var manager = CoreDataManager.shared
+
     @IBAction func syncBrewExtension(_ sender: Any) {
         let controller = self.storyboard?.instantiateController(withIdentifier: "syncViewController") as! SyncViewController
         self.presentAsSheet(controller)
 
-        DispatchQueue(label: "Homebrew Sync").async {
-            // TODO: Sync with homebrew
+        let backgroundContext = self.manager.backgroundContext
+
+        backgroundContext.perform {
+            let database = DataBase(context: backgroundContext)
+            let ext = AppDelegate.shared.brewExtension
+
+            ext.dataBase = database
+            try! ext.sync()
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.dismiss(controller)
             }

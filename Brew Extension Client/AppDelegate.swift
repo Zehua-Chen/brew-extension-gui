@@ -7,9 +7,18 @@
 //
 
 import Cocoa
+import BrewExtension
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+
+    lazy var brewExtension: BrewExtension = {
+        return BrewExtension()
+    }()
+
+    static var shared: AppDelegate {
+        return NSApplication.shared.delegate as! AppDelegate
+    }
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {

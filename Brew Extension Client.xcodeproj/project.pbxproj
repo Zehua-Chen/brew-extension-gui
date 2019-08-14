@@ -303,6 +303,11 @@
 				TargetAttributes = {
 					6785F2B8230230F600AA43D5 = {
 						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					6785F2CD230230F700AA43D5 = {
 						CreatedOnToolsVersion = 10.3;
@@ -611,7 +616,6 @@
 			baseConfigurationReference = 227B77AE25D301D5D87559CF /* Pods-Brew Extension Client.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Brew Extension Client/Brew Extension Client.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SYDGB25RXW;
@@ -632,7 +636,6 @@
 			baseConfigurationReference = 00C72AA080111CC98014792E /* Pods-Brew Extension Client.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Brew Extension Client/Brew Extension Client.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SYDGB25RXW;

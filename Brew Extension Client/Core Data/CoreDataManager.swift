@@ -53,9 +53,20 @@ class CoreDataManager {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedDataModel)
 
         if self.persistentStores.contains(.sql) {
-            let sqlURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            let fileManager = FileManager.default
+
+            var sqlURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
                 .appendingPathComponent(Bundle.main.infoDictionary!["CFBundleName"] as! String)
-                .appendingPathComponent("\(self.managedDataModelName).sqlite")
+
+            if !fileManager.fileExists(atPath: sqlURL.path) {
+                try! fileManager.createDirectory(at: sqlURL, withIntermediateDirectories: false, attributes: nil)
+            }
+
+            sqlURL.appendPathComponent("\(self.managedDataModelName).sqlite")
+
+            if !fileManager.fileExists(atPath: sqlURL.path) {
+                let result = fileManager.createFile(atPath: sqlURL.path, contents: nil, attributes: nil)
+            }
 
             do {
                 try coordinator.addPersistentStore(
