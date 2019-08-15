@@ -97,6 +97,8 @@ class DataBaseTests: XCTestCase {
         database.addLabel("life", to: "valgrind")
 
         // MAKR: Test
+        XCTAssertEqual(database.formulaes(under: "life").count, 2)
+        XCTAssertEqual(database.formulaes(under: "c++").count, 2)
 
         XCTAssertEqual(database.labels(of: "cmake").count, 1)
         XCTAssertEqual(database.labels(of: "valgrind").count, 2)
