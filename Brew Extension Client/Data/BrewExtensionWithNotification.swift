@@ -18,6 +18,8 @@ extension Notification.Name {
     static var formulaeProtectionChanged = Notification.Name("formulaeProtectionChanged")
 
     static var formulaeLabelChanged = Notification.Name("formulaeLabelChanged")
+
+    static var findFormulaeToBeRemovedFor = Notification.Name("findFormulaeToBeRemovedFor")
 }
 
 extension Notification {
@@ -44,6 +46,13 @@ extension Notification {
     static func makeFormulaeLabelChange(formulae: String) -> Notification {
         return .init(name: .formulaeLabelChanged, object: nil, userInfo: [
             "formulae": formulae,
+        ])
+    }
+
+    static func makeFindFormulaesToBeRemovedFor(formulae: String, removes: [String]) -> Notification {
+        return .init(name: .findFormulaeToBeRemovedFor, object: nil, userInfo: [
+            "formulae": formulae,
+            "removes": removes
         ])
     }
 }
@@ -88,5 +97,12 @@ class BrewExtensionWithNotification: BrewExtension {
     override func unprotectFormulae(_ formulae: String) {
         super.unprotectFormulae(formulae)
         self.notificationCenter.post(.makeFormulaeProtectionChangedNotification(formulae: formulae))
+    }
+
+    override func findFormulaesToUninstall(for formulae: String) -> [String] {
+        let f = super.findFormulaesToUninstall(for: formulae)
+        self.notificationCenter.post(.makeFindFormulaesToBeRemovedFor(formulae: formulae, removes: f))
+
+        return f
     }
 }

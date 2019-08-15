@@ -98,6 +98,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         // TODO: Remove formulae
+        let _ = brewExt.findFormulaesToUninstall(for: self.formulaes[row])
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {

@@ -13,6 +13,17 @@ import BrewExtension
 class MainSplitViewController: NSSplitViewController {
 
     var manager = CoreDataManager.shared
+    var notificationCenter = NotificationCenter.default
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.notificationCenter.addObserver(
+            forName: .findFormulaeToBeRemovedFor,
+            object: nil,
+            queue: nil,
+            using: self.removeFormulae)
+    }
 
     lazy var addLabelViewController: AddLabelViewController = {
         let controller = self.storyboard?.instantiateController(withIdentifier: "addLabelViewController") as! AddLabelViewController
@@ -23,6 +34,13 @@ class MainSplitViewController: NSSplitViewController {
 
     lazy var syncViewController: SyncViewController = {
         return self.storyboard?.instantiateController(withIdentifier: "syncViewController") as! SyncViewController
+    }()
+
+    lazy var removeFormulaeViewController: RemoveFormulaeViewController = {
+        let controller = self.storyboard?.instantiateController(withIdentifier: "removeFormulaeViewController") as! RemoveFormulaeViewController
+        controller.hostViewController = self
+
+        return controller
     }()
 
     @IBAction func syncBrewExtension(_ sender: Any) {
@@ -46,4 +64,11 @@ class MainSplitViewController: NSSplitViewController {
     @IBAction func addLabel(_ sender: Any) {
         self.presentAsSheet(self.addLabelViewController)
     }
+
+    func removeFormulae(_ notification: Notification) {
+        self.removeFormulaeViewController.target = notification.userInfo!["formulae"] as! String
+        self.removeFormulaeViewController.removes = notification.userInfo!["removes"] as! [String]
+        self.presentAsSheet(self.removeFormulaeViewController)
+    }
+
 }
