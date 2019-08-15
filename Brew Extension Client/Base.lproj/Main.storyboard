@@ -59,17 +59,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Add Label" id="EeF-x8-Rp8">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="addLabel:" target="Ady-hI-5gd" id="jsw-Mb-Qyg"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="1D5-VH-RJ4"/>
-                                        <menuItem title="Uninstall" id="sR6-pE-pQC">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="mHZ-5w-3sG"/>
                                         <menuItem title="Sync With Homebrew" id="Was-JA-tGl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
