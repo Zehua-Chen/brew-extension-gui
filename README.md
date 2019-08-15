@@ -2,6 +2,8 @@
 
 This is a GUI Client of the swift package [Zehua-Chen/brew-extension](https://github.com/Zehua-Chen/brew-extension)
 
+![alt text](https://user-images.githubusercontent.com/31496190/63078664-cc83ac80-bf6e-11e9-97a9-2fbf4455162c.png)
+
 ## Features
 
 - Adding and removing labels
