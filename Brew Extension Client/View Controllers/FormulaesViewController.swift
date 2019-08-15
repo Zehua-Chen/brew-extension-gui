@@ -34,6 +34,12 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             queue: nil,
             using: self.onFormulaeProtectionChanged)
 
+        self.notificationCenter.addObserver(
+            forName: .formulaeLabelChanged,
+            object: nil,
+            queue: nil,
+            using: self.onFormulaeLabelChanged)
+
         self.formulaes = self.brewExt.formulaes()
     }
 
@@ -57,6 +63,22 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         self.labelFilter = newLabel
 
         for formulae in self.brewExt.formulaes(under: newLabel) {
+            self.formulaes.append(formulae)
+        }
+
+        self.tableView.reloadData()
+
+        if !formulaes.isEmpty {
+            self.brewExt.selectFormulae(self.formulaes[0])
+        }
+    }
+
+    func onFormulaeLabelChanged(_ notification: Notification) {
+        guard let filter = self.labelFilter else { return }
+
+        self.formulaes = []
+
+        for formulae in self.brewExt.formulaes(under: filter) {
             self.formulaes.append(formulae)
         }
 

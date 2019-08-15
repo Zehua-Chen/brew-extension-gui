@@ -58,14 +58,32 @@ class FormulaeViewController: NSViewController {
 
     class LabelDelegateAndDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource {
         var brewExt = AppDelegate.shared.brewExtension
+        var labels = [String]()
+        var labelsOfThisFormulae = Set<String>()
+
         var formulae = "" {
             didSet {
-
+                self.labels = self.brewExt.labels()
+                self.labelsOfThisFormulae = self.brewExt.dataBase!.labels(of: self.formulae)
             }
         }
 
         func numberOfRows(in tableView: NSTableView) -> Int {
-            return 0
+            return self.labels.count
+        }
+
+        func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+            let view = tableView.makeView(withIdentifier: .init("labelCheckboxCellView"), owner: nil) as! LabelCheckboxCellView
+            view.checkboxButton.title = self.labels[row]
+            view.formulae = self.formulae
+
+            if self.labelsOfThisFormulae.contains(self.labels[row]) {
+                view.checkboxButton.state = .on
+            } else {
+                view.checkboxButton.state = .off
+            }
+
+            return view
         }
     }
 
@@ -97,6 +115,18 @@ class FormulaeViewController: NSViewController {
             queue: nil,
             using: self.formulaeProtectionChanged)
 
+        self.notificationCenter.addObserver(
+            forName: .labelsAdded,
+            object: nil,
+            queue: nil,
+            using: self.labelsChanged)
+
+        self.notificationCenter.addObserver(
+            forName: .labelsRemoved,
+            object: nil,
+            queue: nil,
+            using: self.labelsChanged)
+
         self.dependencyTableView.delegate = self.dependencyDelegateAndDataSource
         self.dependencyTableView.dataSource = self.dependencyDelegateAndDataSource
 
@@ -127,6 +157,11 @@ class FormulaeViewController: NSViewController {
         if currentFormulae == changedFormulae {
             self.isProtectedCheckBox.state = _isCurrentFormulaeProtected() ? .on : .off
         }
+    }
+
+    func labelsChanged(_ notification: Notification) {
+        self.labelDelegateAndDataSource.formulae = self.formulae!
+        self.labelTableView.reloadData()
     }
 
     @IBAction func onIsProtectedClicked(_ sender: Any) {

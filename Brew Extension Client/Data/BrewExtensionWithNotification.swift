@@ -16,6 +16,8 @@ extension Notification.Name {
 
     static var formulaeSelected = Notification.Name("formulaeSelected")
     static var formulaeProtectionChanged = Notification.Name("formulaeProtectionChanged")
+
+    static var formulaeLabelChanged = Notification.Name("formulaeLabelChanged")
 }
 
 extension Notification {
@@ -38,6 +40,12 @@ extension Notification {
     static func makeFormulaeProtectionChangedNotification(formulae: String) -> Notification {
         return .init(name: .formulaeProtectionChanged, object: nil, userInfo: ["formulae": formulae])
     }
+
+    static func makeFormulaeLabelChange(formulae: String) -> Notification {
+        return .init(name: .formulaeLabelChanged, object: nil, userInfo: [
+            "formulae": formulae,
+        ])
+    }
 }
 
 
@@ -47,6 +55,16 @@ class BrewExtensionWithNotification: BrewExtension {
     override func addLabel(_ label: String) {
         super.addLabel(label)
         self.notificationCenter.post(.makeLabelsAddedNotification())
+    }
+
+    override func labelFormulae(_ formulae: String, as label: String) throws {
+        try super.labelFormulae(formulae, as: label)
+        self.notificationCenter.post(.makeFormulaeLabelChange(formulae: formulae))
+    }
+
+    override func removeLabel(_ label: String, from formulae: String) throws {
+        try super.removeLabel(label, from: formulae)
+        self.notificationCenter.post(.makeFormulaeLabelChange(formulae: formulae))
     }
 
     override func removeLabel(_ label: String) throws {

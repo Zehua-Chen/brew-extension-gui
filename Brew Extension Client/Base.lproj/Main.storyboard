@@ -1240,14 +1240,14 @@ Gw
                                             <rect key="frame" x="1" y="0.0" width="408" height="134"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="pmw-Zf-S33" viewBased="YES" id="Uar-FZ-Ebj">
+                                                <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="j17-W0-KAe" viewBased="YES" id="Uar-FZ-Ebj">
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="109"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn width="118" minWidth="40" maxWidth="1000" id="tA6-yi-wA0">
+                                                        <tableColumn width="405" minWidth="40" maxWidth="1000" id="tA6-yi-wA0">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Labels">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1260,22 +1260,32 @@ Gw
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="hmk-S5-9tL">
-                                                                    <rect key="frame" x="1" y="1" width="118" height="17"/>
+                                                                <tableCellView identifier="labelCheckboxCellView" id="hmk-S5-9tL" customClass="LabelCheckboxCellView" customModule="BrewExtensionClient" customModuleProvider="target">
+                                                                    <rect key="frame" x="1" y="1" width="405" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZbG-Lr-7TI">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="118" height="17"/>
-                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="dde-cA-ZXt">
+                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FYB-cj-aH9">
+                                                                            <rect key="frame" x="-2" y="-2" width="409" height="19"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="15" id="1Zp-JL-pgD"/>
+                                                                            </constraints>
+                                                                            <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yOA-Ei-cba">
+                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
-                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                        </textField>
+                                                                            </buttonCell>
+                                                                            <connections>
+                                                                                <action selector="onCheckboxButtonClicked:" target="hmk-S5-9tL" id="Mkh-Az-HfD"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="FYB-cj-aH9" secondAttribute="trailing" id="04S-9X-4Kd"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="FYB-cj-aH9" secondAttribute="bottom" id="3HM-QI-ENK"/>
+                                                                        <constraint firstItem="FYB-cj-aH9" firstAttribute="leading" secondItem="hmk-S5-9tL" secondAttribute="leading" id="9gk-Qt-atz"/>
+                                                                        <constraint firstItem="FYB-cj-aH9" firstAttribute="top" secondItem="hmk-S5-9tL" secondAttribute="top" constant="2" id="LVU-My-s50"/>
+                                                                    </constraints>
                                                                     <connections>
-                                                                        <outlet property="textField" destination="ZbG-Lr-7TI" id="ulU-Rk-WAE"/>
+                                                                        <outlet property="checkboxButton" destination="FYB-cj-aH9" id="Ff3-dQ-Qh7"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
@@ -1288,11 +1298,11 @@ Gw
                                             <rect key="frame" x="1" y="118" width="408" height="16"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Efb-bL-Qmi">
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Efb-bL-Qmi">
                                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <tableHeaderView key="headerView" wantsLayer="YES" id="pmw-Zf-S33">
+                                        <tableHeaderView key="headerView" id="j17-W0-KAe">
                                             <rect key="frame" x="0.0" y="0.0" width="408" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
