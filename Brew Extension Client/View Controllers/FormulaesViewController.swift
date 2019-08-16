@@ -13,12 +13,17 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     @IBOutlet weak var tableView: NSTableView!
 
+    fileprivate var _cache = AppDelegate.sharedCache
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-    }
 
-    override func viewDidAppear() {
+        _cache.selectedLabel.subscribe { e in
+            if case .next(let selection) = e {
+                print("selection = \(selection?.name ?? "default")")
+            }
+        }
     }
 
     // MARK: Event handlers

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import RxCocoa
 
 class FormulaeViewController: NSViewController {
 
@@ -56,7 +57,7 @@ class FormulaeViewController: NSViewController {
         self.dependencyTableView.dataSource = self.dependencyDelegateAndDataSource
 
         self.labelTableView.delegate = self.labelDelegateAndDataSource
-        self.labelTableView.dataSource = self.labelDelegateAndDataSource
+//        self.labelTableView.dataSource = self.labelDelegateAndDataSources
     }
 
     func labelsChanged(_ notification: Notification) {

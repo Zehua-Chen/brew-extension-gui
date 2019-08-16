@@ -5,6 +5,7 @@ PODS:
   - BrewExtension/Brew (1.0.0)
   - BrewExtension/BrewExtension (1.0.0):
     - BrewExtension/Brew
+  - Differ (1.4.3)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -14,11 +15,13 @@ PODS:
 
 DEPENDENCIES:
   - BrewExtension (from `https://github.com/Zehua-Chen/brew-extension`, branch `master`)
+  - Differ
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Differ
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -35,10 +38,11 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   BrewExtension: decfd1fa2a1cd619001e7b8e76e40d90587cb448
+  Differ: 6c7477d6187e8c36d02ec342a3c321061b85a0ea
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: 8c60cbb8d700f124dfec55a6ea5fd5e6bc48af44
+PODFILE CHECKSUM: e2a51f73ef9dc9b16e271849f2f4ea5276f14721
 
 COCOAPODS: 1.7.5

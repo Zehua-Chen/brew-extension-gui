@@ -7,29 +7,57 @@
 //
 
 import Cocoa
+import RxSwift
+import RxCocoa
+import Differ
 
 class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
-    var notificationCenter = NotificationCenter.default
-    var labels = [String]()
-    var removeIndex = 0
+
+    private let _disposeBag = DisposeBag()
+    private var _cache = AppDelegate.sharedCache
+    private var _labels = [Label]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        _cache.labels
+            .subscribe { [weak self] e in
+            guard let controller = self else { return }
+
+            switch e {
+            case .next(let updates):
+                let old = controller._labels
+                controller._labels = updates
+                controller.tableView.animateRowChanges(
+                    oldData: old,
+                    newData: updates,
+                    deletionAnimation: [.effectFade],
+                    insertionAnimation: [.effectGap],
+                    indexPathTransform: controller._indexPathTransform)
+            default:
+                break
+            }
+        }.disposed(by: _disposeBag)
+    }
+
+    fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
+        print("index = \(index)")
+//        index.ind
+        return index
     }
 
     // MARK: Event handlers
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-        self.removeIndex = rowIndex
+        _cache.removeLabel(_labels[rowIndex].name)
     }
 
     // MARK: NSTableViewDataSource Conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return labels.count + 1
+        return _labels.count
     }
 
     // MARK: NSTableViewDelegate Conformance
@@ -41,16 +69,18 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     ) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("labelCellView"), owner: nil) as! LabelCellView
 
-        if row == 0 {
-            view.titleTextField.stringValue = "All"
-            view.formulaesCountTextField.stringValue = "x formulaes"
+//        if row == 0 {
+//            view.titleTextField.stringValue = "All"
+//            view.formulaesCountTextField.stringValue = "x formulaes"
+//
+//            return view
+//        }
 
-            return view
-        }
+//        let labelsIndex = row - 1
 
-        let labelsIndex = row - 1
+        guard row < _labels.count else { return nil }
 
-        view.titleTextField.stringValue = labels[labelsIndex]
+        view.titleTextField.stringValue = _labels[row].name
         view.formulaesCountTextField.stringValue = "x formulaes"
 
         return view
@@ -61,11 +91,6 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         rowActionsForRow row: Int,
         edge: NSTableView.RowActionEdge
     ) -> [NSTableViewRowAction] {
-
-        if row == 0 {
-            return []
-        }
-
         switch edge {
         case .leading:
             return []
@@ -77,17 +102,12 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-//        let selectedRow = self.tableView.selectedRow
+//        let index = self.tableView.selectedRow - 1
 //
-//        if selectedRow <= 0 {
-//            self.notificationCenter.post(
-//                name: .labelsSelected,
-//                object: nil,
-//                userInfo: [:])
-//            return
+//        if index > -1 {
+//            _cache.selectLabel(_labels[index])
+//        } else {
+//            _cache.selectLabel(nil)
 //        }
-//
-//        let label = self.labels[selectedRow - 1]
-//        self.brewExt.selectLabel(label)
     }
 }

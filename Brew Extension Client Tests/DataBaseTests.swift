@@ -48,13 +48,13 @@ class DataBaseTests: XCTestCase {
 
         database.addDependency(from: "open_cv", to: "llvm")
 
-        let llvmIncomings = database.incomingDependencies(for: "llvm")
+        let llvmIncomings = database.incomingDependencies(for: "llvm").map { return $0.name }
         XCTAssertEqual(llvmIncomings.count, 2)
         XCTAssertTrue(llvmIncomings.contains("cmake"))
         XCTAssertTrue(llvmIncomings.contains("open_cv"))
 
         database.addDependency(from: "cmake", to: "open_cv")
-        let cmakeOutcomings = database.outcomingDependencies(for: "cmake")
+        let cmakeOutcomings = database.outcomingDependencies(for: "cmake").map { return $0.name }
         XCTAssertEqual(cmakeOutcomings.count, 2)
         XCTAssertTrue(cmakeOutcomings.contains("llvm"))
         XCTAssertTrue(cmakeOutcomings.contains("open_cv"))

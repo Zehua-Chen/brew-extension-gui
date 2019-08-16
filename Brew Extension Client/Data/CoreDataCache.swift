@@ -82,6 +82,10 @@ class CoreDataCache: Cache {
     func labels() -> [Label] {
         let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.propertiesToFetch = ["name"]
+        labelFetchRequest.sortDescriptors = [
+            .init(key: "name", ascending: true)
+        ]
+        
         labelFetchRequest.returnsDistinctResults = true
 
         return try! self.context.fetch(labelFetchRequest).map { label in

@@ -12,15 +12,8 @@ import BrewExtension
 
 class MainSplitViewController: NSSplitViewController {
 
-    var manager = CoreDataManager.shared
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     lazy var addLabelViewController: AddLabelViewController = {
         let controller = self.storyboard?.instantiateController(withIdentifier: "addLabelViewController") as! AddLabelViewController
-        controller.hostViewController = self
 
         return controller
     }()

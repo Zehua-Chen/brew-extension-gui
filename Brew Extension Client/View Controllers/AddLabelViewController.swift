@@ -7,19 +7,23 @@
 //
 
 import Cocoa
+import RxSwift
 
 class AddLabelViewController: NSViewController {
-
-    weak var hostViewController: NSViewController?
     
     @IBOutlet weak var labelField: NSTextField!
+    var cache = AppDelegate.sharedCache
     
     @IBAction func onAddLabelClick(_ sender: Any) {
         // TODO Add Label
-        self.hostViewController?.dismiss(self)
+        if !labelField.stringValue.isEmpty {
+            cache.addLabel(labelField.stringValue)
+        }
+
+        self.presentingViewController?.dismiss(self)
     }
     
     @IBAction func onCancelClick(_ sender: Any) {
-        self.hostViewController?.dismiss(self)
+        self.presentingViewController?.dismiss(self)
     }
 }
