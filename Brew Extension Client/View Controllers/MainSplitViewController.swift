@@ -49,7 +49,7 @@ class MainSplitViewController: NSSplitViewController {
         let backgroundContext = self.manager.backgroundContext
 
         backgroundContext.perform {
-            let database = DataBase(context: backgroundContext)
+            let database = CoreDataCache(context: backgroundContext)
             let ext = BrewExtension()
 
             ext.dataBase = database

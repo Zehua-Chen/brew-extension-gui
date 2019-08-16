@@ -13,7 +13,7 @@ class DataBaseTests: XCTestCase {
 
     func testFormulaes() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         database.addFormulae("cmake")
         database.addFormulae("llvm")
@@ -33,7 +33,7 @@ class DataBaseTests: XCTestCase {
 
     func testDependencies() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         database.addFormulae("cmake")
         database.addFormulae("llvm")
@@ -62,7 +62,7 @@ class DataBaseTests: XCTestCase {
 
     func testProtection() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         database.addFormulae("cmake")
 
@@ -75,7 +75,7 @@ class DataBaseTests: XCTestCase {
 
     func testLabels() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         // MARK: Setup formulaes
 

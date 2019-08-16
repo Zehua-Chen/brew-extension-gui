@@ -19,8 +19,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return brewExt
     }()
 
-    lazy var brewExtensionDataBase: DataBase = {
-        return DataBase(context: CoreDataManager.shared.viewContext)
+    lazy var brewExtensionDataBase: CoreDataCache = {
+        return CoreDataCache(context: CoreDataManager.shared.viewContext)
     }()
 
     static var shared: AppDelegate {
