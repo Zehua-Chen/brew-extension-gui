@@ -22,45 +22,39 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        _cache.labels
-            .subscribe { [weak self] e in
-            guard let controller = self else { return }
+        _cache.labels.bind { [unowned self] updates in
+            let old = self._labels
+            self._labels = updates
 
-            switch e {
-            case .next(let updates):
-                let old = controller._labels
-                controller._labels = updates
-                controller.tableView.animateRowChanges(
-                    oldData: old,
-                    newData: updates,
-                    deletionAnimation: [.effectFade],
-                    insertionAnimation: [.effectGap],
-                    indexPathTransform: controller._indexPathTransform)
-            default:
-                break
-            }
+            // Update table view
+            self.tableView.animateRowChanges(
+                oldData: old,
+                newData: updates,
+                deletionAnimation: [.effectFade],
+                insertionAnimation: [.effectGap],
+                indexPathTransform: self._indexPathTransform)
         }.disposed(by: _disposeBag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
-        print("index = \(index)")
-//        index.ind
-        return index
+        // Needs to make sure that either the inserted or removed index never
+        // write to index 0, which is "All"
+        var i = index
+        i[1] = i[1] + 1
+
+        return i
     }
 
-    // MARK: Event handlers
+    // MARK: NSTableView Related
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-        _cache.removeLabel(_labels[rowIndex].name)
+        guard rowIndex > 0 else { return }
+        _cache.removeLabel(_labels[rowIndex - 1].name)
     }
-
-    // MARK: NSTableViewDataSource Conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return _labels.count
+        return _labels.count + 1
     }
-
-    // MARK: NSTableViewDelegate Conformance
 
     func tableView(
         _ tableView: NSTableView,
@@ -69,18 +63,18 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     ) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("labelCellView"), owner: nil) as! LabelCellView
 
-//        if row == 0 {
-//            view.titleTextField.stringValue = "All"
-//            view.formulaesCountTextField.stringValue = "x formulaes"
-//
-//            return view
-//        }
+        if row == 0 {
+            view.titleTextField.stringValue = "All"
+            view.formulaesCountTextField.stringValue = "x formulaes"
 
-//        let labelsIndex = row - 1
+            return view
+        }
 
-        guard row < _labels.count else { return nil }
+        let labelsIndex = row - 1
 
-        view.titleTextField.stringValue = _labels[row].name
+        guard labelsIndex < _labels.count else { return nil }
+
+        view.titleTextField.stringValue = _labels[labelsIndex].name
         view.formulaesCountTextField.stringValue = "x formulaes"
 
         return view
@@ -91,6 +85,10 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         rowActionsForRow row: Int,
         edge: NSTableView.RowActionEdge
     ) -> [NSTableViewRowAction] {
+        if row == 0 {
+            return []
+        }
+
         switch edge {
         case .leading:
             return []
