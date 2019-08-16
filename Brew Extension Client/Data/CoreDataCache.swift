@@ -10,54 +10,57 @@ import Foundation
 import BrewExtension
 import CoreData
 
+struct Label: LabelProtocol {
+
+    fileprivate var _label: CDLabel
+    fileprivate init(label: CDLabel) {
+        _label = label
+    }
+
+    var name: String {
+        get { return _label.name ?? "" }
+        set { _label.name = newValue }
+    }
+
+    static func == (lhs: Label, rhs: Label) -> Bool {
+        return lhs.name == rhs.name
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name)
+    }
+}
+
+struct Formulae: FormulaeProtocol {
+    fileprivate var _formulae: CDFormulae
+    fileprivate init(formulae: CDFormulae) {
+        _formulae = formulae
+    }
+
+    var name: String {
+        get { return _formulae.name ?? "" }
+        set { _formulae.name = newValue }
+    }
+
+    var isProtected: Bool {
+        get { return _formulae.isProtected }
+        set { return _formulae.isProtected = newValue }
+    }
+
+    static func == (lhs: Formulae, rhs: Formulae) -> Bool {
+        return lhs.name == rhs.name && lhs.isProtected == rhs.isProtected
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name)
+        hasher.combine(self.isProtected)
+    }
+}
+
 class CoreDataCache: Cache {
 
-    struct Label: LabelProtocol {
-
-        fileprivate var _label: CDLabel
-        fileprivate init(label: CDLabel) {
-            _label = label
-        }
-
-        var name: String {
-            get { return _label.name ?? "" }
-            set { _label.name = newValue }
-        }
-
-        static func == (lhs: CoreDataCache.Label, rhs: CoreDataCache.Label) -> Bool {
-            return lhs.name == rhs.name
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.name)
-        }
-    }
-
-    struct Formulae: FormulaeProtocol {
-        fileprivate var _formulae: CDFormulae
-        fileprivate init(formulae: CDFormulae) {
-            _formulae = formulae
-        }
-
-        var name: String {
-            get { return _formulae.name ?? "" }
-            set { _formulae.name = newValue }
-        }
-
-        var isProtected: Bool {
-            get { return _formulae.isProtected }
-            set { return _formulae.isProtected = newValue }
-        }
-
-        static func == (lhs: CoreDataCache.Formulae, rhs: CoreDataCache.Formulae) -> Bool {
-            return lhs.name == rhs.name && lhs.isProtected == rhs.isProtected
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.name)
-            hasher.combine(self.isProtected)
-        }
-    }
+    typealias Label = BrewExtensionClient.Label
+    typealias Formulae = BrewExtensionClient.Formulae
 
     let context: NSManagedObjectContext
 

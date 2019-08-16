@@ -12,45 +12,18 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     @IBOutlet weak var tableView: NSTableView!
     var notificationCenter = NotificationCenter.default
-    var brewExt = AppDelegate.shared.brewExtension
     var labels = [String]()
     var removeIndex = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        self.labels = brewExt.labels()
-
-        self.notificationCenter.addObserver(
-            forName: .labelsAdded,
-            object: nil,
-            queue: nil,
-            using: self.labelsAdded)
-
-        self.notificationCenter.addObserver(
-            forName: .labelsRemoved,
-            object: nil,
-            queue: nil,
-            using: self.labelsRemoved)
     }
 
     // MARK: Event handlers
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
         self.removeIndex = rowIndex
-        try! self.brewExt.removeLabel(labels[rowIndex - 1])
-    }
-
-    func labelsRemoved(_ notification: Notification) {
-        self.tableView.removeRows(at: .init(integer: self.removeIndex), withAnimation: .slideLeft)
-        self.labels = self.brewExt.labels()
-        self.tableView.reloadData()
-    }
-
-    func labelsAdded(_ notification: Notification) {
-        self.tableView.insertRows(at: .init(integer: self.labels.count), withAnimation: .slideRight)
-        self.labels = self.brewExt.labels()
-        self.tableView.reloadData()
     }
 
     // MARK: NSTableViewDataSource Conformance
@@ -104,17 +77,17 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let selectedRow = self.tableView.selectedRow
-
-        if selectedRow <= 0 {
-            self.notificationCenter.post(
-                name: .labelsSelected,
-                object: nil,
-                userInfo: [:])
-            return
-        }
-
-        let label = self.labels[selectedRow - 1]
-        self.brewExt.selectLabel(label)
+//        let selectedRow = self.tableView.selectedRow
+//
+//        if selectedRow <= 0 {
+//            self.notificationCenter.post(
+//                name: .labelsSelected,
+//                object: nil,
+//                userInfo: [:])
+//            return
+//        }
+//
+//        let label = self.labels[selectedRow - 1]
+//        self.brewExt.selectLabel(label)
     }
 }

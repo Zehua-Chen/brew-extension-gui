@@ -13,16 +13,9 @@ import BrewExtension
 class MainSplitViewController: NSSplitViewController {
 
     var manager = CoreDataManager.shared
-    var notificationCenter = NotificationCenter.default
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.notificationCenter.addObserver(
-            forName: .findFormulaeToBeRemovedFor,
-            object: nil,
-            queue: nil,
-            using: self.removeFormulae)
     }
 
     lazy var addLabelViewController: AddLabelViewController = {
@@ -45,20 +38,7 @@ class MainSplitViewController: NSSplitViewController {
 
     @IBAction func syncBrewExtension(_ sender: Any) {
         self.presentAsSheet(self.syncViewController)
-
-        let backgroundContext = self.manager.backgroundContext
-
-        backgroundContext.perform {
-            let database = CoreDataCache(context: backgroundContext)
-            let ext = BrewExtension()
-
-            ext.dataBase = database
-            try! ext.sync()
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.dismiss(self.syncViewController)
-            }
-        }
+        // TODO Sync
     }
 
     @IBAction func addLabel(_ sender: Any) {
@@ -66,9 +46,7 @@ class MainSplitViewController: NSSplitViewController {
     }
 
     func removeFormulae(_ notification: Notification) {
-        self.removeFormulaeViewController.target = notification.userInfo!["formulae"] as! String
-        self.removeFormulaeViewController.removes = notification.userInfo!["removes"] as! [String]
+        // TODO Remove
         self.presentAsSheet(self.removeFormulaeViewController)
     }
-
 }

@@ -11,12 +11,11 @@ import Cocoa
 class AddLabelViewController: NSViewController {
 
     weak var hostViewController: NSViewController?
-    var brewExt = AppDelegate.shared.brewExtension
     
     @IBOutlet weak var labelField: NSTextField!
     
     @IBAction func onAddLabelClick(_ sender: Any) {
-        brewExt.addLabel(self.labelField.stringValue)
+        // TODO Add Label
         self.hostViewController?.dismiss(self)
     }
     

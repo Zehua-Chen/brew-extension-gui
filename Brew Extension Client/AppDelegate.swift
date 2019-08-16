@@ -12,21 +12,17 @@ import BrewExtension
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    lazy var brewExtension: BrewExtensionWithNotification = {
-        let brewExt = BrewExtensionWithNotification()
-        brewExt.dataBase = self.brewExtensionDataBase
-        
-        return brewExt
-    }()
-
-    lazy var brewExtensionDataBase: CoreDataCache = {
-        return CoreDataCache(context: CoreDataManager.shared.viewContext)
-    }()
+    static var sharedCache: ObservableCoreDataCache {
+        return AppDelegate.shared.cache
+    }
 
     static var shared: AppDelegate {
         return NSApplication.shared.delegate as! AppDelegate
     }
 
+    lazy var cache: ObservableCoreDataCache = {
+        return ObservableCoreDataCache(context: CoreDataManager.shared.viewContext)
+    }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application

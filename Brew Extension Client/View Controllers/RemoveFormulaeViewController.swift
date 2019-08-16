@@ -30,11 +30,7 @@ class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTab
     
     @IBAction func onConfirmClicked(_ sender: Any) {
         self.titleTextField.stringValue = "Working"
-
-        for remove in removes {
-            try! AppDelegate.shared.brewExtension.uninstallFormulae(remove)
-        }
-
+        // TODO Remove formulae
         self.hostViewController.dismiss(self)
     }
     
@@ -45,13 +41,11 @@ class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTab
     // MARK: NSTableView protocol conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return removes.count
+        return 0
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("removeTableCellView"), owner: nil) as! NSTableCellView
-        view.textField?.stringValue = removes[row]
-
         return view
     }
 }
