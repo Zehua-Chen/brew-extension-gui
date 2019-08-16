@@ -10,53 +10,6 @@ import Foundation
 import BrewExtension
 import CoreData
 
-struct Label: LabelProtocol {
-
-    fileprivate var _label: CDLabel
-    fileprivate init(label: CDLabel) {
-        _label = label
-    }
-
-    var name: String {
-        get { return _label.name ?? "" }
-        set { _label.name = newValue }
-    }
-
-    static func == (lhs: Label, rhs: Label) -> Bool {
-        return lhs.name == rhs.name
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(self.name)
-    }
-}
-
-struct Formulae: FormulaeProtocol {
-    fileprivate var _formulae: CDFormulae
-    fileprivate init(formulae: CDFormulae) {
-        _formulae = formulae
-    }
-
-    var name: String {
-        get { return _formulae.name ?? "" }
-        set { _formulae.name = newValue }
-    }
-
-    var isProtected: Bool {
-        get { return _formulae.isProtected }
-        set { return _formulae.isProtected = newValue }
-    }
-
-    static func == (lhs: Formulae, rhs: Formulae) -> Bool {
-        return lhs.name == rhs.name && lhs.isProtected == rhs.isProtected
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(self.name)
-        hasher.combine(self.isProtected)
-    }
-}
-
 class CoreDataCache: Cache {
 
     typealias Label = BrewExtensionClient.Label
@@ -231,6 +184,10 @@ class CoreDataCache: Cache {
         }
     }
 
+    func numberOfFormulaes() -> Int {
+        return self.formulaes().count
+    }
+
     func addDependency(from: String, to: String) {
         let from = _fetchFormlae(from)
         let to = _fetchFormlae(to)
@@ -280,5 +237,22 @@ class CoreDataCache: Cache {
         }
 
         return formulaes[0]
+    }
+
+    fileprivate func _fetchLabel(
+        _ label: String,
+        with properties: [String] = []
+    ) -> CDLabel {
+        let labelRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
+        labelRequest.predicate = NSPredicate(format: "name == %@", label)
+        labelRequest.propertiesToFetch = properties
+
+        let labels = try! self.context.fetch(labelRequest)
+
+        guard labels.count == 1 else {
+            fatalError("Duplicate label = \(label)")
+        }
+
+        return labels[0]
     }
 }

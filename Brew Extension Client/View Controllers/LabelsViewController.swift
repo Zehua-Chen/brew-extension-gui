@@ -65,7 +65,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
         if row == 0 {
             view.titleTextField.stringValue = "All"
-            view.formulaesCountTextField.stringValue = "x formulaes"
+            view.formulaesCountTextField.stringValue = "\(_cache.numberOfFormulaes()) formulaes"
 
             return view
         }
@@ -74,8 +74,10 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
         guard labelsIndex < _labels.count else { return nil }
 
-        view.titleTextField.stringValue = _labels[labelsIndex].name
-        view.formulaesCountTextField.stringValue = "x formulaes"
+        let label = _labels[labelsIndex]
+
+        view.titleTextField.stringValue = label.name
+        view.formulaesCountTextField.stringValue = "\(label.numberOfFormulaes) formulaes"
 
         return view
     }

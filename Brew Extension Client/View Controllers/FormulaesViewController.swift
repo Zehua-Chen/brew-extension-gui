@@ -8,12 +8,14 @@
 
 import Cocoa
 import Dispatch
+import RxSwift
 
 class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
     @IBOutlet weak var tableView: NSTableView!
 
     fileprivate var _cache = AppDelegate.sharedCache
+    fileprivate var _disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +25,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             if case .next(let selection) = e {
                 print("selection = \(selection?.name ?? "default")")
             }
-        }
+        }.disposed(by: _disposeBag)
     }
 
     // MARK: Event handlers
