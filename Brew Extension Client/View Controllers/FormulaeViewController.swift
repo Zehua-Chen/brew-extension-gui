@@ -64,7 +64,7 @@ class FormulaeViewController: NSViewController {
     }
 
     @IBAction func onIsProtectedClicked(_ sender: Any) {
-        guard let formulae = self.formulae else { return }
+//        guard let formulae = self.formulae else { return }
         // TODO Handle protection click
     }
 }

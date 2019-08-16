@@ -19,9 +19,28 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     fileprivate var _disposeBag = DisposeBag()
     fileprivate var _formulaes = [Formulae]()
 
+    fileprivate var _protectRowAction: NSTableViewRowAction!
+    fileprivate var _unprotectRowAction: NSTableViewRowAction!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+
+        _protectRowAction = NSTableViewRowAction(
+            style: .regular,
+            title: "Protect",
+            handler: self.onProtectFormulae)
+
+        _protectRowAction.image = NSImage(named: NSImage.lockLockedTemplateName)
+
+        _unprotectRowAction = NSTableViewRowAction(
+            style: .regular,
+            title: "Unprotect",
+            handler: self.onUnprotectFormulae)
+
+        _unprotectRowAction.backgroundColor = .systemOrange
+        _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
+
 
         _cache.currentFormulaes.bind(onNext: { [unowned self] formulaesUpdate in
 
@@ -51,12 +70,14 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        // TODO: Protect formulae
+        _formulaes[row].isProtected = true
+        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
     }
 
     func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        // TODO: Protect formulae
+        _formulaes[row].isProtected = false
+        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
     }
 
     // MAKR: NSTableView protocols conformance
@@ -85,10 +106,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {
         switch edge {
         case .leading:
-            return [
-                .init(style: .regular, title: "Protect", handler: self.onProtectFormulae),
-                .init(style: .destructive, title: "Unprotect", handler: self.onUnprotectFormulae),
-            ]
+            return [_protectRowAction, _unprotectRowAction]
         case .trailing:
             return [
                 .init(style: .destructive, title: "Remove", handler: self.onRemoveFormulae),
