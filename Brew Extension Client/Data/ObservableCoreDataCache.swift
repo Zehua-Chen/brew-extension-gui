@@ -10,33 +10,27 @@ import RxSwift
 import RxCocoa
 
 class ObservableCoreDataCache: CoreDataCache {
-    fileprivate var _labels = BehaviorRelay<[Label]>(value: [])
-    fileprivate var _selectedLabel = BehaviorRelay<Label?>(value: nil)
-
-    var labels: Observable<[Label]> {
-        return _labels.asObservable()
-    }
-
-    var selectedLabel: Observable<Label?> {
-        return _selectedLabel.asObservable()
-    }
+    var labels = BehaviorRelay<[Label]>(value: [])
+    var currentLabel = BehaviorRelay<Label?>(value: nil)
+    var onSync = BehaviorRelay<Void>(value: ())
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
-        _labels.accept(self.labels())
+
+        self.labels.accept(self.labels())
     }
 
     override func addLabel(_ label: String) {
         super.addLabel(label)
-        _labels.accept(self.labels())
+        self.labels.accept(self.labels())
     }
 
     override func removeLabel(_ label: String) {
         super.removeLabel(label)
-        _labels.accept(self.labels())
+        self.labels.accept(self.labels())
     }
 
     func selectLabel(_ label: Label?) {
-        _selectedLabel.accept(label)
+        self.currentLabel.accept(label)
     }
 }

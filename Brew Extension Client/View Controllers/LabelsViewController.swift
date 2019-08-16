@@ -22,7 +22,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        _cache.labels.bind { [unowned self] updates in
+        _cache.labels.bind(onNext: { [unowned self] updates in
             let old = self._labels
             self._labels = updates
 
@@ -33,7 +33,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
                 deletionAnimation: [.effectFade],
                 insertionAnimation: [.effectGap],
                 indexPathTransform: self._indexPathTransform)
-        }.disposed(by: _disposeBag)
+        }).disposed(by: _disposeBag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
@@ -102,12 +102,10 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-//        let index = self.tableView.selectedRow - 1
-//
-//        if index > -1 {
-//            _cache.selectLabel(_labels[index])
-//        } else {
-//            _cache.selectLabel(nil)
-//        }
+        if self.tableView.selectedRow == 0 {
+            _cache.currentLabel.accept(nil)
+        } else {
+            _cache.currentLabel.accept(_labels[self.tableView.selectedRow - 1])
+        }
     }
 }

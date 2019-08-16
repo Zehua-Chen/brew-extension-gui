@@ -933,9 +933,9 @@ DQ
                                     </gridCell>
                                     <gridCell row="p3h-bU-whs" column="d5i-rB-ir7" id="NyV-XP-xru"/>
                                     <gridCell row="p3h-bU-whs" column="jO4-56-eVE" id="tDt-Zj-lDN">
-                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hxd-wC-tGB">
-                                            <rect key="frame" x="41" y="0.0" width="92" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Error Message" id="TSe-ee-deK">
+                                        <textField key="contentView" identifier="Error Message" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hxd-wC-tGB">
+                                            <rect key="frame" x="41" y="0.0" width="104" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" id="TSe-ee-deK">
                                                 <font key="font" metaFont="message"/>
                                                 <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

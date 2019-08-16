@@ -9,6 +9,7 @@
 import Cocoa
 import Dispatch
 import RxSwift
+import RxCocoa
 
 class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
@@ -16,16 +17,21 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     fileprivate var _cache = AppDelegate.sharedCache
     fileprivate var _disposeBag = DisposeBag()
+    fileprivate var _formulaes = [Formulae]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 
-        _cache.selectedLabel.subscribe { e in
-            if case .next(let selection) = e {
-                print("selection = \(selection?.name ?? "default")")
+        _cache.currentLabel.bind(onNext: { [unowned self] label in
+            if label == nil {
+                self._formulaes = self._cache.formulaes()
+                return
             }
-        }.disposed(by: _disposeBag)
+
+            self._formulaes = Array(self._cache.formulaes(under: label!.name))
+            self.tableView.reloadData()
+        }).disposed(by: _disposeBag)
     }
 
     // MARK: Event handlers
@@ -47,20 +53,20 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     // MAKR: NSTableView protocols conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 0
+        return _formulaes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
 
-//        view.titleTextField.stringValue = formulae
-//        view.labelsTextField.stringValue = "Label: \(self.labelFilter ?? "")"
-//
-//        if self.brewExt.dataBase?.protectsFormulae(formulae) ?? false {
-//            view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
-//        } else {
-//            view.protectionIcon.image = NSImage(named: NSImage.lockUnlockedTemplateName)
-//        }
+        view.titleTextField.stringValue = _formulaes[row].name
+        view.labelsTextField.stringValue = "Label: "
+
+        if _formulaes[row].isProtected {
+            view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
+        } else {
+            view.protectionIcon.image = NSImage(named: NSImage.lockUnlockedTemplateName)
+        }
 
         return view
     }
