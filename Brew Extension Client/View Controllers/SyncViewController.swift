@@ -26,7 +26,7 @@ class SyncViewController: NSViewController, SyncOperation {
             cache.write()
 
             DispatchQueue.main.async {
-                AppDelegate.sharedCache.onSync.accept(())
+                AppDelegate.sharedCache.finishSync()
                 self.presentingViewController?.dismiss(self)
             }
         }

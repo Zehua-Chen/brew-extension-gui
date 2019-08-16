@@ -178,6 +178,9 @@ class CoreDataCache: Cache {
     func formulaes() -> [Formulae] {
         let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.propertiesToFetch = ["name"]
+        formulaeFetchRequest.sortDescriptors = [
+            .init(key: "name", ascending: true)
+        ]
 
         return try! self.context.fetch(formulaeFetchRequest).map{ formulae in
             return Formulae(formulae: formulae)

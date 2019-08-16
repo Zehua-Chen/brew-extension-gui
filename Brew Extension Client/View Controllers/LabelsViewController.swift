@@ -103,9 +103,9 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
     func tableViewSelectionDidChange(_ notification: Notification) {
         if self.tableView.selectedRow == 0 {
-            _cache.currentLabel.accept(nil)
+            _cache.currentLabel.onNext(nil)
         } else {
-            _cache.currentLabel.accept(_labels[self.tableView.selectedRow - 1])
+            _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])
         }
     }
 }

@@ -23,14 +23,23 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         super.viewDidLoad()
         // Do view setup here.
 
-        _cache.currentLabel.bind(onNext: { [unowned self] label in
-            if label == nil {
-                self._formulaes = self._cache.formulaes()
+        _cache.currentFormulaes.bind(onNext: { [unowned self] formulaesUpdate in
+
+            if !formulaesUpdate.shouldAnimate {
+                self._formulaes = formulaesUpdate.formulaes
+                self.tableView.reloadData()
+
                 return
             }
 
-            self._formulaes = Array(self._cache.formulaes(under: label!.name))
-            self.tableView.reloadData()
+            let oldFormulaes = self._formulaes
+            self._formulaes = formulaesUpdate.formulaes
+
+            self.tableView.animateRowChanges(
+                oldData: oldFormulaes,
+                newData: formulaesUpdate.formulaes,
+                deletionAnimation: .effectFade,
+                insertionAnimation: .slideLeft)
         }).disposed(by: _disposeBag)
     }
 
@@ -57,6 +66,8 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard row < _formulaes.count else { return nil }
+
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
 
         view.titleTextField.stringValue = _formulaes[row].name

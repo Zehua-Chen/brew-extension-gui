@@ -10,12 +10,30 @@ import RxSwift
 import RxCocoa
 
 class ObservableCoreDataCache: CoreDataCache {
+    struct FormulaeUpdate {
+        var formulaes = [Formulae]()
+        var shouldAnimate = false
+    }
+
     var labels = BehaviorRelay<[Label]>(value: [])
-    var currentLabel = BehaviorRelay<Label?>(value: nil)
-    var onSync = BehaviorRelay<Void>(value: ())
+
+    // MARK: Current Selection Related
+
+    var currentLabel = BehaviorSubject<Label?>(value: nil)
+    var currentFormulaes = BehaviorSubject<FormulaeUpdate>(value: .init())
+
+    fileprivate var _disposeBag = DisposeBag()
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
+
+        self.currentLabel.map { [unowned self] label -> FormulaeUpdate in
+            if label == nil {
+                return FormulaeUpdate(formulaes: self.formulaes(), shouldAnimate: false)
+            }
+
+            return FormulaeUpdate(formulaes: Array(self.formulaes(under: label!.name)), shouldAnimate: false)
+        }.subscribe(self.currentFormulaes).disposed(by: _disposeBag)
 
         self.labels.accept(self.labels())
     }
@@ -30,7 +48,16 @@ class ObservableCoreDataCache: CoreDataCache {
         self.labels.accept(self.labels())
     }
 
-    func selectLabel(_ label: Label?) {
-        self.currentLabel.accept(label)
+    func finishSync() {
+        if let labelName = (try! self.currentLabel.value())?.name {
+            currentFormulaes.onNext(.init(
+                formulaes: Array(self.formulaes(under: labelName)),
+                shouldAnimate: true))
+            return
+        }
+
+        currentFormulaes.onNext(.init(
+            formulaes: self.formulaes(),
+            shouldAnimate: true))
     }
 }

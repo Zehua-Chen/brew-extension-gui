@@ -193,9 +193,9 @@
 			children = (
 				6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */,
 				6785F2EB230233AD00AA43D5 /* CoreDataCache.swift */,
+				6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */,
 				67BEF9502306F1AF00C0F908 /* Label.swift */,
 				67BEF9522306F1CB00C0F908 /* Formulae.swift */,
-				6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */,
 				6785F3042302A56B00AA43D5 /* CoreDataManager.swift */,
 			);
 			path = Data;
