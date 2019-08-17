@@ -22,38 +22,55 @@ class ObservableCoreDataCache: CoreDataCache {
     var currentFormulaeProtected = BehaviorSubject<Bool>(value: false)
     var currentFormulaeOutcomingDependencies = BehaviorSubject<[Formulae]>(value: [])
     var currentFormulaeIncomingDependencies = BehaviorSubject<[Formulae]>(value: [])
+    var currentFormulaeLabels = BehaviorSubject<[Label]>(value: [])
+    var currentFormulaeLabelUpdated = PublishSubject<Void>()
 
     fileprivate var _disposeBag = DisposeBag()
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
 
-        self.currentFormulae.map { [unowned self] formulae -> [Formulae] in
-            guard formulae != nil else { return [] }
-            return Array(self.outcomingDependencies(for: formulae!.name))
-        }.subscribe(self.currentFormulaeOutcomingDependencies).disposed(by: _disposeBag)
-
-        self.currentFormulae.map { [unowned self] formulae -> [Formulae] in
-            guard formulae != nil else { return [] }
-            return Array(self.incomingDependencies(for: formulae!.name))
-        }.subscribe(self.currentFormulaeIncomingDependencies).disposed(by: _disposeBag)
-
-        self.currentFormulae.map { formulae -> Bool in
-            return formulae?.isProtected ?? false
-        }.subscribe(self.currentFormulaeProtected).disposed(by: _disposeBag)
-
-        self.currentFormulaes.map { formulaes -> Formulae? in
-            guard !formulaes.isEmpty else { return nil }
-            return formulaes[0]
-        }.subscribe(self.currentFormulae).disposed(by: _disposeBag)
-
-        self.currentLabel.map { [unowned self] label -> [Formulae] in
-            if label == nil {
-                return self.formulaes()
+        self.currentFormulae
+            .map { [unowned self] formulae -> [Formulae] in
+                guard formulae != nil else { return [] }
+                return Array(self.outcomingDependencies(for: formulae!.name))
             }
+            .subscribe(self.currentFormulaeOutcomingDependencies)
+            .disposed(by: _disposeBag)
 
-            return Array(self.formulaes(under: label!.name))
-        }.subscribe(self.currentFormulaes).disposed(by: _disposeBag)
+        self.currentFormulae
+            .map { [unowned self] formulae -> [Formulae] in
+                guard formulae != nil else { return [] }
+                return Array(self.incomingDependencies(for: formulae!.name))
+            }
+            .subscribe(self.currentFormulaeIncomingDependencies)
+            .disposed(by: _disposeBag)
+
+        self.currentFormulae
+            .map { formulae -> Bool in
+                return formulae?.isProtected ?? false
+            }
+            .subscribe(self.currentFormulaeProtected)
+            .disposed(by: _disposeBag)
+
+        self.currentFormulaes
+            .map { formulaes -> Formulae? in
+                guard !formulaes.isEmpty else { return nil }
+                return formulaes[0]
+            }
+            .subscribe(self.currentFormulae)
+            .disposed(by: _disposeBag)
+
+        self.currentLabel
+            .map { [unowned self] label -> [Formulae] in
+                if label == nil {
+                    return self.formulaes()
+                }
+
+                return Array(self.formulaes(under: label!.name))
+            }
+            .subscribe(self.currentFormulaes)
+            .disposed(by: _disposeBag)
 
         self.labels.accept(self.labels())
     }

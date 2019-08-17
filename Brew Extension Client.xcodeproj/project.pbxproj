@@ -28,7 +28,6 @@
 		6787FC2C23052B2300979758 /* RemoveFormulaeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FC2B23052B2300979758 /* RemoveFormulaeViewController.swift */; };
 		6787FCB423069B2900979758 /* ObservableCoreDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */; };
 		67BEF9512306F1AF00C0F908 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEF9502306F1AF00C0F908 /* Label.swift */; };
-		67BEF9532306F1CB00C0F908 /* Formulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEF9522306F1CB00C0F908 /* Formulae.swift */; };
 		A31533AC37D63392EA7C74AA /* Pods_Brew_Extension_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5422436A993886EB7BC6D0EA /* Pods_Brew_Extension_Client.framework */; };
 		BF9869FFDD25A181A06F3F8A /* Pods_Brew_Extension_Client_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03CD95A99A4AB0C2092C3ED /* Pods_Brew_Extension_Client_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -85,7 +84,6 @@
 		6787FC2B23052B2300979758 /* RemoveFormulaeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFormulaeViewController.swift; sourceTree = "<group>"; };
 		6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableCoreDataCache.swift; sourceTree = "<group>"; };
 		67BEF9502306F1AF00C0F908 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
-		67BEF9522306F1CB00C0F908 /* Formulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formulae.swift; sourceTree = "<group>"; };
 		893027BBECC609B4CE7FDDB2 /* Pods-Brew Extension Client Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension Client Tests.release.xcconfig"; path = "Target Support Files/Pods-Brew Extension Client Tests/Pods-Brew Extension Client Tests.release.xcconfig"; sourceTree = "<group>"; };
 		954A6B7BE4138650573BE3C4 /* Pods-Brew ExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew ExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-Brew ExtensionTests/Pods-Brew ExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9730042129F9E5BFC651756D /* Pods-Brew Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension.debug.xcconfig"; path = "Target Support Files/Pods-Brew Extension/Pods-Brew Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 				6785F2EB230233AD00AA43D5 /* CoreDataCache.swift */,
 				6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */,
 				67BEF9502306F1AF00C0F908 /* Label.swift */,
-				67BEF9522306F1CB00C0F908 /* Formulae.swift */,
 				6785F3042302A56B00AA43D5 /* CoreDataManager.swift */,
 			);
 			path = Data;
@@ -444,7 +441,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67BEF9532306F1CB00C0F908 /* Formulae.swift in Sources */,
 				6785F3112303C06900AA43D5 /* FormulaeCellView.swift in Sources */,
 				6787FC2C23052B2300979758 /* RemoveFormulaeViewController.swift in Sources */,
 				6785F319230426FF00AA43D5 /* MainWindowController.swift in Sources */,

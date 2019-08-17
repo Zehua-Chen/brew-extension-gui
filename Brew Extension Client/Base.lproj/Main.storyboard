@@ -1270,9 +1270,6 @@ DQ
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="onIsProtectedClicked:" target="CTj-BJ-a8h" id="vV2-lQ-ZUs"/>
-                                </connections>
                             </button>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qlp-Jl-zGk">
                                 <rect key="frame" x="20" y="20" width="410" height="312"/>
@@ -1413,7 +1410,7 @@ DQ
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="labelCheckboxCellView" id="hmk-S5-9tL" customClass="LabelCheckboxCellView" customModule="BrewExtensionClient" customModuleProvider="target">
+                                                                <tableCellView identifier="labelCellView" id="hmk-S5-9tL" customClass="CheckboxCellView" customModule="BrewExtensionClient" customModuleProvider="target">
                                                                     <rect key="frame" x="1" y="1" width="405" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1427,7 +1424,7 @@ DQ
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                             <connections>
-                                                                                <action selector="onCheckboxButtonClicked:" target="hmk-S5-9tL" id="Mkh-Az-HfD"/>
+                                                                                <action selector="onCheckBoxClicked:" target="hmk-S5-9tL" id="LCC-jR-cgi"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>

@@ -22,18 +22,26 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        _cache.labels.bind(onNext: { [unowned self] updates in
-            let old = self._labels
-            self._labels = updates
+        _cache.labels
+            .bind(onNext: { [unowned self] updates in
+                let old = self._labels
+                self._labels = updates
 
-            // Update table view
-            self.tableView.animateRowChanges(
-                oldData: old,
-                newData: updates,
-                deletionAnimation: [.effectFade],
-                insertionAnimation: [.effectGap],
-                indexPathTransform: self._indexPathTransform)
-        }).disposed(by: _disposeBag)
+                // Update table view
+                self.tableView.animateRowChanges(
+                    oldData: old,
+                    newData: updates,
+                    deletionAnimation: [.effectFade],
+                    insertionAnimation: [.effectGap],
+                    indexPathTransform: self._indexPathTransform)
+            })
+            .disposed(by: _disposeBag)
+
+        _cache.currentFormulaeLabelUpdated
+            .subscribe { e in
+                self.tableView.reloadData()
+            }
+            .disposed(by: _disposeBag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
@@ -102,7 +110,8 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        if self.tableView.selectedRow == 0 {
+        let row = self.tableView.selectedRow
+        if row == 0 || row >= _labels.count {
             _cache.currentLabel.onNext(nil)
         } else {
             _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])

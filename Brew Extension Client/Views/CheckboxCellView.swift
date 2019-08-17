@@ -12,10 +12,21 @@ import RxCocoa
 class CheckboxCellView: NSTableCellView {
 
     @IBOutlet weak var checkboxButton: NSButton!
+    var cache = AppDelegate.sharedCache
+    var formulae = ""
+    
+    @IBAction func onCheckBoxClicked(_ sender: Any) {
+        guard !formulae.isEmpty else { return }
 
-    @IBAction func onCheckboxButtonClicked(_ sender: Any) {
+        switch self.checkboxButton.state {
+        case .on:
+            cache.addLabel(checkboxButton.title, to: formulae)
+        case .off:
+            cache.removeLabel(checkboxButton.title, from: formulae)
+        default:
+            break
+        }
+
+        cache.currentFormulaeLabelUpdated.onNext(())
     }
-}
-
-class LabelCheckboxCellView: CheckboxCellView {
 }

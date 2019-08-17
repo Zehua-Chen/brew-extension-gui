@@ -21,6 +21,8 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
     fileprivate let _disposeBag = DisposeBag()
     fileprivate var _incomings = [Formulae]()
     fileprivate var _outcomings = [Formulae]()
+    fileprivate var _labels = [Label]()
+    fileprivate var _currentFormulae: Formulae?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,12 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
         _cache.currentFormulae
             .map({ return $0?.name ?? "?" })
             .bind(to: self.formulaeTitleLabel.rx.text)
+            .disposed(by: _disposeBag)
+
+        _cache.currentFormulae
+            .bind(onNext: { [unowned self] formulae in
+                self._currentFormulae = formulae
+            })
             .disposed(by: _disposeBag)
 
         _cache.currentFormulaeProtected.map { protected -> NSControl.StateValue in
@@ -49,6 +57,11 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
             self.dependencyTableView.reloadData()
         }).disposed(by: _disposeBag)
 
+        _cache.labels.bind(onNext: { [unowned self] labels in
+            self._labels = labels
+            self.labelTableView.reloadData()
+        }).disposed(by: _disposeBag)
+
         self.isProtectedCheckBox.rx.state.bind(onNext: { [unowned self] state in
             guard let formulaeName = try! self._cache.currentFormulae.value()?.name else { return }
 
@@ -63,9 +76,6 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
         }).disposed(by: _disposeBag)
     }
 
-    func labelsChanged(_ notification: Notification) {
-    }
-
     func numberOfRows(in tableView: NSTableView) -> Int {
         switch tableView.tag {
         // MARK: Depdency Table
@@ -77,7 +87,7 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
             return _incomings.count
         // MARK: Label Table
         case 1:
-            return 0
+            return _labels.count
         default:
             return 0
         }
@@ -105,7 +115,18 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
             }
         // MARK: Label Table
         case 1:
-            return nil
+            let view = tableView.makeView(withIdentifier: .init("labelCellView"), owner: nil) as! CheckboxCellView
+            view.checkboxButton.title = _labels[row].name
+            view.checkboxButton.state = .off
+            view.formulae = _currentFormulae?.name ?? ""
+
+            if let formulae = self._currentFormulae {
+                if _labels[row].containsFormulae(formulae) {
+                    view.checkboxButton.state = .on
+                }
+            }
+
+            return view
         default:
             return nil
         }

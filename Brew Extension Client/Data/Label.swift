@@ -9,6 +9,33 @@
 import Foundation
 import BrewExtension
 
+struct Formulae: FormulaeProtocol {
+    fileprivate var _formulae: CDFormulae
+
+    init(formulae: CDFormulae) {
+        _formulae = formulae
+    }
+
+    var name: String {
+        get { return _formulae.name ?? "" }
+        set { _formulae.name = newValue }
+    }
+
+    var isProtected: Bool {
+        get { return _formulae.isProtected }
+        set { return _formulae.isProtected = newValue }
+    }
+
+    static func == (lhs: Formulae, rhs: Formulae) -> Bool {
+        return lhs.name == rhs.name && lhs.isProtected == rhs.isProtected
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name)
+        hasher.combine(self.isProtected)
+    }
+}
+
 struct Label: LabelProtocol {
 
     fileprivate var _label: CDLabel
@@ -28,6 +55,10 @@ struct Label: LabelProtocol {
 
     static func == (lhs: Label, rhs: Label) -> Bool {
         return lhs.name == rhs.name
+    }
+
+    func containsFormulae(_ formulae: Formulae) -> Bool {
+        return _label.formulaes?.contains(formulae._formulae) ?? false
     }
 
     func hash(into hasher: inout Hasher) {
