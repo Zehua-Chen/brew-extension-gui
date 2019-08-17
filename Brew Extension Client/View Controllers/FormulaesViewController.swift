@@ -8,123 +8,80 @@
 
 import Cocoa
 import Dispatch
+import RxSwift
+import RxCocoa
 
 class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
     @IBOutlet weak var tableView: NSTableView!
-    var notificationCenter = NotificationCenter.default
 
-    var brewExt = AppDelegate.shared.brewExtension
-    var formulaes = [String]()
-    var labelFilter: String?
+    fileprivate var _cache = AppDelegate.sharedCache
+    fileprivate var _disposeBag = DisposeBag()
+    fileprivate var _formulaes = [Formulae]()
+
+    fileprivate var _protectRowAction: NSTableViewRowAction!
+    fileprivate var _unprotectRowAction: NSTableViewRowAction!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 
-        self.notificationCenter.addObserver(
-            forName: .labelsSelected,
-            object: nil,
-            queue: nil,
-            using: self.onLabelClicked)
+        _protectRowAction = NSTableViewRowAction(
+            style: .regular,
+            title: "Protect",
+            handler: self.onProtectFormulae)
 
-        self.notificationCenter.addObserver(
-            forName: .formulaeProtectionChanged,
-            object: nil,
-            queue: nil,
-            using: self.onFormulaeProtectionChanged)
+        _protectRowAction.image = NSImage(named: NSImage.lockLockedTemplateName)
 
-        self.notificationCenter.addObserver(
-            forName: .formulaeLabelChanged,
-            object: nil,
-            queue: nil,
-            using: self.onFormulaeLabelChanged)
+        _unprotectRowAction = NSTableViewRowAction(
+            style: .regular,
+            title: "Unprotect",
+            handler: self.onUnprotectFormulae)
 
-        self.formulaes = self.brewExt.formulaes()
-    }
+        _unprotectRowAction.backgroundColor = .systemOrange
+        _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
 
-    override func viewDidAppear() {
-        if !formulaes.isEmpty {
-            self.brewExt.selectFormulae(self.formulaes[0])
-        }
+        _cache.currentFormulaes.bind(onNext: { [unowned self] formulaes in
+            self._formulaes = formulaes
+            self.tableView.reloadData()
+        }).disposed(by: _disposeBag)
+
     }
 
     // MARK: Event handlers
 
-    func onLabelClicked(_ notification: Notification) {
-        guard let newLabel = notification.userInfo?["label"] as? String else {
-            self.formulaes = self.brewExt.formulaes()
-            self.tableView.reloadData()
-            self.labelFilter = nil
-            return
-        }
-
-        self.formulaes = []
-        self.labelFilter = newLabel
-
-        for formulae in self.brewExt.formulaes(under: newLabel) {
-            self.formulaes.append(formulae)
-        }
-
-        self.tableView.reloadData()
-
-        if !formulaes.isEmpty {
-            self.brewExt.selectFormulae(self.formulaes[0])
-        }
-    }
-
-    func onFormulaeLabelChanged(_ notification: Notification) {
-        guard let filter = self.labelFilter else { return }
-
-        self.formulaes = []
-
-        for formulae in self.brewExt.formulaes(under: filter) {
-            self.formulaes.append(formulae)
-        }
-
-        self.tableView.reloadData()
-
-        if !formulaes.isEmpty {
-            self.brewExt.selectFormulae(self.formulaes[0])
-        }
-    }
-
-    func onFormulaeProtectionChanged(_ notification: Notification) {
-        // Otherwise the slide back animation does not play
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.tableView.reloadData()
-        }
-    }
-
     func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         // TODO: Remove formulae
-        let _ = brewExt.findFormulaesToUninstall(for: self.formulaes[row])
+        _cache.onRemoveFormulae.onNext(_formulaes[row])
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        self.brewExt.protectFormulae(self.formulaes[row])
+        _cache.protectFormulae(&_formulaes[row])
+        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
     }
 
     func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        self.brewExt.unprotectFormulae(self.formulaes[row])
+        _cache.unprotectFormulae(&_formulaes[row])
+        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
     }
 
     // MAKR: NSTableView protocols conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return formulaes.count
+        return _formulaes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let formulae = self.formulaes[row]
+        guard row < _formulaes.count else { return nil }
+
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
 
-        view.titleTextField.stringValue = formulae
-        view.labelsTextField.stringValue = "Label: \(self.labelFilter ?? "")"
+        view.titleTextField.stringValue = _formulaes[row].name
+        view.labelsTextField.stringValue = "Label: "
 
-        if self.brewExt.dataBase?.protectsFormulae(formulae) ?? false {
+        if _formulaes[row].isProtected {
             view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
         } else {
             view.protectionIcon.image = NSImage(named: NSImage.lockUnlockedTemplateName)
@@ -136,10 +93,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {
         switch edge {
         case .leading:
-            return [
-                .init(style: .regular, title: "Protect", handler: self.onProtectFormulae),
-                .init(style: .destructive, title: "Unprotect", handler: self.onUnprotectFormulae),
-            ]
+            return [_protectRowAction, _unprotectRowAction]
         case .trailing:
             return [
                 .init(style: .destructive, title: "Remove", handler: self.onRemoveFormulae),
@@ -150,10 +104,10 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let selectedRow = self.tableView.selectedRow
-        let formulae = self.formulaes[selectedRow]
-
-        self.brewExt.selectFormulae(formulae)
+        guard self.tableView.selectedRow < _formulaes.count else { return }
+        guard self.tableView.selectedRow > 0 else { return }
+        
+        _cache.currentFormulae.onNext(_formulaes[self.tableView.selectedRow])
     }
     
 }

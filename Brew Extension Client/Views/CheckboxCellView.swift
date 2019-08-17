@@ -7,38 +7,26 @@
 //
 
 import Cocoa
+import RxCocoa
 
 class CheckboxCellView: NSTableCellView {
 
     @IBOutlet weak var checkboxButton: NSButton!
+    var cache = AppDelegate.sharedCache
+    var formulae = ""
+    
+    @IBAction func onCheckBoxClicked(_ sender: Any) {
+        guard !formulae.isEmpty else { return }
 
-    @IBAction func onCheckboxButtonClicked(_ sender: Any) {
-        let b = sender as! NSButton
-        switch b.state {
+        switch self.checkboxButton.state {
         case .on:
-            self.onChecked()
+            cache.addLabel(checkboxButton.title, to: formulae)
         case .off:
-            self.onUnChecked()
+            cache.removeLabel(checkboxButton.title, from: formulae)
         default:
             break
         }
-    }
 
-    // Overridable Messages
-
-    func onChecked() {}
-    func onUnChecked() {}
-}
-
-class LabelCheckboxCellView: CheckboxCellView {
-    var formulae = ""
-    var brewExt = AppDelegate.shared.brewExtension
-
-    override func onChecked() {
-        try! self.brewExt.labelFormulae(self.formulae, as: self.checkboxButton.title)
-    }
-
-    override func onUnChecked() {
-        try! self.brewExt.removeLabel(self.checkboxButton.title, from: self.formulae)
+        cache.currentFormulaeLabelUpdated.onNext(())
     }
 }

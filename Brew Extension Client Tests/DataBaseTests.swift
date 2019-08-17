@@ -13,7 +13,7 @@ class DataBaseTests: XCTestCase {
 
     func testFormulaes() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         database.addFormulae("cmake")
         database.addFormulae("llvm")
@@ -33,7 +33,7 @@ class DataBaseTests: XCTestCase {
 
     func testDependencies() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         database.addFormulae("cmake")
         database.addFormulae("llvm")
@@ -48,13 +48,13 @@ class DataBaseTests: XCTestCase {
 
         database.addDependency(from: "open_cv", to: "llvm")
 
-        let llvmIncomings = database.incomingDependencies(for: "llvm")
+        let llvmIncomings = database.incomingDependencies(for: "llvm").map { return $0.name }
         XCTAssertEqual(llvmIncomings.count, 2)
         XCTAssertTrue(llvmIncomings.contains("cmake"))
         XCTAssertTrue(llvmIncomings.contains("open_cv"))
 
         database.addDependency(from: "cmake", to: "open_cv")
-        let cmakeOutcomings = database.outcomingDependencies(for: "cmake")
+        let cmakeOutcomings = database.outcomingDependencies(for: "cmake").map { return $0.name }
         XCTAssertEqual(cmakeOutcomings.count, 2)
         XCTAssertTrue(cmakeOutcomings.contains("llvm"))
         XCTAssertTrue(cmakeOutcomings.contains("open_cv"))
@@ -62,7 +62,7 @@ class DataBaseTests: XCTestCase {
 
     func testProtection() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         database.addFormulae("cmake")
 
@@ -75,7 +75,7 @@ class DataBaseTests: XCTestCase {
 
     func testLabels() {
         let manager = CoreDataManager.makeManagerForTesting()
-        let database = DataBase(context: manager.viewContext)
+        let database = CoreDataCache(context: manager.viewContext)
 
         // MARK: Setup formulaes
 

@@ -10,7 +10,10 @@ import Foundation
 import BrewExtension
 import CoreData
 
-class DataBase: BrewExtensionDataBase {
+class CoreDataCache: Cache {
+
+    typealias Label = BrewExtensionClient.Label
+    typealias Formulae = BrewExtensionClient.Formulae
 
     let context: NSManagedObjectContext
 
@@ -18,44 +21,52 @@ class DataBase: BrewExtensionDataBase {
         self.context = context
     }
 
-    func labels(of formulae: String) -> Set<String> {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+    func labels(of formulae: String) -> Set<Label> {
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
 
-        return Set(formulaes[0].labels!.lazy.map { return ($0 as! Label).name! })
+        return Set(formulaes[0].labels!.lazy.map { label in
+            return Label(label: label as! CDLabel)
+        })
     }
 
-    func labels() -> [String] {
-        let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
+    func labels() -> [Label] {
+        let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.propertiesToFetch = ["name"]
+        labelFetchRequest.sortDescriptors = [
+            .init(key: "name", ascending: true)
+        ]
+        
         labelFetchRequest.returnsDistinctResults = true
 
         return try! self.context.fetch(labelFetchRequest).map { label in
-            return label.name!
+            return Label(label: label)
         }
     }
 
-    func formulaes(under label: String) -> Set<String> {
-        let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
+    func formulaes(under label: String) -> Set<Formulae> {
+        let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
         guard labels.count == 1 else { return .init() }
 
-        return Set(labels[0].formulaes!.lazy.map{ return ($0 as! Formulae).name! })
+        return Set(labels[0].formulaes!.lazy.map{ formulae in
+            return Formulae(formulae: (formulae as! CDFormulae))
+        })
     }
 
     func removeLabel(_ label: String, from formulae: String) {
-        let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
+        let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
 
         guard labels.count == 1 else { return }
 
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
@@ -67,14 +78,14 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func addLabel(_ label: String, to formulae: String) {
-        let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
+        let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
 
         guard labels.count == 1 else { return }
 
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
@@ -85,12 +96,12 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func addLabel(_ label: String) {
-        let l = Label(context: self.context)
+        let l = CDLabel(context: self.context)
         l.name = label
     }
 
     func removeLabel(_ label: String) {
-        let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
+        let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
@@ -101,7 +112,7 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func containsLabel(_ label: String) -> Bool {
-        let labelFetchRequest: NSFetchRequest<Label> = Label.fetchRequest()
+        let labelFetchRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
         labelFetchRequest.predicate = NSPredicate(format: "name == %@", label)
 
         let labels = try! self.context.fetch(labelFetchRequest)
@@ -110,7 +121,7 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func protectFormulae(_ formulae: String) {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
@@ -121,7 +132,7 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func protectsFormulae(_ formulae: String) -> Bool {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
@@ -132,7 +143,7 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func unprotectFormulae(_ formulae: String) {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
@@ -143,7 +154,7 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func containsFormulae(_ formulae: String) -> Bool {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulaes = try! self.context.fetch(formulaeFetchRequest)
@@ -152,80 +163,99 @@ class DataBase: BrewExtensionDataBase {
     }
 
     func addFormulae(_ formulae: String) {
-        let f = Formulae(context: self.context)
+        let f = CDFormulae(context: self.context)
         f.name = formulae
     }
 
     func removeFormulae(_ formulae: String) {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.predicate = NSPredicate(format: "name == %@", formulae)
 
         let formulae = try! self.context.fetch(formulaeFetchRequest)[0]
         self.context.delete(formulae as NSManagedObject)
     }
 
-    func formulaes() -> [String] {
-        let formulaeFetchRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
+    func formulaes() -> [Formulae] {
+        let formulaeFetchRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
         formulaeFetchRequest.propertiesToFetch = ["name"]
+        formulaeFetchRequest.sortDescriptors = [
+            .init(key: "name", ascending: true)
+        ]
 
-        return try! self.context.fetch(formulaeFetchRequest).map{ return $0.name! }
+        return try! self.context.fetch(formulaeFetchRequest).map{ formulae in
+            return Formulae(formulae: formulae)
+        }
+    }
+
+    func numberOfFormulaes() -> Int {
+        return self.formulaes().count
     }
 
     func addDependency(from: String, to: String) {
-        let fromRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        fromRequest.predicate = NSPredicate(format: "name == %@", from)
+        let from = _fetchFormlae(from)
+        let to = _fetchFormlae(to)
 
-        let froms = try! self.context.fetch(fromRequest)
-        guard froms.count == 1 else { return }
-
-        let toRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        toRequest.predicate = NSPredicate(format: "name == %@", to)
-
-        let tos = try! self.context.fetch(toRequest)
-        guard tos.count == 1 else { return }
-
-        froms[0].addToOutcomings(tos[0])
+        from.addToOutcomings(to)
     }
 
     func containsDependency(from: String, to: String) -> Bool {
-        let fromRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        fromRequest.predicate = NSPredicate(format: "name == %@", from)
+        let from = _fetchFormlae(from)
+        let to = _fetchFormlae(to)
 
-        let froms = try! self.context.fetch(fromRequest)
-        guard froms.count == 1 else { return false }
-
-        let toRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        toRequest.predicate = NSPredicate(format: "name == %@", to)
-
-        let tos = try! self.context.fetch(toRequest)
-        guard tos.count == 1 else { return false }
-
-        return froms[0].outcomings!.contains(tos[0])
+        return from.outcomings!.contains(to)
     }
 
-    func outcomingDependencies(for formulae: String) -> Set<String> {
-        let formulaeRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        formulaeRequest.predicate = NSPredicate(format: "name == %@", formulae)
-        formulaeRequest.propertiesToFetch = ["name"]
+    func outcomingDependencies(for formulae: String) -> Set<Formulae> {
+        let formulae = _fetchFormlae(formulae)
 
-        let formulaes = try! context.fetch(formulaeRequest)
-        guard formulaes.count == 1 else { return .init() }
-
-        return Set(formulaes[0].outcomings!.lazy.map{ return ($0 as! Formulae).name! })
+        return Set(formulae.outcomings!.lazy.map{ formulae in
+            return Formulae(formulae: (formulae as! CDFormulae))
+        })
     }
 
-    func incomingDependencies(for formulae: String) -> Set<String> {
-        let formulaeRequest: NSFetchRequest<Formulae> = Formulae.fetchRequest()
-        formulaeRequest.predicate = NSPredicate(format: "name == %@", formulae)
-        formulaeRequest.propertiesToFetch = ["name"]
+    func incomingDependencies(for formulae: String) -> Set<Formulae> {
+        let formulae = _fetchFormlae(formulae)
 
-        let formulaes = try! context.fetch(formulaeRequest)
-        guard formulaes.count == 1 else { return .init() }
-
-        return Set(formulaes[0].incomings!.lazy.map{ return ($0 as! Formulae).name! })
+        return Set(formulae.incomings!.lazy.map{ formulae in
+            return Formulae(formulae: (formulae as! CDFormulae))
+        })
     }
 
     func write() {
         try! self.context.save()
+    }
+
+    fileprivate func _fetchFormlae(
+        _ formulae: String,
+        with properties: [String] = []
+    ) -> CDFormulae {
+        let formulaeRequest: NSFetchRequest<CDFormulae> = CDFormulae.fetchRequest()
+        formulaeRequest.predicate = NSPredicate(format: "name == %@", formulae)
+        formulaeRequest.propertiesToFetch = properties
+
+        let formulaes = try! self.context.fetch(formulaeRequest)
+
+        guard formulaes.count == 1 else {
+            fatalError("Duplicate formulae = \(formulae)")
+        }
+
+        return formulaes[0]
+    }
+
+    fileprivate func _fetchLabel(
+        _ label: String,
+        with properties: [String] = []
+    ) -> CDLabel {
+        let labelRequest: NSFetchRequest<CDLabel> = CDLabel.fetchRequest()
+        labelRequest.predicate = NSPredicate(format: "name == %@", label)
+        labelRequest.propertiesToFetch = properties
+
+        let labels = try! self.context.fetch(labelRequest)
+
+        guard labels.count == 1 else {
+            fatalError("Duplicate label = \(label)")
+        }
+
+        return labels[0]
     }
 }

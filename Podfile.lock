@@ -5,23 +5,44 @@ PODS:
   - BrewExtension/Brew (1.0.0)
   - BrewExtension/BrewExtension (1.0.0):
     - BrewExtension/Brew
+  - Differ (1.4.3)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
 
 DEPENDENCIES:
-  - BrewExtension (from `https://github.com/Zehua-Chen/brew-extension`, branch `cocoapods`)
+  - BrewExtension (from `https://github.com/Zehua-Chen/brew-extension`, branch `master`)
+  - Differ
+  - RxCocoa (~> 5)
+  - RxSwift (~> 5)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Differ
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 EXTERNAL SOURCES:
   BrewExtension:
-    :branch: cocoapods
+    :branch: master
     :git: https://github.com/Zehua-Chen/brew-extension
 
 CHECKOUT OPTIONS:
   BrewExtension:
-    :commit: 50880116f2bd660464e6d0400392e181cdc42f96
+    :commit: a4afeaa5250cc6ff8022fa996191168df49628b2
     :git: https://github.com/Zehua-Chen/brew-extension
 
 SPEC CHECKSUMS:
-  BrewExtension: 799d9dc78735b29fba37ef53b4f36b0abc33c739
+  BrewExtension: decfd1fa2a1cd619001e7b8e76e40d90587cb448
+  Differ: 6c7477d6187e8c36d02ec342a3c321061b85a0ea
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: e4832cd3d60789080eb35bb6e8132d711187c8ec
+PODFILE CHECKSUM: e2a51f73ef9dc9b16e271849f2f4ea5276f14721
 
 COCOAPODS: 1.7.5

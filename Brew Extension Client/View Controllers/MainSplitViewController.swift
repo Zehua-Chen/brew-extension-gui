@@ -9,25 +9,12 @@
 import Cocoa
 import Dispatch
 import BrewExtension
+import RxSwift
 
 class MainSplitViewController: NSSplitViewController {
 
-    var manager = CoreDataManager.shared
-    var notificationCenter = NotificationCenter.default
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.notificationCenter.addObserver(
-            forName: .findFormulaeToBeRemovedFor,
-            object: nil,
-            queue: nil,
-            using: self.removeFormulae)
-    }
-
     lazy var addLabelViewController: AddLabelViewController = {
         let controller = self.storyboard?.instantiateController(withIdentifier: "addLabelViewController") as! AddLabelViewController
-        controller.hostViewController = self
 
         return controller
     }()
@@ -38,37 +25,36 @@ class MainSplitViewController: NSSplitViewController {
 
     lazy var removeFormulaeViewController: RemoveFormulaeViewController = {
         let controller = self.storyboard?.instantiateController(withIdentifier: "removeFormulaeViewController") as! RemoveFormulaeViewController
-        controller.hostViewController = self
 
         return controller
     }()
 
+    fileprivate var _cache = AppDelegate.sharedCache
+    fileprivate var _disposeBag = DisposeBag()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        _cache.onRemoveFormulae
+            .bind(onNext: { [unowned self] formulae in
+                self.removeFormulae(formulae)
+            })
+            .disposed(by: _disposeBag)
+    }
+
     @IBAction func syncBrewExtension(_ sender: Any) {
         self.presentAsSheet(self.syncViewController)
-
-        let backgroundContext = self.manager.backgroundContext
-
-        backgroundContext.perform {
-            let database = DataBase(context: backgroundContext)
-            let ext = BrewExtension()
-
-            ext.dataBase = database
-            try! ext.sync()
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.dismiss(self.syncViewController)
-            }
-        }
+        // TODO Sync
     }
 
     @IBAction func addLabel(_ sender: Any) {
         self.presentAsSheet(self.addLabelViewController)
+        
     }
 
-    func removeFormulae(_ notification: Notification) {
-        self.removeFormulaeViewController.target = notification.userInfo!["formulae"] as! String
-        self.removeFormulaeViewController.removes = notification.userInfo!["removes"] as! [String]
+    func removeFormulae(_ formulae: Formulae) {
+        // TODO Remove
+        self.removeFormulaeViewController.formulae = formulae
         self.presentAsSheet(self.removeFormulaeViewController)
     }
-
 }
