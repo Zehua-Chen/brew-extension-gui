@@ -14,6 +14,8 @@ class ObservableCoreDataCache: CoreDataCache {
     var labels = BehaviorRelay<[Label]>(value: [])
     var formulaes = BehaviorRelay<[Formulae]>(value: [])
 
+    var onRemoveFormulae = PublishSubject<Formulae>()
+
     // MARK: Current Selection Related
 
     var currentLabel = BehaviorSubject<Label?>(value: nil)

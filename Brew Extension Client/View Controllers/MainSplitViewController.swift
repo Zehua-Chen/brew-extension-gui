@@ -9,6 +9,7 @@
 import Cocoa
 import Dispatch
 import BrewExtension
+import RxSwift
 
 class MainSplitViewController: NSSplitViewController {
 
@@ -24,10 +25,22 @@ class MainSplitViewController: NSSplitViewController {
 
     lazy var removeFormulaeViewController: RemoveFormulaeViewController = {
         let controller = self.storyboard?.instantiateController(withIdentifier: "removeFormulaeViewController") as! RemoveFormulaeViewController
-        controller.hostViewController = self
 
         return controller
     }()
+
+    fileprivate var _cache = AppDelegate.sharedCache
+    fileprivate var _disposeBag = DisposeBag()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        _cache.onRemoveFormulae
+            .bind(onNext: { [unowned self] formulae in
+                self.removeFormulae(formulae)
+            })
+            .disposed(by: _disposeBag)
+    }
 
     @IBAction func syncBrewExtension(_ sender: Any) {
         self.presentAsSheet(self.syncViewController)
@@ -36,10 +49,12 @@ class MainSplitViewController: NSSplitViewController {
 
     @IBAction func addLabel(_ sender: Any) {
         self.presentAsSheet(self.addLabelViewController)
+        
     }
 
-    func removeFormulae(_ notification: Notification) {
+    func removeFormulae(_ formulae: Formulae) {
         // TODO Remove
+        self.removeFormulaeViewController.formulae = formulae
         self.presentAsSheet(self.removeFormulaeViewController)
     }
 }

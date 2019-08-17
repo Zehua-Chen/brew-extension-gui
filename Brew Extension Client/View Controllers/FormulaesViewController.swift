@@ -52,6 +52,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         // TODO: Remove formulae
+        _cache.onRemoveFormulae.onNext(_formulaes[row])
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
