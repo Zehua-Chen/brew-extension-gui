@@ -41,25 +41,11 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         _unprotectRowAction.backgroundColor = .systemOrange
         _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
 
-
-        _cache.currentFormulaes.bind(onNext: { [unowned self] formulaesUpdate in
-
-            if !formulaesUpdate.shouldAnimate {
-                self._formulaes = formulaesUpdate.formulaes
-                self.tableView.reloadData()
-
-                return
-            }
-
-            let oldFormulaes = self._formulaes
-            self._formulaes = formulaesUpdate.formulaes
-
-            self.tableView.animateRowChanges(
-                oldData: oldFormulaes,
-                newData: formulaesUpdate.formulaes,
-                deletionAnimation: .effectFade,
-                insertionAnimation: .slideLeft)
+        _cache.currentFormulaes.bind(onNext: { [unowned self] formulaes in
+            self._formulaes = formulaes
+            self.tableView.reloadData()
         }).disposed(by: _disposeBag)
+
     }
 
     // MARK: Event handlers
@@ -70,13 +56,13 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        _formulaes[row].isProtected = true
+        _cache.protectFormulae(&_formulaes[row])
         self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
     }
 
     func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        _formulaes[row].isProtected = false
+        _cache.unprotectFormulae(&_formulaes[row])
         self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
     }
 
@@ -117,7 +103,10 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        // TODO Select row
+        guard self.tableView.selectedRow < _formulaes.count else { return }
+        guard self.tableView.selectedRow > 0 else { return }
+        
+        _cache.currentFormulae.onNext(_formulaes[self.tableView.selectedRow])
     }
     
 }

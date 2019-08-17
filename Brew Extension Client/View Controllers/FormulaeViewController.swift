@@ -8,63 +8,106 @@
 
 import Cocoa
 import RxCocoa
+import RxSwift
 
-class FormulaeViewController: NSViewController {
-
-    class DependencyDelegateAndDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource {
-
-        func tableView(
-            _ tableView: NSTableView,
-            viewFor tableColumn: NSTableColumn?,
-            row: Int
-        ) -> NSView? {
-            return nil
-        }
-
-        func numberOfRows(in tableView: NSTableView) -> Int {
-            return 0
-        }
-    }
-
-    class LabelDelegateAndDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource {
-
-        func numberOfRows(in tableView: NSTableView) -> Int {
-            return 0
-        }
-
-        func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-            let view = tableView.makeView(withIdentifier: .init("labelCheckboxCellView"), owner: nil) as! LabelCheckboxCellView
-
-            return view
-        }
-    }
+class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
 
     @IBOutlet weak var isProtectedCheckBox: NSButton!
     @IBOutlet weak var formulaeTitleLabel: NSTextField!
     @IBOutlet weak var dependencyTableView: NSTableView!
     @IBOutlet weak var labelTableView: NSTableView!
 
-    var formulae: String?
-
-    var dependencyDelegateAndDataSource = DependencyDelegateAndDataSource()
-    var labelDelegateAndDataSource = LabelDelegateAndDataSource()
+    fileprivate let _cache = AppDelegate.sharedCache
+    fileprivate let _disposeBag = DisposeBag()
+    fileprivate var _incomings = [Formulae]()
+    fileprivate var _outcomings = [Formulae]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        _cache.currentFormulae
+            .map({ return $0?.name ?? "?" })
+            .bind(to: self.formulaeTitleLabel.rx.text)
+            .disposed(by: _disposeBag)
 
-        self.dependencyTableView.delegate = self.dependencyDelegateAndDataSource
-        self.dependencyTableView.dataSource = self.dependencyDelegateAndDataSource
+        _cache.currentFormulaeProtected.map { protected -> NSControl.StateValue in
+            switch protected {
+            case true:
+                return .on
+            case false:
+                return .off
+            }
+        }.bind(to: self.isProtectedCheckBox.rx.state).disposed(by: _disposeBag)
 
-        self.labelTableView.delegate = self.labelDelegateAndDataSource
-//        self.labelTableView.dataSource = self.labelDelegateAndDataSources
+        _cache.currentFormulaeOutcomingDependencies.bind(onNext: { [unowned self] formulaes in
+            self._outcomings = formulaes
+            self.dependencyTableView.reloadData()
+        }).disposed(by: _disposeBag)
+
+        _cache.currentFormulaeIncomingDependencies.bind(onNext: { [unowned self] formulaes in
+            self._incomings = formulaes
+            self.dependencyTableView.reloadData()
+        }).disposed(by: _disposeBag)
+
+        self.isProtectedCheckBox.rx.state.bind(onNext: { [unowned self] state in
+            guard let formulaeName = try! self._cache.currentFormulae.value()?.name else { return }
+
+            switch state {
+            case .on:
+                self._cache.protectFormulae(formulaeName)
+            case .off:
+                self._cache.unprotectFormulae(formulaeName)
+            default:
+                break
+            }
+        }).disposed(by: _disposeBag)
     }
 
     func labelsChanged(_ notification: Notification) {
     }
 
-    @IBAction func onIsProtectedClicked(_ sender: Any) {
-//        guard let formulae = self.formulae else { return }
-        // TODO Handle protection click
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        switch tableView.tag {
+        // MARK: Depdency Table
+        case 0:
+            if _outcomings.count > _incomings.count {
+                return _outcomings.count
+            }
+
+            return _incomings.count
+        // MARK: Label Table
+        case 1:
+            return 0
+        default:
+            return 0
+        }
+    }
+
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        switch tableView.tag {
+        // MARK: Depdency Table
+        case 0:
+            let view = tableView.makeView(withIdentifier: .init("dependencyCellView"), owner: nil) as! NSTableCellView
+
+            switch tableColumn!.title {
+            case "Depending on":
+                guard row < _outcomings.count else { return nil }
+                view.textField?.stringValue = _outcomings[row].name
+
+                return view
+            case "Depended by":
+                guard row < _incomings.count else { return nil }
+                view.textField?.stringValue = _incomings[row].name
+
+                return view
+            default:
+                return nil
+            }
+        // MARK: Label Table
+        case 1:
+            return nil
+        default:
+            return nil
+        }
     }
 }

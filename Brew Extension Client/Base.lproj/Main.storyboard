@@ -1367,6 +1367,10 @@ DQ
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="CTj-BJ-a8h" id="QQa-FD-BdS"/>
+                                                        <outlet property="delegate" destination="CTj-BJ-a8h" id="Cm0-9O-ml1"/>
+                                                    </connections>
                                                 </tableView>
                                             </subviews>
                                         </clipView>
@@ -1389,7 +1393,7 @@ DQ
                                             <rect key="frame" x="1" y="0.0" width="408" height="134"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="j17-W0-KAe" viewBased="YES" id="Uar-FZ-Ebj">
+                                                <tableView verticalHuggingPriority="750" ambiguous="YES" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="j17-W0-KAe" viewBased="YES" id="Uar-FZ-Ebj">
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="109"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -1440,6 +1444,10 @@ DQ
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="CTj-BJ-a8h" id="bRH-nf-vsi"/>
+                                                        <outlet property="delegate" destination="CTj-BJ-a8h" id="NVh-vQ-RbJ"/>
+                                                    </connections>
                                                 </tableView>
                                             </subviews>
                                         </clipView>
