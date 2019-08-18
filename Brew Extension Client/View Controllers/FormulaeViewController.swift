@@ -38,42 +38,52 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
             })
             .disposed(by: _disposeBag)
 
-        _cache.currentFormulaeProtected.map { protected -> NSControl.StateValue in
-            switch protected {
-            case true:
-                return .on
-            case false:
-                return .off
-            }
-        }.bind(to: self.isProtectedCheckBox.rx.state).disposed(by: _disposeBag)
+        _cache.currentFormulaeProtected
+            .map({ protected -> NSControl.StateValue in
+                switch protected {
+                case true:
+                    return .on
+                case false:
+                    return .off
+                }
+            })
+            .bind(to: self.isProtectedCheckBox.rx.state).disposed(by: _disposeBag)
 
-        _cache.currentFormulaeOutcomingDependencies.bind(onNext: { [unowned self] formulaes in
-            self._outcomings = formulaes
-            self.dependencyTableView.reloadData()
-        }).disposed(by: _disposeBag)
+        _cache.currentFormulaeOutcomingDependencies
+            .bind(onNext: { [unowned self] formulaes in
+                self._outcomings = formulaes
+                self.dependencyTableView.reloadData()
+            })
+            .disposed(by: _disposeBag)
 
-        _cache.currentFormulaeIncomingDependencies.bind(onNext: { [unowned self] formulaes in
-            self._incomings = formulaes
-            self.dependencyTableView.reloadData()
-        }).disposed(by: _disposeBag)
+        _cache.currentFormulaeIncomingDependencies
+            .bind(onNext: { [unowned self] formulaes in
+                self._incomings = formulaes
+                self.dependencyTableView.reloadData()
+            })
+            .disposed(by: _disposeBag)
 
-        _cache.labels.bind(onNext: { [unowned self] labels in
-            self._labels = labels
-            self.labelTableView.reloadData()
-        }).disposed(by: _disposeBag)
+        _cache.labels
+            .bind(onNext: { [unowned self] labels in
+                self._labels = labels
+                self.labelTableView.reloadData()
+            })
+            .disposed(by: _disposeBag)
 
-        self.isProtectedCheckBox.rx.state.bind(onNext: { [unowned self] state in
-            guard let formulaeName = try! self._cache.currentFormulae.value()?.name else { return }
+        self.isProtectedCheckBox.rx.state
+            .bind(onNext: { [unowned self] state in
+                guard let formulaeName = try! self._cache.currentFormulae.value()?.name else { return }
 
-            switch state {
-            case .on:
-                self._cache.protectFormulae(formulaeName)
-            case .off:
-                self._cache.unprotectFormulae(formulaeName)
-            default:
-                break
-            }
-        }).disposed(by: _disposeBag)
+                switch state {
+                case .on:
+                    self._cache.protectFormulae(formulaeName)
+                case .off:
+                    self._cache.unprotectFormulae(formulaeName)
+                default:
+                    break
+                }
+            })
+            .disposed(by: _disposeBag)
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {

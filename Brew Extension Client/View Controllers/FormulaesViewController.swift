@@ -41,11 +41,12 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         _unprotectRowAction.backgroundColor = .systemOrange
         _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
 
-        _cache.currentFormulaes.bind(onNext: { [unowned self] formulaes in
-            self._formulaes = formulaes
-            self.tableView.reloadData()
-        }).disposed(by: _disposeBag)
-
+        _cache.currentFormulaes
+            .bind(onNext: { [unowned self] formulaes in
+                self._formulaes = formulaes
+                self.tableView.reloadData()
+            })
+            .disposed(by: _disposeBag)
     }
 
     // MARK: Event handlers
