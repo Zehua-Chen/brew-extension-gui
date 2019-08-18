@@ -42,6 +42,12 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
                 self.tableView.reloadData()
             }
             .disposed(by: _disposeBag)
+
+        self.tableView.rx.selectedRow
+            .bind(onNext: { row in
+                print("selected row = \(row)")
+            })
+            .disposed(by: _disposeBag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
@@ -110,8 +116,9 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let row = self.tableView.selectedRow
-        if row == 0 || row >= _labels.count {
+        let actualRow = self.tableView.selectedRow - 1
+
+        if actualRow < 0 || actualRow >= _labels.count {
             _cache.currentLabel.onNext(nil)
         } else {
             _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])
