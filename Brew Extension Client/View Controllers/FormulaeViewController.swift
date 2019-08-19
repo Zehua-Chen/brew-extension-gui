@@ -17,7 +17,7 @@ class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableView
     @IBOutlet weak var dependencyTableView: NSTableView!
     @IBOutlet weak var labelTableView: NSTableView!
 
-    fileprivate let _cache = AppDelegate.sharedCache
+    fileprivate let _cache = AppDelegate.sharedDatabase
     fileprivate let _disposeBag = DisposeBag()
 //    fileprivate var _incomings = [Formulae]()
 //    fileprivate var _outcomings = [Formulae]()

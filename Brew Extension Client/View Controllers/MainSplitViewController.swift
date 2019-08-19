@@ -29,7 +29,7 @@ class MainSplitViewController: NSSplitViewController {
         return controller
     }()
 
-    fileprivate var _cache = AppDelegate.sharedCache
+    fileprivate var _cache = AppDelegate.sharedDatabase
     fileprivate var _disposeBag = DisposeBag()
 
     override func viewDidLoad() {

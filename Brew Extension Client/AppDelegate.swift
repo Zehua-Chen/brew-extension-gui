@@ -12,16 +12,16 @@ import BrewExtension
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    static var sharedCache: ObservableCoreDataCache {
-        return AppDelegate.shared.cache
+    static var sharedDatabase: ObservableDatabase {
+        return AppDelegate.shared.database
     }
 
     static var shared: AppDelegate {
         return NSApplication.shared.delegate as! AppDelegate
     }
 
-    lazy var cache: ObservableCoreDataCache = {
-        return ObservableCoreDataCache(context: CoreDataManager.shared.viewContext)
+    lazy var database: ObservableDatabase = {
+        return ObservableDatabase(context: CoreDataManager.shared.viewContext)
     }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {

@@ -13,7 +13,7 @@
 		6785F2C7230230F700AA43D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6785F2C5230230F700AA43D5 /* Main.storyboard */; };
 		6785F2D3230230F700AA43D5 /* DataBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2D2230230F700AA43D5 /* DataBaseTests.swift */; };
 		6785F2DE230230F700AA43D5 /* Brew_ExtensionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2DD230230F700AA43D5 /* Brew_ExtensionUITests.swift */; };
-		6785F2EC230233AD00AA43D5 /* CoreDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EB230233AD00AA43D5 /* CoreDataCache.swift */; };
+		6785F2EC230233AD00AA43D5 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F2EB230233AD00AA43D5 /* Database.swift */; };
 		6785F3052302A56B00AA43D5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F3042302A56B00AA43D5 /* CoreDataManager.swift */; };
 		6785F30A2303B25200AA43D5 /* LabelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F3092303B25200AA43D5 /* LabelsViewController.swift */; };
 		6785F30D2303B3A200AA43D5 /* LabelCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6785F30C2303B3A200AA43D5 /* LabelCellView.swift */; };
@@ -26,7 +26,7 @@
 		6787FBFC2304390B00979758 /* AddLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FBFB2304390B00979758 /* AddLabelViewController.swift */; };
 		6787FC002304454E00979758 /* CheckboxCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FBFF2304454E00979758 /* CheckboxCellView.swift */; };
 		6787FC2C23052B2300979758 /* RemoveFormulaeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FC2B23052B2300979758 /* RemoveFormulaeViewController.swift */; };
-		6787FCB423069B2900979758 /* ObservableCoreDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */; };
+		6787FCB423069B2900979758 /* ObservableDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6787FCB323069B2900979758 /* ObservableDatabase.swift */; };
 		67BEFA232309BC7700C0F908 /* NSTableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFA222309BC7700C0F908 /* NSTableView+Rx.swift */; };
 		67BEFA412309C3A200C0F908 /* BECLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFA402309C3A200C0F908 /* BECLabel.swift */; };
 		67BEFA432309C3B200C0F908 /* BECFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFA422309C3B200C0F908 /* BECFormulae.swift */; };
@@ -70,7 +70,7 @@
 		6785F2D9230230F700AA43D5 /* Brew Extension Client UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brew Extension Client UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6785F2DD230230F700AA43D5 /* Brew_ExtensionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brew_ExtensionUITests.swift; sourceTree = "<group>"; };
 		6785F2DF230230F700AA43D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6785F2EB230233AD00AA43D5 /* CoreDataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCache.swift; sourceTree = "<group>"; };
+		6785F2EB230233AD00AA43D5 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		6785F2F82302740400AA43D5 /* BrewExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BrewExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6785F3042302A56B00AA43D5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		6785F3092303B25200AA43D5 /* LabelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsViewController.swift; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		6787FBFB2304390B00979758 /* AddLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLabelViewController.swift; sourceTree = "<group>"; };
 		6787FBFF2304454E00979758 /* CheckboxCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxCellView.swift; sourceTree = "<group>"; };
 		6787FC2B23052B2300979758 /* RemoveFormulaeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFormulaeViewController.swift; sourceTree = "<group>"; };
-		6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableCoreDataCache.swift; sourceTree = "<group>"; };
+		6787FCB323069B2900979758 /* ObservableDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableDatabase.swift; sourceTree = "<group>"; };
 		67BEFA222309BC7700C0F908 /* NSTableView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTableView+Rx.swift"; sourceTree = "<group>"; };
 		67BEFA402309C3A200C0F908 /* BECLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BECLabel.swift; sourceTree = "<group>"; };
 		67BEFA422309C3B200C0F908 /* BECFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BECFormulae.swift; sourceTree = "<group>"; };
@@ -197,8 +197,8 @@
 				6785F2C0230230F600AA43D5 /* BrewExtensionClient.xcdatamodeld */,
 				67BEFA402309C3A200C0F908 /* BECLabel.swift */,
 				67BEFA422309C3B200C0F908 /* BECFormulae.swift */,
-				6785F2EB230233AD00AA43D5 /* CoreDataCache.swift */,
-				6787FCB323069B2900979758 /* ObservableCoreDataCache.swift */,
+				6785F2EB230233AD00AA43D5 /* Database.swift */,
+				6787FCB323069B2900979758 /* ObservableDatabase.swift */,
 				6785F3042302A56B00AA43D5 /* CoreDataManager.swift */,
 			);
 			path = Data;
@@ -466,9 +466,9 @@
 				6787FC002304454E00979758 /* CheckboxCellView.swift in Sources */,
 				6787FBFC2304390B00979758 /* AddLabelViewController.swift in Sources */,
 				6785F3172303E75E00AA43D5 /* FormulaeViewController.swift in Sources */,
-				6785F2EC230233AD00AA43D5 /* CoreDataCache.swift in Sources */,
+				6785F2EC230233AD00AA43D5 /* Database.swift in Sources */,
 				6785F30F2303BF3D00AA43D5 /* FormulaesViewController.swift in Sources */,
-				6787FCB423069B2900979758 /* ObservableCoreDataCache.swift in Sources */,
+				6787FCB423069B2900979758 /* ObservableDatabase.swift in Sources */,
 				6785F31F2304288600AA43D5 /* MainSplitViewController.swift in Sources */,
 				6785F3052302A56B00AA43D5 /* CoreDataManager.swift in Sources */,
 				67BEFA232309BC7700C0F908 /* NSTableView+Rx.swift in Sources */,

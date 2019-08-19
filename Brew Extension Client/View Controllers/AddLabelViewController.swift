@@ -16,36 +16,36 @@ class AddLabelViewController: NSViewController {
     @IBOutlet weak var errorMessageField: NSTextField!
     @IBOutlet weak var addButton: NSButton!
     
-    fileprivate var _cache = AppDelegate.sharedCache
-    fileprivate var _disposeBag = DisposeBag()
+    fileprivate var _database = AppDelegate.sharedDatabase
+    fileprivate var _bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        labelField.rx.text
-//            .map({ [unowned self] label in
+        labelField.rx.text
+            .map({ [unowned self] label in
 //                if label != nil {
 //                    if self._cache.containsLabel(label!) {
 //                        return "This name is already taken"
 //                    }
 //                }
-//
-//                return ""
-//            })
-//            .bind(to: errorMessageField.rx.text).disposed(by: _disposeBag)
-//
-//        labelField.rx.text
-//            .map({ [unowned self] label -> Bool in
+
+                return ""
+            })
+            .bind(to: errorMessageField.rx.text).disposed(by: _bag)
+
+        labelField.rx.text
+            .map({ [unowned self] label -> Bool in
 //                guard label != nil else { return false }
 //                guard !label!.isEmpty else { return false }
 //                guard !self._cache.containsLabel(label!) else { return false }
-//
-//                return true
-//            }).bind(to: addButton.rx.isEnabled).disposed(by: _disposeBag)
+
+                return true
+            }).bind(to: addButton.rx.isEnabled).disposed(by: _bag)
     }
     
     @IBAction func onAddLabelClick(_ sender: Any) {
-//        _cache.addLabel(labelField.stringValue)
+        _database.addLabel(labelField.stringValue)
         self.presentingViewController?.dismiss(self)
     }
     

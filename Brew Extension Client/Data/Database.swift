@@ -10,7 +10,7 @@ import Foundation
 import BrewExtension
 import CoreData
 
-class CoreDataCache {
+class Database {
 
     struct BrewExtensionDataSourceWrapper: DataSource {
         func formulaes() -> [String] {
@@ -57,6 +57,28 @@ class CoreDataCache {
 
     init(context: NSManagedObjectContext) {
         self.context = context
+    }
+
+    func fetchLabels(with properties: [String] = ["name"]) -> [BECLabel] {
+        let labelsFetchRequest: NSFetchRequest<BECLabel> = BECLabel.fetchRequest()
+        labelsFetchRequest.propertiesToFetch = properties
+        labelsFetchRequest.sortDescriptors = [
+            .init(keyPath: \BECLabel.name, ascending: true)
+        ]
+
+        return try! self.context.fetch(labelsFetchRequest)
+    }
+
+    func deleteLabel(_ label: BECLabel) {
+        self.context.delete(label)
+        try! self.context.save()
+    }
+
+    func addLabel(_ label: String) {
+        let l = BECLabel(context: self.context)
+        l.name = label
+
+        try! self.context.save()
     }
 
 //    func labels(of formulae: String) -> Set<String> {
@@ -131,10 +153,7 @@ class CoreDataCache {
 //        formulaes[0].addToLabels(labels[0])
 //    }
 //
-//    func addLabel(_ label: String) {
-//        let l = BECLabel(context: self.context)
-//        l.name = label
-//    }
+
 //
 //    func removeLabel(_ label: String) {
 //        let labelFetchRequest: NSFetchRequest<BECLabel> = BECLabel.fetchRequest()

@@ -12,7 +12,7 @@ import RxCocoa
 class CheckboxCellView: NSTableCellView {
 
     @IBOutlet weak var checkboxButton: NSButton!
-    var cache = AppDelegate.sharedCache
+    var cache = AppDelegate.sharedDatabase
     var formulae = ""
     
     @IBAction func onCheckBoxClicked(_ sender: Any) {
