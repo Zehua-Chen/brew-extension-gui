@@ -15,8 +15,10 @@ class LabelCellView: NSTableCellView {
     @IBOutlet weak var formulaesCountTextField: NSTextField!
 
     fileprivate var _bag: DisposeBag!
+    fileprivate var _label: BECLabel?
 
     func setupUsing(formulaesCount: Driver<Int>, title: String) {
+        _label = nil
         _bag = DisposeBag()
 
         formulaesCount
@@ -25,5 +27,10 @@ class LabelCellView: NSTableCellView {
             .disposed(by: _bag)
 
         self.titleTextField.stringValue = title
+    }
+
+    func setup(using label: BECLabel) {
+        self.setupUsing(formulaesCount: label.formulaesCount.asDriver(), title: label.name!)
+        _label = label
     }
 }

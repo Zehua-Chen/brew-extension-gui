@@ -32,6 +32,15 @@ class MainSplitViewController: NSSplitViewController {
     fileprivate var _cache = AppDelegate.sharedDatabase
     fileprivate var _disposeBag = DisposeBag()
 
+    override func responds(to aSelector: Selector!) -> Bool {
+        switch aSelector {
+        case #selector(toggleSidebar(_:)):
+            return true
+        default:
+            return super.responds(to: aSelector)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,6 +59,11 @@ class MainSplitViewController: NSSplitViewController {
     @IBAction func addLabel(_ sender: Any) {
         self.presentAsSheet(self.addLabelViewController)
         
+    }
+
+    @objc override func toggleSidebar(_ sender: Any?) {
+        let item = self.splitViewItems[0]
+        item.animator().isCollapsed = !item.isCollapsed
     }
 
 //    func removeFormulae(_ formulae: Formulae) {
