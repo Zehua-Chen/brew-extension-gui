@@ -18,17 +18,17 @@ class SyncViewController: NSViewController, SyncOperation {
     override func viewDidAppear() {
         super.viewDidAppear()
 
-        let context = CoreDataManager.shared.backgroundContext
-        context.perform {
-            var cache = CoreDataCache(context: context)
-
-            try! self.sync(into: &cache, using: .init())
-            cache.write()
-
-            DispatchQueue.main.async {
-                AppDelegate.sharedCache.finishSync()
-                self.presentingViewController?.dismiss(self)
-            }
-        }
+//        let context = CoreDataManager.shared.backgroundContext
+//        context.perform {
+//            var cache = CoreDataCache(context: context)
+//
+//            try! self.sync(into: &cache, using: .init())
+//            cache.write()
+//
+//            DispatchQueue.main.async {
+//                AppDelegate.sharedCache.finishSync()
+//                self.presentingViewController?.dismiss(self)
+//            }
+//        }
     }
 }

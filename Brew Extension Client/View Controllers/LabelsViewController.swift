@@ -17,37 +17,37 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
     private let _disposeBag = DisposeBag()
     private var _cache = AppDelegate.sharedCache
-    private var _labels = [Label]()
+//    private var _labels = [Label]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        _cache.labels
-            .bind(onNext: { [unowned self] updates in
-                let old = self._labels
-                self._labels = updates
-
-                // Update table view
-                self.tableView.animateRowChanges(
-                    oldData: old,
-                    newData: updates,
-                    deletionAnimation: [.effectFade],
-                    insertionAnimation: [.effectGap],
-                    indexPathTransform: self._indexPathTransform)
-            })
-            .disposed(by: _disposeBag)
-
-        _cache.currentFormulaeLabelUpdated
-            .subscribe { e in
-                self.tableView.reloadData()
-            }
-            .disposed(by: _disposeBag)
-
-        self.tableView.rx.selectedRow
-            .bind(onNext: { row in
-                print("selected row = \(row)")
-            })
-            .disposed(by: _disposeBag)
+//        _cache.labels
+//            .bind(onNext: { [unowned self] updates in
+//                let old = self._labels
+//                self._labels = updates
+//
+//                // Update table view
+//                self.tableView.animateRowChanges(
+//                    oldData: old,
+//                    newData: updates,
+//                    deletionAnimation: [.effectFade],
+//                    insertionAnimation: [.effectGap],
+//                    indexPathTransform: self._indexPathTransform)
+//            })
+//            .disposed(by: _disposeBag)
+//
+//        _cache.currentFormulaeLabelUpdated
+//            .subscribe { e in
+//                self.tableView.reloadData()
+//            }
+//            .disposed(by: _disposeBag)
+//
+//        self.tableView.rx.selectedRow
+//            .bind(onNext: { row in
+//                print("selected row = \(row)")
+//            })
+//            .disposed(by: _disposeBag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
@@ -62,12 +62,13 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     // MARK: NSTableView Related
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-        guard rowIndex > 0 else { return }
-        _cache.removeLabel(_labels[rowIndex - 1].name)
+//        guard rowIndex > 0 else { return }
+//        _cache.removeLabel(_labels[rowIndex - 1].name)
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return _labels.count + 1
+        return 0
+//        return _labels.count + 1
     }
 
     func tableView(
@@ -77,21 +78,21 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     ) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("labelCellView"), owner: nil) as! LabelCellView
 
-        if row == 0 {
-            view.titleTextField.stringValue = "All"
-            view.formulaesCountTextField.stringValue = "\(_cache.numberOfFormulaes()) formulaes"
-
-            return view
-        }
-
-        let labelsIndex = row - 1
-
-        guard labelsIndex < _labels.count else { return nil }
-
-        let label = _labels[labelsIndex]
-
-        view.titleTextField.stringValue = label.name
-        view.formulaesCountTextField.stringValue = "\(label.numberOfFormulaes) formulaes"
+//        if row == 0 {
+//            view.titleTextField.stringValue = "All"
+//            view.formulaesCountTextField.stringValue = "\(_cache.numberOfFormulaes()) formulaes"
+//
+//            return view
+//        }
+//
+//        let labelsIndex = row - 1
+//
+//        guard labelsIndex < _labels.count else { return nil }
+//
+//        let label = _labels[labelsIndex]
+//
+//        view.titleTextField.stringValue = label.name
+//        view.formulaesCountTextField.stringValue = "\(label.numberOfFormulaes) formulaes"
 
         return view
     }
@@ -116,12 +117,12 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let actualRow = self.tableView.selectedRow - 1
-
-        if actualRow < 0 || actualRow >= _labels.count {
-            _cache.currentLabel.onNext(nil)
-        } else {
-            _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])
-        }
+//        let actualRow = self.tableView.selectedRow - 1
+//
+//        if actualRow < 0 || actualRow >= _labels.count {
+//            _cache.currentLabel.onNext(nil)
+//        } else {
+//            _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])
+//        }
     }
 }

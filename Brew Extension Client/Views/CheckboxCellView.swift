@@ -16,17 +16,17 @@ class CheckboxCellView: NSTableCellView {
     var formulae = ""
     
     @IBAction func onCheckBoxClicked(_ sender: Any) {
-        guard !formulae.isEmpty else { return }
-
-        switch self.checkboxButton.state {
-        case .on:
-            cache.addLabel(checkboxButton.title, to: formulae)
-        case .off:
-            cache.removeLabel(checkboxButton.title, from: formulae)
-        default:
-            break
-        }
-
-        cache.currentFormulaeLabelUpdated.onNext(())
+//        guard !formulae.isEmpty else { return }
+//
+//        switch self.checkboxButton.state {
+//        case .on:
+//            cache.addLabel(checkboxButton.title, to: formulae)
+//        case .off:
+//            cache.removeLabel(checkboxButton.title, from: formulae)
+//        default:
+//            break
+//        }
+//
+//        cache.currentFormulaeLabelUpdated.onNext(())
     }
 }

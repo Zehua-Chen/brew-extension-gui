@@ -12,8 +12,8 @@ import BrewExtension
 class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, FindUninstallablesOperation {
 
     var target = ""
-    var removes = [Formulae]()
-    var formulae: Formulae!
+//    var removes = [Formulae]()
+//    var formulae: Formulae!
 
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var titleTextField: NSTextField!
@@ -25,13 +25,13 @@ class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTab
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        removes = self.findUninstallableFormulaes(for: formulae.name, cache: AppDelegate.sharedCache)
-        self.titleTextField.stringValue = "The following formulaes will be removed"
-        self.tableView.reloadData()
+//        removes = self.findUninstallableFormulaes(for: formulae.name, cache: AppDelegate.sharedCache)
+//        self.titleTextField.stringValue = "The following formulaes will be removed"
+//        self.tableView.reloadData()
     }
     
     @IBAction func onConfirmClicked(_ sender: Any) {
-        self.titleTextField.stringValue = "Working"
+//        self.titleTextField.stringValue = "Working"
         // TODO Remove formulae
         self.presentingViewController?.dismiss(self)
     }
@@ -43,13 +43,14 @@ class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTab
     // MARK: NSTableView protocol conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return removes.count
+        return 0
+//        return removes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("removeTableCellView"), owner: nil) as! NSTableCellView
-        view.textField?.stringValue = removes[row].name
-        
+//        view.textField?.stringValue = removes[row].name
+
         return view
     }
 }

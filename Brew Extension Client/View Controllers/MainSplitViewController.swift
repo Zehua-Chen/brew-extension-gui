@@ -35,11 +35,11 @@ class MainSplitViewController: NSSplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        _cache.onRemoveFormulae
-            .bind(onNext: { [unowned self] formulae in
-                self.removeFormulae(formulae)
-            })
-            .disposed(by: _disposeBag)
+//        _cache.onRemoveFormulae
+//            .bind(onNext: { [unowned self] formulae in
+//                self.removeFormulae(formulae)
+//            })
+//            .disposed(by: _disposeBag)
     }
 
     @IBAction func syncBrewExtension(_ sender: Any) {
@@ -52,9 +52,9 @@ class MainSplitViewController: NSSplitViewController {
         
     }
 
-    func removeFormulae(_ formulae: Formulae) {
-        // TODO Remove
-        self.removeFormulaeViewController.formulae = formulae
-        self.presentAsSheet(self.removeFormulaeViewController)
-    }
+//    func removeFormulae(_ formulae: Formulae) {
+//        // TODO Remove
+//        self.removeFormulaeViewController.formulae = formulae
+//        self.presentAsSheet(self.removeFormulaeViewController)
+//    }
 }
