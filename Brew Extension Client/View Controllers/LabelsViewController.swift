@@ -44,18 +44,24 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
                     indexPathTransform: self._indexPathTransform)
             })
             .disposed(by: _bag)
-//
-//        _cache.currentFormulaeLabelUpdated
-//            .subscribe { e in
-//                self.tableView.reloadData()
-//            }
-//            .disposed(by: _disposeBag)
-//
-//        self.tableView.rx.selectedRow
-//            .bind(onNext: { row in
-//                print("selected row = \(row)")
-//            })
-//            .disposed(by: _disposeBag)
+
+        self.tableView.rx.selectedRow
+            .bind(onNext: { [unowned self] row in
+                if row == 0 {
+                    self._database.selectLabel(nil)
+                    return
+                }
+
+                let actualRow = row - 1
+
+                if actualRow < self._labels.count {
+                    self._database.selectLabel(self._labels[actualRow])
+                    return
+                }
+
+                self._database.selectLabel(nil)
+            })
+            .disposed(by: _bag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
@@ -70,8 +76,10 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     // MARK: NSTableView Related
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-        guard rowIndex - 1 > 0 else { return }
-        _database.deleteLabel(_labels[rowIndex - 1])
+        let labelIndex = rowIndex - 1
+        guard labelIndex >= 0 else { return }
+
+        _database.deleteLabel(_labels[labelIndex])
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -94,13 +102,9 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         }
 
         let labelsIndex = row - 1
-
         guard labelsIndex < _labels.count else { return nil }
 
-        let label = _labels[labelsIndex]
-        view.setupUsing(
-            formulaesCount: label.formulaesCount.asDriver(),
-            title: label.name!)
+        view.setup(using: _labels[labelsIndex])
 
         return view
     }

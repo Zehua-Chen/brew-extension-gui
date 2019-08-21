@@ -575,7 +575,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="72O-kg-Ovn"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -634,7 +634,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24" y="-91"/>
+            <point key="canvasLocation" x="19" y="-189"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -661,8 +661,23 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="D363D5B2-A373-49CD-8AC7-2A8E4C0C5B8C" label="Sidebar" paletteLabel="Sidebar" sizingBehavior="auto" id="8Bd-UC-BHI">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="oe0-QE-3Gx">
+                                        <rect key="frame" x="0.0" y="14" width="68" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Sidebar" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9WB-52-4lO">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="toggleSidebar:" target="Oky-zY-oP4" id="fIG-MM-8nm"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="8Bd-UC-BHI"/>
                                 <toolbarItem reference="gH1-ur-J7B"/>
                             </defaultToolbarItems>
                         </toolbar>
@@ -967,8 +982,8 @@ DQ
             <objects>
                 <splitViewController id="sJv-u8-Nbi" customClass="MainSplitViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
-                        <splitViewItem id="f25-AS-wrb" userLabel="Split View Item"/>
-                        <splitViewItem id="tCG-dq-gQz"/>
+                        <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" id="f25-AS-wrb" userLabel="Split View Item"/>
+                        <splitViewItem holdingPriority="255" behavior="contentList" id="tCG-dq-gQz"/>
                         <splitViewItem id="Cqi-n6-efu"/>
                     </splitViewItems>
                     <splitView key="splitView" dividerStyle="thin" vertical="YES" id="rwW-ZU-FbV">

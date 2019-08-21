@@ -30,7 +30,7 @@ class LabelCellView: NSTableCellView {
     }
 
     func setup(using label: BECLabel) {
-        self.setupUsing(formulaesCount: label.formulaesCount.asDriver(), title: label.name!)
+        self.setupUsing(formulaesCount: label.observableFormulaesCount.asDriver(), title: label.name!)
         _label = label
     }
 }

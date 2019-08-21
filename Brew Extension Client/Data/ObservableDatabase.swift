@@ -10,31 +10,19 @@ import RxSwift
 import RxCocoa
 
 class ObservableDatabase: Database, ReactiveCompatible {
-    var labels = BehaviorRelay<[BECLabel]>(value: [])
-    var formulaesCount = BehaviorRelay<Int>(value: 0)
+    var sync: PublishRelay<Void> = .init()
+    var labels: BehaviorRelay<[BECLabel]> = .init(value: [])
+    var formulaesCount: BehaviorRelay<Int> = .init(value: 0)
 
-    var currentLabel = BehaviorRelay<BECLabel?>(value: nil)
+    var currentFormulaes: BehaviorRelay<[BECFormulae]> = .init(value: [])
 
-    fileprivate var _bag = DisposeBag()
+    fileprivate var _bag: DisposeBag = DisposeBag()
+    fileprivate var _selectedLabel: BECLabel?
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
-
-        self.labels
-            .map({ labels -> BECLabel? in
-                guard !labels.isEmpty else { return nil }
-                return labels[0]
-            })
-            .bind(to: self.currentLabel)
-            .disposed(by: _bag)
-
-        // TODO: Send the correct formulaes count
-        self.labels
-            .map({ return $0.count })
-            .bind(to: self.formulaesCount)
-            .disposed(by: _bag)
-
         self.labels.accept(self.fetchLabels())
+        self.formulaesCount.accept(self.fetchFormulaesCount())
     }
 
     override func addLabel(_ label: String) {
@@ -45,5 +33,10 @@ class ObservableDatabase: Database, ReactiveCompatible {
     override func deleteLabel(_ label: BECLabel) {
         super.deleteLabel(label)
         self.labels.accept(self.fetchLabels())
+    }
+
+    func selectLabel(_ label: BECLabel?) {
+        _selectedLabel = label
+        self.currentFormulaes.accept(self.fetchFormulaes())
     }
 }

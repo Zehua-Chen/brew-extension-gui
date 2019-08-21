@@ -7,7 +7,17 @@
 //
 
 import Cocoa
+import RxCocoa
+import RxSwift
 
 class BECFormulae: NSManagedObject {
+    lazy var observalbleLabels: BehaviorRelay<Set<BECLabel>> = {
+        let relay = BehaviorRelay<Set<BECLabel>>(value: self.labels as! Set<BECLabel>)
+        return relay
+    }()
 
+    lazy var obserableIsProtected: BehaviorRelay<Bool> = {
+        let relay = BehaviorRelay<Bool>(value: self.isProtected)
+        return relay
+    }()
 }

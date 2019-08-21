@@ -69,6 +69,20 @@ class Database {
         return try! self.context.fetch(labelsFetchRequest)
     }
 
+    func fetchFormulaes() -> [BECFormulae] {
+        let formulaeFetchRequest: NSFetchRequest<BECFormulae> = BECFormulae.fetchRequest()
+        formulaeFetchRequest.propertiesToFetch = ["name"]
+        formulaeFetchRequest.sortDescriptors = [
+            .init(key: "name", ascending: true)
+        ]
+
+        return try! self.context.fetch(formulaeFetchRequest)
+    }
+
+    func fetchFormulaesCount() -> Int {
+        return try! self.context.count(for: BECFormulae.fetchRequest())
+    }
+
     func deleteLabel(_ label: BECLabel) {
         self.context.delete(label)
         try! self.context.save()
@@ -230,15 +244,7 @@ class Database {
 //        self.context.delete(formulae as NSManagedObject)
 //    }
 //
-//    func formulaes() -> [BECFormulae] {
-//        let formulaeFetchRequest: NSFetchRequest<BECFormulae> = BECFormulae.fetchRequest()
-//        formulaeFetchRequest.propertiesToFetch = ["name"]
-//        formulaeFetchRequest.sortDescriptors = [
-//            .init(key: "name", ascending: true)
-//        ]
-//
-//        return try! self.context.fetch(formulaeFetchRequest)
-//    }
+
 //
 //    func numberOfFormulaes() -> Int {
 //        return self.formulaes().count

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class BECLabel: NSManagedObject {
-    lazy var formulaesCount: BehaviorRelay<Int> = {
+    lazy var observableFormulaesCount: BehaviorRelay<Int> = {
         return BehaviorRelay<Int>(value: self.formulaes?.count ?? 0)
     }()
 
@@ -27,6 +27,6 @@ class BECLabel: NSManagedObject {
 
     fileprivate func _setupObservables() {
         print("BECLabel setup")
-        self.formulaesCount.accept(self.formulaes?.count ?? 0)
+        self.observableFormulaesCount.accept(self.formulaes?.count ?? 0)
     }
 }

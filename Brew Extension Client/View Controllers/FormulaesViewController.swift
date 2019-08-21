@@ -15,9 +15,9 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     @IBOutlet weak var tableView: NSTableView!
 
-    fileprivate var _cache = AppDelegate.sharedDatabase
+    fileprivate var _database = AppDelegate.sharedDatabase
     fileprivate var _disposeBag = DisposeBag()
-//    fileprivate var _formulaes = [Formulae]()
+    fileprivate var _formulaes = [BECFormulae]()
 
     fileprivate var _protectRowAction: NSTableViewRowAction!
     fileprivate var _unprotectRowAction: NSTableViewRowAction!
@@ -26,27 +26,28 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         super.viewDidLoad()
         // Do view setup here.
 
-//        _protectRowAction = NSTableViewRowAction(
-//            style: .regular,
-//            title: "Protect",
-//            handler: self.onProtectFormulae)
-//
-//        _protectRowAction.image = NSImage(named: NSImage.lockLockedTemplateName)
-//
-//        _unprotectRowAction = NSTableViewRowAction(
-//            style: .regular,
-//            title: "Unprotect",
-//            handler: self.onUnprotectFormulae)
-//
-//        _unprotectRowAction.backgroundColor = .systemOrange
-//        _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
-//
-//        _cache.currentFormulaes
-//            .bind(onNext: { [unowned self] formulaes in
-//                self._formulaes = formulaes
-//                self.tableView.reloadData()
-//            })
-//            .disposed(by: _disposeBag)
+        _protectRowAction = NSTableViewRowAction(
+            style: .regular,
+            title: "Protect",
+            handler: self.onProtectFormulae)
+
+        _protectRowAction.image = NSImage(named: NSImage.lockLockedTemplateName)
+
+        _unprotectRowAction = NSTableViewRowAction(
+            style: .regular,
+            title: "Unprotect",
+            handler: self.onUnprotectFormulae)
+
+        _unprotectRowAction.backgroundColor = .systemOrange
+        _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
+
+        _database.currentFormulaes
+            .asDriver()
+            .drive(onNext: { [unowned self] formulaes in
+                self._formulaes = formulaes
+                self.tableView.reloadData()
+            })
+            .disposed(by: _disposeBag)
     }
 
     // MARK: Event handlers
@@ -71,23 +72,14 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     // MAKR: NSTableView protocols conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 0
-//        return _formulaes.count
+        return _formulaes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 //        guard row < _formulaes.count else { return nil }
 
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
-
-//        view.titleTextField.stringValue = _formulaes[row].name
-//        view.labelsTextField.stringValue = "Label: "
-//
-//        if _formulaes[row].isProtected {
-//            view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
-//        } else {
-//            view.protectionIcon.image = NSImage(named: NSImage.lockUnlockedTemplateName)
-//        }
+        view.setup(using: _formulaes[row])
 
         return view
     }
