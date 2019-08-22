@@ -20,4 +20,13 @@ class BECFormulae: NSManagedObject {
         let relay = BehaviorRelay<Bool>(value: self.isProtected)
         return relay
     }()
+
+    override func didChangeValue(forKey key: String) {
+        switch key {
+        case "isProtected":
+            self.obserableIsProtected.accept(self.isProtected)
+        default:
+            break
+        }
+    }
 }

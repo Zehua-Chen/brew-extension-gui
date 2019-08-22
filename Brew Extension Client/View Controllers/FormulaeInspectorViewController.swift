@@ -10,7 +10,10 @@ import Cocoa
 import RxCocoa
 import RxSwift
 
-class FormulaeViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class FormulaeInspectorViewController:
+    NSViewController,
+    NSTableViewDelegate,
+    NSTableViewDataSource {
 
     @IBOutlet weak var isProtectedCheckBox: NSButton!
     @IBOutlet weak var formulaeTitleLabel: NSTextField!

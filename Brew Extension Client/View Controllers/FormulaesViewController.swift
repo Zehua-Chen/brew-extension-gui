@@ -58,15 +58,13 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
-//        self.tableView.rowActionsVisible = false
-//        _cache.protectFormulae(&_formulaes[row])
-//        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
+        self.tableView.rowActionsVisible = false
+        _formulaes[row].isProtected = true
     }
 
     func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
-//        self.tableView.rowActionsVisible = false
-//        _cache.unprotectFormulae(&_formulaes[row])
-//        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
+        self.tableView.rowActionsVisible = false
+        _formulaes[row].isProtected = false
     }
 
     // MAKR: NSTableView protocols conformance
@@ -76,7 +74,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-//        guard row < _formulaes.count else { return nil }
+        guard row < _formulaes.count else { return nil }
 
         let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
         view.setup(using: _formulaes[row])
@@ -87,7 +85,11 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {
         switch edge {
         case .leading:
-            return [_protectRowAction, _unprotectRowAction]
+            if _formulaes[row].isProtected {
+                return [_unprotectRowAction]
+            }
+
+            return [_protectRowAction]
         case .trailing:
             return [
                 .init(style: .destructive, title: "Remove", handler: self.onRemoveFormulae),

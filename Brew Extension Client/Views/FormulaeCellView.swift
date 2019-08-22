@@ -27,7 +27,11 @@ class FormulaeCellView: NSTableCellView {
         formulae.observalbleLabels
             .asDriver()
             .map({ labels -> String in
-                return ""
+                return labels.sorted(by: { a, b in
+                    return a.name! < b.name!
+                })
+                .map({ return $0.name! })
+                .joined(separator: ",")
             })
             .drive(self.labelsTextField.rx.text)
             .disposed(by: _bag)
