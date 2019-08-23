@@ -13,11 +13,24 @@ extension NSUserInterfaceItemIdentifier {
         return .init("labelCellView")
     }
 
-    static var dependencyCellView: NSUserInterfaceItemIdentifier {
-        return .init("dependencyCellView")
+    static var incomingDepsCellView: NSUserInterfaceItemIdentifier {
+        return .init("incomingDepsCellView")
+    }
+
+    static var outcomingDepsCellView: NSUserInterfaceItemIdentifier {
+        return .init("outcomingDepsCellView")
     }
 
     static var formulaeCellView: NSUserInterfaceItemIdentifier {
         return .init("formulaeCellView")
     }
+
+    static var outcomingDepsColum: NSUserInterfaceItemIdentifier {
+        return .init("outcomingDepsColum")
+    }
+
+    static var incomingDepsColum: NSUserInterfaceItemIdentifier {
+        return .init("incomingDepsColum")
+    }
+
 }

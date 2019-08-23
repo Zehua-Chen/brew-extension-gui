@@ -25,8 +25,8 @@ class FormulaeInspectorViewController:
     fileprivate let _persistantBag: DisposeBag = .init()
     fileprivate var _selectionBag: DisposeBag = .init()
 
-    fileprivate var _incomings: [BECLabel] = []
-    fileprivate var _outcomings: [BECLabel] = []
+    fileprivate var _incomings: [BECFormulae] = []
+    fileprivate var _outcomings: [BECFormulae] = []
     fileprivate var _labels: [BECLabel] = []
 
     fileprivate var _formulae: BECFormulae?
@@ -69,6 +69,18 @@ class FormulaeInspectorViewController:
                     })
                     .drive(self.isProtectedCheckBox.rx.state)
                     .disposed(by: self._selectionBag)
+
+                self._incomings = self._formulae?.typedIncomings
+                    .sorted(by: { a, b in
+                        return a.name! < b.name!
+                    }) ?? []
+
+                self._outcomings = self._formulae?.typedOutcomings
+                    .sorted(by: { a, b in
+                        return a.name! < b.name!
+                    }) ?? []
+
+                self.dependencyTableView.reloadData()
             })
             .disposed(by: _persistantBag)
     }
@@ -105,16 +117,25 @@ class FormulaeInspectorViewController:
         switch tableView.tag {
         // MARK: Depdency Table
         case 0:
-            let view = tableView.makeView(
-                withIdentifier: .dependencyCellView,
-                owner: nil) as! NSTableCellView
 
-            switch tableColumn!.title {
-            case "Depending on":
+            switch tableColumn!.identifier {
+            case .outcomingDepsColum:
                 guard row < _outcomings.count else { return nil }
+
+                let view = tableView.makeView(
+                    withIdentifier: .outcomingDepsCellView,
+                    owner: nil) as! NSTableCellView
+
+                view.textField?.stringValue = _outcomings[row].name!
                 return view
-            case "Depended by":
+            case .incomingDepsColum:
                 guard row < _incomings.count else { return nil }
+
+                let view = tableView.makeView(
+                    withIdentifier: .incomingDepsCellView,
+                    owner: nil) as! NSTableCellView
+
+                view.textField?.stringValue = _incomings[row].name!
                 return view
             default:
                 return nil

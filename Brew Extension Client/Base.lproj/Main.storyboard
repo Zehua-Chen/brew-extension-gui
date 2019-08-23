@@ -1298,14 +1298,14 @@ DQ
                                             <rect key="frame" x="1" y="0.0" width="408" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="143"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn width="200" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
+                                                        <tableColumn identifier="outcomingDepsColum" width="200" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depending on">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1318,7 +1318,7 @@ DQ
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="dependencyCellView" id="t47-7Y-QqV">
+                                                                <tableCellView identifier="outcomingDepsCellView" id="t47-7Y-QqV">
                                                                     <rect key="frame" x="1" y="1" width="200" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1343,7 +1343,7 @@ DQ
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
-                                                        <tableColumn identifier="dependencyCellView" width="201" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
+                                                        <tableColumn identifier="incomingDepsColum" width="201" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depended by">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1356,7 +1356,7 @@ DQ
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="8uq-u0-zo7">
+                                                                <tableCellView identifier="incomingDepsCellView" id="8uq-u0-zo7">
                                                                     <rect key="frame" x="204" y="1" width="201" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>

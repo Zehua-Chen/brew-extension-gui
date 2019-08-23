@@ -20,6 +20,14 @@ class BECFormulae: NSManagedObject {
         return relay
     }()
 
+    var typedOutcomings: Set<BECFormulae> {
+        return self.outcomings as! Set<BECFormulae>
+    }
+
+    var typedIncomings: Set<BECFormulae> {
+        return self.incomings as! Set<BECFormulae>
+    }
+
     override func didChangeValue(forKey key: String) {
         switch key {
         case "isProtected":
