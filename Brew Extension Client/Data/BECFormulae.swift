@@ -28,6 +28,10 @@ class BECFormulae: NSManagedObject {
         return self.incomings as! Set<BECFormulae>
     }
 
+    var typedLabels: Set<BECLabel> {
+        return self.labels as! Set<BECLabel>
+    }
+
     override func didChangeValue(forKey key: String) {
         switch key {
         case "isProtected":

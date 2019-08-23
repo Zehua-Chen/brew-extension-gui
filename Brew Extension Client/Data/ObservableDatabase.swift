@@ -14,11 +14,11 @@ class ObservableDatabase: Database {
     var labels: BehaviorRelay<[BECLabel]> = .init(value: [])
     var formulaesCount: BehaviorRelay<Int> = .init(value: 0)
 
+    var currentLabel: BECLabel?
     var currentFormulaes: BehaviorRelay<[BECFormulae]> = .init(value: [])
     var currentFormulae: BehaviorRelay<BECFormulae?> = .init(value: nil)
 
     fileprivate var _bag: DisposeBag = DisposeBag()
-    fileprivate var _selectedLabel: BECLabel?
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
@@ -49,10 +49,10 @@ class ObservableDatabase: Database {
     }
 
     func selectLabel(_ label: BECLabel?) {
-        _selectedLabel = label
+        currentLabel = label
 
-        if _selectedLabel != nil {
-            self.currentFormulaes.accept(self.fetchFormulaes(in: _selectedLabel!))
+        if currentLabel != nil {
+            self.currentFormulaes.accept(self.fetchFormulaes(in: currentLabel!))
         } else {
             self.currentFormulaes.accept(self.fetchFormulaes())
         }

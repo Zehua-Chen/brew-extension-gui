@@ -43,22 +43,14 @@ class MainSplitViewController: NSSplitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        _cache.onRemoveFormulae
-//            .bind(onNext: { [unowned self] formulae in
-//                self.removeFormulae(formulae)
-//            })
-//            .disposed(by: _disposeBag)
     }
 
     @IBAction func syncBrewExtension(_ sender: Any) {
         self.presentAsSheet(self.syncViewController)
-        // TODO Sync
     }
 
     @IBAction func addLabel(_ sender: Any) {
         self.presentAsSheet(self.addLabelViewController)
-        
     }
 
     @objc override func toggleSidebar(_ sender: Any?) {

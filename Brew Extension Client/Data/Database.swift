@@ -13,43 +13,69 @@ import CoreData
 class Database {
 
     struct BrewExtensionDataSourceWrapper: DataSource {
+
+        fileprivate weak var _database: Database!
+
+        fileprivate init(database: Database) {
+            _database = database
+        }
+
         func formulaes() -> [String] {
-            return .init()
+            return _database.fetchFormulaes()
+                .map({ formulae in
+                    return formulae.name!
+                })
         }
 
         func outcomingDependencies(for formulaeName: String) -> Set<String> {
-            return .init()
+            let f = _database.fetchFormulaes(with: formulaeName)[0]
+            return Set(f.typedOutcomings.lazy.map({ return $0.name! }))
         }
 
         func protectsFormulae(_ name: String) -> Bool {
-            return false
+            let f = _database.fetchFormulaes(with: name)[0]
+            return f.isProtected
         }
 
         func labels(of formulaeName: String) -> Set<String> {
-            return .init()
+            let f = _database.fetchFormulaes(with: formulaeName)[0]
+            return Set(f.typedLabels.lazy.map({ return $0.name! }))
         }
 
         mutating func removeLabel(_ labelName: String, from formulaeName: String) {
+            let f = _database.fetchFormulaes(with: formulaeName)[0]
+            let l = _database.fetchLabels(with: labelName)[0]
+
+            f.removeFromLabels(l)
         }
 
         mutating func removeFormulae(_ name: String) {
+            let f = _database.fetchFormulaes(with: name)[0]
+            _database.context.delete(f)
         }
 
         func containsFormulae(_ name: String) -> Bool {
-            return false
+            return _database.fetchFormulaes(with: name).count == 1
         }
 
         func containsDependency(from sourceName: String, to targetName: String) -> Bool {
-            return false
+            let from = _database.fetchFormulaes(with: sourceName)[0]
+            let to = _database.fetchFormulaes(with: targetName)[0]
+
+            return from.outcomings!.contains(to)
         }
 
         mutating func addFormulae(_ name: String) {
+            let f = BECFormulae(context: _database.context)
+            f.name = name
         }
 
         mutating func addDependency(from sourceName: String, to targetName: String) {
+            let from = _database.fetchFormulaes(with: sourceName)[0]
+            let to = _database.fetchFormulaes(with: targetName)[0]
 
+            from.addToOutcomings(to)
         }
-
 
     }
 
@@ -57,6 +83,10 @@ class Database {
 
     init(context: NSManagedObjectContext) {
         self.context = context
+    }
+
+    func makeDataSourceWrapper() -> BrewExtensionDataSourceWrapper {
+        return .init(database: self)
     }
 
     func fetchLabels(with properties: [String] = ["name"]) -> [BECLabel] {
@@ -79,6 +109,13 @@ class Database {
         return try! self.context.fetch(formulaeFetchRequest)
     }
 
+    func fetchFormulaes(with name: String) -> [BECFormulae] {
+        let formulaeFetchRequest: NSFetchRequest<BECFormulae> = BECFormulae.fetchRequest()
+        formulaeFetchRequest.predicate = .init(format: "name == %@", name)
+
+        return try! self.context.fetch(formulaeFetchRequest)
+    }
+
     func fetchFormulaes(in label: BECLabel) -> [BECFormulae] {
         let formulaeFetchRequest: NSFetchRequest<BECFormulae> = BECFormulae.fetchRequest()
         formulaeFetchRequest.sortDescriptors = [
@@ -92,6 +129,13 @@ class Database {
 
     func fetchFormulaesCount() -> Int {
         return try! self.context.count(for: BECFormulae.fetchRequest())
+    }
+
+    func fetchLabels(with name: String) -> [BECLabel] {
+        let labelFetchRequest: NSFetchRequest<BECLabel> = BECLabel.fetchRequest()
+        labelFetchRequest.predicate = .init(format: "name == %@", name)
+
+        return try! self.context.fetch(labelFetchRequest)
     }
 
     func deleteLabel(_ label: BECLabel) {

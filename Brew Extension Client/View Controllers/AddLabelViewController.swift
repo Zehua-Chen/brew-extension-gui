@@ -7,8 +7,6 @@
 //
 
 import Cocoa
-import RxSwift
-import RxCocoa
 
 class AddLabelViewController: NSViewController {
     
@@ -17,31 +15,9 @@ class AddLabelViewController: NSViewController {
     @IBOutlet weak var addButton: NSButton!
     
     fileprivate var _database = AppDelegate.sharedDatabase
-    fileprivate var _bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        labelField.rx.text
-//            .map({ [unowned self] label in
-//                if label != nil {
-//                    if self._cache.containsLabel(label!) {
-//                        return "This name is already taken"
-//                    }
-//                }
-//
-//                return ""
-//            })
-//            .bind(to: errorMessageField.rx.text).disposed(by: _bag)
-//
-//        labelField.rx.text
-//            .map({ [unowned self] label -> Bool in
-//                guard label != nil else { return false }
-//                guard !label!.isEmpty else { return false }
-//                guard !self._cache.containsLabel(label!) else { return false }
-//
-//                return true
-//            }).bind(to: addButton.rx.isEnabled).disposed(by: _bag)
     }
     
     @IBAction func onAddLabelClick(_ sender: Any) {

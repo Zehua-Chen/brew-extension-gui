@@ -51,11 +51,32 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             .disposed(by: _bag)
 
         self.tableView.rx.selectedRow
-            .map({ [unowned self] row in
+            .map({ [unowned self] row -> BECFormulae? in
+                guard row < self._formulaes.count else { return nil }
                 return self._formulaes[row]
             })
             .subscribe(onNext: { [unowned self] formulae in
                 self._database.selectFormulae(formulae)
+            })
+            .disposed(by: _bag)
+
+        _database.sync.asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [unowned self] in
+                var newFormulaes = [BECFormulae]()
+
+                if let label = self._database.currentLabel {
+                    newFormulaes = self._database.fetchFormulaes(in: label)
+                } else {
+                    newFormulaes = self._database.fetchFormulaes()
+                }
+
+                let oldFormulaes = self._formulaes
+                self._formulaes = newFormulaes
+
+                self.tableView.animateRowChanges(
+                    oldData: oldFormulaes,
+                    newData: newFormulaes,
+                    isEqual: { return $0.name! == $1.name! })
             })
             .disposed(by: _bag)
     }
