@@ -16,7 +16,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     @IBOutlet weak var tableView: NSTableView!
 
     fileprivate var _database = AppDelegate.sharedDatabase
-    fileprivate var _disposeBag = DisposeBag()
+    fileprivate var _bag = DisposeBag()
     fileprivate var _formulaes = [BECFormulae]()
 
     fileprivate var _protectRowAction: NSTableViewRowAction!
@@ -47,7 +47,16 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
                 self._formulaes = formulaes
                 self.tableView.reloadData()
             })
-            .disposed(by: _disposeBag)
+            .disposed(by: _bag)
+
+        self.tableView.rx.selectedRow
+            .map({ [unowned self] row in
+                return self._formulaes[row]
+            })
+            .subscribe(onNext: { [unowned self] formulae in
+                self._database.selectFormulae(formulae)
+            })
+            .disposed(by: _bag)
     }
 
     // MARK: Event handlers

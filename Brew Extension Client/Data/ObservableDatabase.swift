@@ -9,12 +9,13 @@
 import RxSwift
 import RxCocoa
 
-class ObservableDatabase: Database, ReactiveCompatible {
+class ObservableDatabase: Database {
     var sync: PublishRelay<Void> = .init()
     var labels: BehaviorRelay<[BECLabel]> = .init(value: [])
     var formulaesCount: BehaviorRelay<Int> = .init(value: 0)
 
     var currentFormulaes: BehaviorRelay<[BECFormulae]> = .init(value: [])
+    var currentFormulae: BehaviorRelay<BECFormulae?> = .init(value: nil)
 
     fileprivate var _bag: DisposeBag = DisposeBag()
     fileprivate var _selectedLabel: BECLabel?
@@ -38,5 +39,9 @@ class ObservableDatabase: Database, ReactiveCompatible {
     func selectLabel(_ label: BECLabel?) {
         _selectedLabel = label
         self.currentFormulaes.accept(self.fetchFormulaes())
+    }
+
+    func selectFormulae(_ formulae: BECFormulae?) {
+        self.currentFormulae.accept(formulae)
     }
 }

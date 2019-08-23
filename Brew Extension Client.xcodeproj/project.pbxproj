@@ -30,6 +30,7 @@
 		67BEFA412309C3A200C0F908 /* BECLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFA402309C3A200C0F908 /* BECLabel.swift */; };
 		67BEFA432309C3B200C0F908 /* BECFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFA422309C3B200C0F908 /* BECFormulae.swift */; };
 		67BEFB18230EE9B900C0F908 /* FormulaeInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFB17230EE9B900C0F908 /* FormulaeInspectorViewController.swift */; };
+		67BEFB28230FC54000C0F908 /* NSUserInterfaceItemIdentifierExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BEFB27230FC54000C0F908 /* NSUserInterfaceItemIdentifierExtension.swift */; };
 		A31533AC37D63392EA7C74AA /* Pods_Brew_Extension_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5422436A993886EB7BC6D0EA /* Pods_Brew_Extension_Client.framework */; };
 		BF9869FFDD25A181A06F3F8A /* Pods_Brew_Extension_Client_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03CD95A99A4AB0C2092C3ED /* Pods_Brew_Extension_Client_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		67BEFA402309C3A200C0F908 /* BECLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BECLabel.swift; sourceTree = "<group>"; };
 		67BEFA422309C3B200C0F908 /* BECFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BECFormulae.swift; sourceTree = "<group>"; };
 		67BEFB17230EE9B900C0F908 /* FormulaeInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormulaeInspectorViewController.swift; sourceTree = "<group>"; };
+		67BEFB27230FC54000C0F908 /* NSUserInterfaceItemIdentifierExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUserInterfaceItemIdentifierExtension.swift; sourceTree = "<group>"; };
 		893027BBECC609B4CE7FDDB2 /* Pods-Brew Extension Client Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension Client Tests.release.xcconfig"; path = "Target Support Files/Pods-Brew Extension Client Tests/Pods-Brew Extension Client Tests.release.xcconfig"; sourceTree = "<group>"; };
 		954A6B7BE4138650573BE3C4 /* Pods-Brew ExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew ExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-Brew ExtensionTests/Pods-Brew ExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9730042129F9E5BFC651756D /* Pods-Brew Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brew Extension.debug.xcconfig"; path = "Target Support Files/Pods-Brew Extension/Pods-Brew Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				6785F2ED23026D8300AA43D5 /* Data */,
 				6785F2BC230230F600AA43D5 /* AppDelegate.swift */,
 				6785F318230426FF00AA43D5 /* MainWindowController.swift */,
+				67BEFB27230FC54000C0F908 /* NSUserInterfaceItemIdentifierExtension.swift */,
 				6785F2C3230230F700AA43D5 /* Assets.xcassets */,
 				6785F2C5230230F700AA43D5 /* Main.storyboard */,
 				6785F2C8230230F700AA43D5 /* Info.plist */,
@@ -462,6 +465,7 @@
 				67BEFA412309C3A200C0F908 /* BECLabel.swift in Sources */,
 				6785F30D2303B3A200AA43D5 /* LabelCellView.swift in Sources */,
 				6785F2BD230230F600AA43D5 /* AppDelegate.swift in Sources */,
+				67BEFB28230FC54000C0F908 /* NSUserInterfaceItemIdentifierExtension.swift in Sources */,
 				6785F31C230427D800AA43D5 /* SyncViewController.swift in Sources */,
 				6787FC002304454E00979758 /* CheckboxCellView.swift in Sources */,
 				6787FBFC2304390B00979758 /* AddLabelViewController.swift in Sources */,

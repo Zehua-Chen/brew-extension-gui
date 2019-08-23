@@ -54,7 +54,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
 
                 let actualRow = row - 1
 
-                if actualRow < self._labels.count {
+                if actualRow < self._labels.count && actualRow > -1 {
                     self._database.selectLabel(self._labels[actualRow])
                     return
                 }

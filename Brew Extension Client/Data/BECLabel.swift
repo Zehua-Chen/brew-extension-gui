@@ -25,6 +25,21 @@ class BECLabel: NSManagedObject {
         _setupObservables()
     }
 
+    override func didChangeValue(
+        forKey inKey: String,
+        withSetMutation inMutationKind: NSKeyValueSetMutationKind,
+        using inObjects: Set<AnyHashable>
+    ) {
+        super.didChangeValue(forKey: inKey, withSetMutation: inMutationKind, using: inObjects)
+
+        switch inKey {
+        case "formulaes":
+            self.observableFormulaesCount.accept(self.formulaes!.count)
+        default:
+            break
+        }
+    }
+
     fileprivate func _setupObservables() {
         print("BECLabel setup")
         self.observableFormulaesCount.accept(self.formulaes?.count ?? 0)

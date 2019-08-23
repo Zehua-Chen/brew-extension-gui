@@ -12,8 +12,7 @@ import RxSwift
 
 class BECFormulae: NSManagedObject {
     lazy var observalbleLabels: BehaviorRelay<Set<BECLabel>> = {
-        let relay = BehaviorRelay<Set<BECLabel>>(value: self.labels as! Set<BECLabel>)
-        return relay
+        return .init(value: self.labels as! Set<BECLabel>)
     }()
 
     lazy var obserableIsProtected: BehaviorRelay<Bool> = {
@@ -28,5 +27,24 @@ class BECFormulae: NSManagedObject {
         default:
             break
         }
+    }
+
+    override func didChangeValue(
+        forKey inKey: String,
+        withSetMutation inMutationKind: NSKeyValueSetMutationKind,
+        using inObjects: Set<AnyHashable>
+    ) {
+        super.didChangeValue(forKey: inKey, withSetMutation: inMutationKind, using: inObjects)
+
+        switch inKey {
+        case "labels":
+            self.observalbleLabels.accept(self.labels as! Set<BECLabel>)
+        default:
+            break
+        }
+    }
+
+    fileprivate func _labelsAsArray() -> [BECLabel] {
+        return Array(self.labels as! Set<BECLabel>)
     }
 }
