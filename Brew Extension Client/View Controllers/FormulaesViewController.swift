@@ -46,6 +46,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             .drive(onNext: { [unowned self] formulaes in
                 self._formulaes = formulaes
                 self.tableView.reloadData()
+                self.tableView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
             })
             .disposed(by: _bag)
 
@@ -85,7 +86,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard row < _formulaes.count else { return nil }
 
-        let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
+        let view = tableView.makeView(withIdentifier: .formulaeCellView, owner: nil) as! FormulaeCellView
         view.setup(using: _formulaes[row])
 
         return view

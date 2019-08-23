@@ -16,4 +16,8 @@ extension NSUserInterfaceItemIdentifier {
     static var dependencyCellView: NSUserInterfaceItemIdentifier {
         return .init("dependencyCellView")
     }
+
+    static var formulaeCellView: NSUserInterfaceItemIdentifier {
+        return .init("formulaeCellView")
+    }
 }

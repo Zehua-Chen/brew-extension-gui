@@ -23,17 +23,6 @@ class CheckboxCellView: NSTableCellView {
         _label = label
         _bag = .init()
 
-        _formulae.observalbleLabels.asDriver()
-            .map({ [unowned self] labels -> NSControl.StateValue in
-                if labels.contains(self._label) {
-                    return .on
-                }
-
-                return .off
-            })
-            .drive(self.checkboxButton.rx.state)
-            .disposed(by: _bag)
-
         if formulae.labels!.contains(label) {
             self.checkboxButton.state = .on
         } else {

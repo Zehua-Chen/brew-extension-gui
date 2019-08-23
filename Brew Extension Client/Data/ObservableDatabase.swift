@@ -22,6 +22,18 @@ class ObservableDatabase: Database {
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
+
+        self.currentFormulaes
+            .map({ formulaes -> BECFormulae? in
+                if formulaes.isEmpty {
+                    return nil
+                }
+
+                return formulaes[0]
+            })
+            .bind(to: self.currentFormulae)
+            .disposed(by: _bag)
+
         self.labels.accept(self.fetchLabels())
         self.formulaesCount.accept(self.fetchFormulaesCount())
     }
@@ -38,7 +50,12 @@ class ObservableDatabase: Database {
 
     func selectLabel(_ label: BECLabel?) {
         _selectedLabel = label
-        self.currentFormulaes.accept(self.fetchFormulaes())
+
+        if _selectedLabel != nil {
+            self.currentFormulaes.accept(self.fetchFormulaes(in: _selectedLabel!))
+        } else {
+            self.currentFormulaes.accept(self.fetchFormulaes())
+        }
     }
 
     func selectFormulae(_ formulae: BECFormulae?) {

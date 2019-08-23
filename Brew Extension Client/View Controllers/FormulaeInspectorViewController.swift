@@ -21,11 +21,15 @@ class FormulaeInspectorViewController:
     @IBOutlet weak var labelTableView: NSTableView!
 
     fileprivate let _database: ObservableDatabase = AppDelegate.sharedDatabase
-    fileprivate let _bag: DisposeBag = .init()
+
+    fileprivate let _persistantBag: DisposeBag = .init()
+    fileprivate var _selectionBag: DisposeBag = .init()
+
     fileprivate var _incomings: [BECLabel] = []
     fileprivate var _outcomings: [BECLabel] = []
     fileprivate var _labels: [BECLabel] = []
-//    fileprivate var _currentFormulae: Formulae?
+
+    fileprivate var _formulae: BECFormulae?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,62 +39,49 @@ class FormulaeInspectorViewController:
                 self._labels = labels
                 self.labelTableView.reloadData()
             })
-            .disposed(by: _bag)
+            .disposed(by: _persistantBag)
 
-//        _database.currentFormulae.
-//
-//        _cache.currentFormulae
-//            .bind(onNext: { [unowned self] formulae in
-//                self._currentFormulae = formulae
-//            })
-//            .disposed(by: _disposeBag)
-//
-//        _cache.currentFormulaeProtected
-//            .map({ protected -> NSControl.StateValue in
-//                switch protected {
-//                case true:
-//                    return .on
-//                case false:
-//                    return .off
-//                }
-//            })
-//            .bind(to: self.isProtectedCheckBox.rx.state).disposed(by: _disposeBag)
-//
-//        _cache.currentFormulaeOutcomingDependencies
-//            .bind(onNext: { [unowned self] formulaes in
-//                self._outcomings = formulaes
-//                self.dependencyTableView.reloadData()
-//            })
-//            .disposed(by: _disposeBag)
-//
-//        _cache.currentFormulaeIncomingDependencies
-//            .bind(onNext: { [unowned self] formulaes in
-//                self._incomings = formulaes
-//                self.dependencyTableView.reloadData()
-//            })
-//            .disposed(by: _disposeBag)
-//
-//        _cache.labels
-//            .bind(onNext: { [unowned self] labels in
-//                self._labels = labels
-//                self.labelTableView.reloadData()
-//            })
-//            .disposed(by: _disposeBag)
+        let currentFormulaeDriver = _database.currentFormulae.asDriver()
 
-//        self.isProtectedCheckBox.rx.state
-//            .bind(onNext: { [unowned self] state in
-//                guard let formulaeName = try! self._cache.currentFormulae.value()?.name else { return }
-//
-//                switch state {
-//                case .on:
-//                    self._cache.protectFormulae(formulaeName)
-//                case .off:
-//                    self._cache.unprotectFormulae(formulaeName)
-//                default:
-//                    break
-//                }
-//            })
-//            .disposed(by: _disposeBag)
+        currentFormulaeDriver
+            .map({ formulae -> String in
+                return formulae?.name ?? "?"
+            })
+            .drive(self.formulaeTitleLabel.rx.text)
+            .disposed(by: _persistantBag)
+
+        currentFormulaeDriver
+            .drive(onNext: { [unowned self] formulae in
+                // MARK: Bind selected formulae
+                self._selectionBag = .init()
+                self._formulae = formulae
+                self.labelTableView.reloadData()
+
+                // Reobserve current formulae
+                self._formulae?.obserableIsProtected.asDriver()
+                    .map({ protected -> NSControl.StateValue in
+                        switch protected {
+                        case true:
+                            return .on
+                        case false:
+                            return .off
+                        }
+                    })
+                    .drive(self.isProtectedCheckBox.rx.state)
+                    .disposed(by: self._selectionBag)
+            })
+            .disposed(by: _persistantBag)
+    }
+
+    @IBAction func onIsProtectedClick(_ sender: Any) {
+        switch self.isProtectedCheckBox.state {
+        case .on:
+            _formulae?.isProtected = true
+        case .off:
+            _formulae?.isProtected = false
+        default:
+            break
+        }
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -134,8 +125,8 @@ class FormulaeInspectorViewController:
                 withIdentifier: .labelCellView,
                 owner: nil) as! CheckboxCellView
 
-            guard let current = _database.currentFormulae.value else { return nil }
-            view.setupUsing(formulae: current, label: _labels[row])
+            guard let formulae = _formulae else { return nil }
+            view.setupUsing(formulae: formulae, label: _labels[row])
 
             return view
         default:

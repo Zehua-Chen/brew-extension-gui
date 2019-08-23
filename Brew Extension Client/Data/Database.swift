@@ -79,6 +79,17 @@ class Database {
         return try! self.context.fetch(formulaeFetchRequest)
     }
 
+    func fetchFormulaes(in label: BECLabel) -> [BECFormulae] {
+        let formulaeFetchRequest: NSFetchRequest<BECFormulae> = BECFormulae.fetchRequest()
+        formulaeFetchRequest.sortDescriptors = [
+            .init(key: "name", ascending: true)
+        ]
+
+        return try! self.context.fetch(formulaeFetchRequest).filter({ formulae in
+            formulae.labels!.contains(label)
+        })
+    }
+
     func fetchFormulaesCount() -> Int {
         return try! self.context.count(for: BECFormulae.fetchRequest())
     }

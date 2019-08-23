@@ -41,7 +41,6 @@ class BECLabel: NSManagedObject {
     }
 
     fileprivate func _setupObservables() {
-        print("BECLabel setup")
         self.observableFormulaesCount.accept(self.formulaes?.count ?? 0)
     }
 }
