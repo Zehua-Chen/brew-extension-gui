@@ -9,30 +9,45 @@
 import Cocoa
 import BrewExtension
 
-class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, FindUninstallablesOperation {
-
-    var target = ""
-//    var removes = [Formulae]()
-//    var formulae: Formulae!
+class RemoveFormulaeViewController:
+    NSViewController,
+    NSTableViewDelegate,
+    NSTableViewDataSource,
+    FindUninstallablesOperation,
+    UninstallOperation {
+//    var removes = [Formulae](
 
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var titleTextField: NSTextField!
+
+    fileprivate var _removes: [String] = []
+    fileprivate var _database: ObservableDatabase = AppDelegate.sharedDatabase
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
     }
 
     override func viewDidAppear() {
         super.viewDidAppear()
-//        removes = self.findUninstallableFormulaes(for: formulae.name, cache: AppDelegate.sharedCache)
-//        self.titleTextField.stringValue = "The following formulaes will be removed"
-//        self.tableView.reloadData()
+
+        let wrapper = _database.makeDataSourceWrapper()
+        guard let name = _database.currentFormulae.value?.name else { return }
+
+        _removes = self.findUninstallableFormulaes(for: name, using: wrapper)
+        self.titleTextField.stringValue = "The following formulaes will be removed"
+        self.tableView.reloadData()
     }
     
     @IBAction func onConfirmClicked(_ sender: Any) {
-//        self.titleTextField.stringValue = "Working"
         // TODO Remove formulae
+        var wrapper = _database.makeDataSourceWrapper()
+
+        for remove in _removes {
+            try! self.uninstallFormulae(remove, with: .init(), using: &wrapper)
+        }
+
+        try! _database.context.save()
+
         self.presentingViewController?.dismiss(self)
     }
     
@@ -43,13 +58,12 @@ class RemoveFormulaeViewController: NSViewController, NSTableViewDelegate, NSTab
     // MARK: NSTableView protocol conformance
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 0
-//        return removes.count
+        return _removes.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let view = tableView.makeView(withIdentifier: .init("removeTableCellView"), owner: nil) as! NSTableCellView
-//        view.textField?.stringValue = removes[row].name
+        view.textField?.stringValue = _removes[row]
 
         return view
     }

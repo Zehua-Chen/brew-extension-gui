@@ -59,10 +59,24 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
+                                        <menuItem title="Add Label" id="XIF-Qz-IeH">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="addLabel:" target="Ady-hI-5gd" id="z13-9j-V8c"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Ctb-JJ-1Sd"/>
+                                        <menuItem title="Remove Selected Formulae" id="rBM-ha-dNt">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="removeSelectedFormulae:" target="Ady-hI-5gd" id="cPv-05-wfa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="wkE-0J-op5"/>
                                         <menuItem title="Sync With Homebrew" id="Was-JA-tGl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="syncBrewExtension:" target="Ady-hI-5gd" id="Lxt-Tj-4CU"/>
+                                                <action selector="syncBrewExtension:" target="Ady-hI-5gd" id="bWX-WR-KQd"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>

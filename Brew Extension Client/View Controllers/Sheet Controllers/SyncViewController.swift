@@ -28,7 +28,7 @@ class SyncViewController: NSViewController, SyncOperation {
 
             DispatchQueue.main.async { [unowned self] in
                 self.presentingViewController?.dismiss(self)
-                AppDelegate.sharedDatabase.sync.accept(())
+                AppDelegate.sharedDatabase.formulaesSynced.accept(())
             }
         }
     }

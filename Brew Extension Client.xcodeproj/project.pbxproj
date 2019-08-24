@@ -213,13 +213,11 @@
 		6785F3082303B23A00AA43D5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6787FBFB2304390B00979758 /* AddLabelViewController.swift */,
-				6785F31A230427D700AA43D5 /* SyncViewController.swift */,
+				67BEFB2B231101A200C0F908 /* Sheet Controllers */,
 				6785F3092303B25200AA43D5 /* LabelsViewController.swift */,
 				6785F30E2303BF3D00AA43D5 /* FormulaesViewController.swift */,
 				67BEFB17230EE9B900C0F908 /* FormulaeInspectorViewController.swift */,
 				6785F31E2304288600AA43D5 /* MainSplitViewController.swift */,
-				6787FC2B23052B2300979758 /* RemoveFormulaeViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -240,6 +238,16 @@
 				67BEFA222309BC7700C0F908 /* NSTableView+Rx.swift */,
 			);
 			path = ReactiveX;
+			sourceTree = "<group>";
+		};
+		67BEFB2B231101A200C0F908 /* Sheet Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6787FBFB2304390B00979758 /* AddLabelViewController.swift */,
+				6787FC2B23052B2300979758 /* RemoveFormulaeViewController.swift */,
+				6785F31A230427D700AA43D5 /* SyncViewController.swift */,
+			);
+			path = "Sheet Controllers";
 			sourceTree = "<group>";
 		};
 		CED87AC79683D264BFDD3758 /* Pods */ = {

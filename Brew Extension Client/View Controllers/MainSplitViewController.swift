@@ -34,7 +34,11 @@ class MainSplitViewController: NSSplitViewController {
 
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {
-        case #selector(toggleSidebar(_:)):
+        case #selector(removeSelectedFormulae(_:)):
+            return true
+        case #selector(addLabel(_:)):
+            return true
+        case #selector(syncBrewExtension(_:)):
             return true
         default:
             return super.responds(to: aSelector)
@@ -53,9 +57,11 @@ class MainSplitViewController: NSSplitViewController {
         self.presentAsSheet(self.addLabelViewController)
     }
 
-    @objc override func toggleSidebar(_ sender: Any?) {
-        let item = self.splitViewItems[0]
-        item.animator().isCollapsed = !item.isCollapsed
+    /// Remove a formulae
+    ///
+    /// - Parameter formulae: the formulae to delete
+    @IBAction func removeSelectedFormulae(_ formulae: Any) {
+        self.presentAsSheet(self.removeFormulaeViewController)
     }
 
 //    func removeFormulae(_ formulae: Formulae) {

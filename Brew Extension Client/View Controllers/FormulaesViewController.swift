@@ -60,7 +60,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             })
             .disposed(by: _bag)
 
-        _database.sync.asDriver(onErrorJustReturn: ())
+        _database.formulaesSynced.asDriver(onErrorJustReturn: ())
             .drive(onNext: { [unowned self] in
                 var newFormulaes = [BECFormulae]()
 
@@ -85,7 +85,9 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         // TODO: Remove formulae
-//        _cache.onRemoveFormulae.onNext(_formulaes[row])
+        self.view.window?.firstResponder?.tryToPerform(
+            #selector(MainSplitViewController.removeSelectedFormulae(_:)),
+            with: _formulaes[row])
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {

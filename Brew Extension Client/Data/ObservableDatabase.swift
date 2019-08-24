@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class ObservableDatabase: Database {
-    var sync: PublishRelay<Void> = .init()
+    var formulaesSynced: PublishRelay<Void> = .init()
     var labels: BehaviorRelay<[BECLabel]> = .init(value: [])
     var formulaesCount: BehaviorRelay<Int> = .init(value: 0)
 
