@@ -22,7 +22,7 @@ class LabelCellView: NSTableCellView {
         _bag = DisposeBag()
 
         formulaesCount
-            .map({ return "\($0) formulaes" })
+            .map({ return "\($0)" })
             .drive(self.formulaesCountTextField.rx.text)
             .disposed(by: _bag)
 
