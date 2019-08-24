@@ -29,32 +29,38 @@ class MainSplitViewController: NSSplitViewController {
         return controller
     }()
 
-    fileprivate var _cache = AppDelegate.sharedCache
+    fileprivate var _cache = AppDelegate.sharedDatabase
     fileprivate var _disposeBag = DisposeBag()
+
+    override func responds(to aSelector: Selector!) -> Bool {
+        switch aSelector {
+        case #selector(removeSelectedFormulae(_:)):
+            return true
+        case #selector(addLabel(_:)):
+            return true
+        case #selector(syncBrewExtension(_:)):
+            return true
+        default:
+            return super.responds(to: aSelector)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        _cache.onRemoveFormulae
-            .bind(onNext: { [unowned self] formulae in
-                self.removeFormulae(formulae)
-            })
-            .disposed(by: _disposeBag)
     }
 
     @IBAction func syncBrewExtension(_ sender: Any) {
         self.presentAsSheet(self.syncViewController)
-        // TODO Sync
     }
 
     @IBAction func addLabel(_ sender: Any) {
         self.presentAsSheet(self.addLabelViewController)
-        
     }
 
-    func removeFormulae(_ formulae: Formulae) {
-        // TODO Remove
-        self.removeFormulaeViewController.formulae = formulae
+    /// Remove the selected formulae
+    ///
+    /// - Parameter formulae: the formulae to delete
+    @IBAction func removeSelectedFormulae(_ formulae: Any) {
         self.presentAsSheet(self.removeFormulaeViewController)
     }
 }

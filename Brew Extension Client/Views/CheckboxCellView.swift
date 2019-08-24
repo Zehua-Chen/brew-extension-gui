@@ -8,25 +8,38 @@
 
 import Cocoa
 import RxCocoa
+import RxSwift
 
 class CheckboxCellView: NSTableCellView {
 
     @IBOutlet weak var checkboxButton: NSButton!
-    var cache = AppDelegate.sharedCache
-    var formulae = ""
+
+    fileprivate var _formulae: BECFormulae!
+    fileprivate var _label: BECLabel!
+    fileprivate var _bag: DisposeBag!
+
+    func setupUsing(formulae: BECFormulae, label: BECLabel) {
+        _formulae = formulae
+        _label = label
+        _bag = .init()
+
+        if formulae.labels!.contains(label) {
+            self.checkboxButton.state = .on
+        } else {
+            self.checkboxButton.state = .off
+        }
+
+        self.checkboxButton.title = label.name!
+    }
     
     @IBAction func onCheckBoxClicked(_ sender: Any) {
-        guard !formulae.isEmpty else { return }
-
         switch self.checkboxButton.state {
         case .on:
-            cache.addLabel(checkboxButton.title, to: formulae)
+            _formulae.addToLabels(_label)
         case .off:
-            cache.removeLabel(checkboxButton.title, from: formulae)
+            _formulae.removeFromLabels(_label)
         default:
             break
         }
-
-        cache.currentFormulaeLabelUpdated.onNext(())
     }
 }

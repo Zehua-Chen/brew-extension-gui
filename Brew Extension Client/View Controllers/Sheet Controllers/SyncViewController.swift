@@ -19,15 +19,16 @@ class SyncViewController: NSViewController, SyncOperation {
         super.viewDidAppear()
 
         let context = CoreDataManager.shared.backgroundContext
-        context.perform {
-            var cache = CoreDataCache(context: context)
+        context.perform { [unowned self] in
+            let database = Database(context: context)
+            var container = database.makeDataSourceWrapper()
 
-            try! self.sync(into: &cache, using: .init())
-            cache.write()
+            try! self.sync(into: &container, brew: .init())
+            try! database.context.save()
 
-            DispatchQueue.main.async {
-                AppDelegate.sharedCache.finishSync()
+            DispatchQueue.main.async { [unowned self] in
                 self.presentingViewController?.dismiss(self)
+                AppDelegate.sharedDatabase.formulaesSynced.accept(())
             }
         }
     }

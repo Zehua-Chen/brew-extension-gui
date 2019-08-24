@@ -15,9 +15,9 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
 
     @IBOutlet weak var tableView: NSTableView!
 
-    fileprivate var _cache = AppDelegate.sharedCache
-    fileprivate var _disposeBag = DisposeBag()
-    fileprivate var _formulaes = [Formulae]()
+    fileprivate var _database = AppDelegate.sharedDatabase
+    fileprivate var _bag = DisposeBag()
+    fileprivate var _formulaes = [BECFormulae]()
 
     fileprivate var _protectRowAction: NSTableViewRowAction!
     fileprivate var _unprotectRowAction: NSTableViewRowAction!
@@ -41,30 +41,63 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         _unprotectRowAction.backgroundColor = .systemOrange
         _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
 
-        _cache.currentFormulaes.bind(onNext: { [unowned self] formulaes in
-            self._formulaes = formulaes
-            self.tableView.reloadData()
-        }).disposed(by: _disposeBag)
+        _database.selectedFormulaes
+            .asDriver()
+            .drive(onNext: { [unowned self] formulaes in
+                self._formulaes = formulaes
+                self.tableView.reloadData()
+                self.tableView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
+            })
+            .disposed(by: _bag)
 
+        self.tableView.rx.selectedRow
+            .map({ [unowned self] row -> BECFormulae? in
+                guard row < self._formulaes.count else { return nil }
+                return self._formulaes[row]
+            })
+            .subscribe(onNext: { [unowned self] formulae in
+                self._database.selectFormulae(formulae)
+            })
+            .disposed(by: _bag)
+
+        _database.formulaesSynced.asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [unowned self] in
+                var newFormulaes = [BECFormulae]()
+
+                if let label = self._database.selectedLabel {
+                    newFormulaes = self._database.fetchFormulaes(in: label)
+                } else {
+                    newFormulaes = self._database.fetchFormulaes()
+                }
+
+                let oldFormulaes = self._formulaes
+                self._formulaes = newFormulaes
+
+                self.tableView.animateRowChanges(
+                    oldData: oldFormulaes,
+                    newData: newFormulaes,
+                    isEqual: { return $0.name! == $1.name! })
+            })
+            .disposed(by: _bag)
     }
 
     // MARK: Event handlers
 
     func onRemoveFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         // TODO: Remove formulae
-        _cache.onRemoveFormulae.onNext(_formulaes[row])
+        self.view.window?.firstResponder?.tryToPerform(
+            #selector(MainSplitViewController.removeSelectedFormulae(_:)),
+            with: _formulaes[row])
     }
 
     func onProtectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        _cache.protectFormulae(&_formulaes[row])
-        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
+        _formulaes[row].isProtected = true
     }
 
     func onUnprotectFormulae(_ action: NSTableViewRowAction, _ row: Int) {
         self.tableView.rowActionsVisible = false
-        _cache.unprotectFormulae(&_formulaes[row])
-        self.tableView.reloadData(forRowIndexes: .init(integer: row), columnIndexes: .init(integer: 0))
+        _formulaes[row].isProtected = false
     }
 
     // MAKR: NSTableView protocols conformance
@@ -76,16 +109,8 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard row < _formulaes.count else { return nil }
 
-        let view = tableView.makeView(withIdentifier: .init("formulaeCellView"), owner: nil) as! FormulaeCellView
-
-        view.titleTextField.stringValue = _formulaes[row].name
-        view.labelsTextField.stringValue = "Label: "
-
-        if _formulaes[row].isProtected {
-            view.protectionIcon.image = NSImage(named: NSImage.lockLockedTemplateName)
-        } else {
-            view.protectionIcon.image = NSImage(named: NSImage.lockUnlockedTemplateName)
-        }
+        let view = tableView.makeView(withIdentifier: .formulaeCellView, owner: nil) as! FormulaeCellView
+        view.setup(using: _formulaes[row])
 
         return view
     }
@@ -93,7 +118,11 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {
         switch edge {
         case .leading:
-            return [_protectRowAction, _unprotectRowAction]
+            if _formulaes[row].isProtected {
+                return [_unprotectRowAction]
+            }
+
+            return [_protectRowAction]
         case .trailing:
             return [
                 .init(style: .destructive, title: "Remove", handler: self.onRemoveFormulae),
@@ -103,11 +132,4 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         }
     }
 
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        guard self.tableView.selectedRow < _formulaes.count else { return }
-        guard self.tableView.selectedRow > 0 else { return }
-        
-        _cache.currentFormulae.onNext(_formulaes[self.tableView.selectedRow])
-    }
-    
 }

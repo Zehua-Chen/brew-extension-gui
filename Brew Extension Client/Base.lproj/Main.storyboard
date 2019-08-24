@@ -59,10 +59,30 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
+                                        <menuItem title="Add Label" id="XIF-Qz-IeH">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="addLabel:" target="Ady-hI-5gd" id="z13-9j-V8c"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Remove Selected Label" id="v5o-zk-eVU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="removeSelectedLabel:" target="Ady-hI-5gd" id="d4E-22-cYg"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Ctb-JJ-1Sd"/>
+                                        <menuItem title="Remove Selected Formulae" id="rBM-ha-dNt">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="removeSelectedFormulae:" target="Ady-hI-5gd" id="cPv-05-wfa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="wkE-0J-op5"/>
                                         <menuItem title="Sync With Homebrew" id="Was-JA-tGl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="syncBrewExtension:" target="Ady-hI-5gd" id="Lxt-Tj-4CU"/>
+                                                <action selector="syncBrewExtension:" target="Ady-hI-5gd" id="bWX-WR-KQd"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
@@ -575,7 +595,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="72O-kg-Ovn"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -634,7 +654,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24" y="-91"/>
+            <point key="canvasLocation" x="19" y="-189"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -661,8 +681,23 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="D363D5B2-A373-49CD-8AC7-2A8E4C0C5B8C" label="Sidebar" paletteLabel="Sidebar" sizingBehavior="auto" id="8Bd-UC-BHI">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="oe0-QE-3Gx">
+                                        <rect key="frame" x="0.0" y="14" width="68" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Sidebar" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9WB-52-4lO">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="toggleSidebar:" target="Oky-zY-oP4" id="fIG-MM-8nm"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="8Bd-UC-BHI"/>
                                 <toolbarItem reference="gH1-ur-J7B"/>
                             </defaultToolbarItems>
                         </toolbar>
@@ -967,8 +1002,8 @@ DQ
             <objects>
                 <splitViewController id="sJv-u8-Nbi" customClass="MainSplitViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
-                        <splitViewItem id="f25-AS-wrb" userLabel="Split View Item"/>
-                        <splitViewItem id="tCG-dq-gQz"/>
+                        <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" id="f25-AS-wrb" userLabel="Split View Item"/>
+                        <splitViewItem holdingPriority="255" behavior="contentList" id="tCG-dq-gQz"/>
                         <splitViewItem id="Cqi-n6-efu"/>
                     </splitViewItems>
                     <splitView key="splitView" dividerStyle="thin" vertical="YES" id="rwW-ZU-FbV">
@@ -1248,10 +1283,10 @@ DQ
             </objects>
             <point key="canvasLocation" x="22" y="1248"/>
         </scene>
-        <!--Formulae View Controller-->
+        <!--Formulae Inspector View Controller-->
         <scene sceneID="wYK-0a-VzZ">
             <objects>
-                <viewController id="CTj-BJ-a8h" customClass="FormulaeViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CTj-BJ-a8h" customClass="FormulaeInspectorViewController" customModule="BrewExtensionClient" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="zVN-bq-yCr">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="403"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1270,6 +1305,9 @@ DQ
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onIsProtectedClick:" target="CTj-BJ-a8h" id="ZQy-mr-Ocb"/>
+                                </connections>
                             </button>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qlp-Jl-zGk">
                                 <rect key="frame" x="20" y="20" width="410" height="312"/>
@@ -1280,14 +1318,14 @@ DQ
                                             <rect key="frame" x="1" y="0.0" width="408" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="143"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn width="200" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
+                                                        <tableColumn identifier="outcomingDepsColum" width="200" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depending on">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1300,7 +1338,7 @@ DQ
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="dependencyCellView" id="t47-7Y-QqV">
+                                                                <tableCellView identifier="outcomingDepsCellView" id="t47-7Y-QqV">
                                                                     <rect key="frame" x="1" y="1" width="200" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1325,7 +1363,7 @@ DQ
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
-                                                        <tableColumn identifier="dependencyCellView" width="201" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
+                                                        <tableColumn identifier="incomingDepsColum" width="201" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depended by">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1338,7 +1376,7 @@ DQ
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="8uq-u0-zo7">
+                                                                <tableCellView identifier="incomingDepsCellView" id="8uq-u0-zo7">
                                                                     <rect key="frame" x="204" y="1" width="201" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>

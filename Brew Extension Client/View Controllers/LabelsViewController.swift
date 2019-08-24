@@ -15,33 +15,53 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     @IBOutlet weak var tableView: NSTableView!
 
-    private let _disposeBag = DisposeBag()
-    private var _cache = AppDelegate.sharedCache
-    private var _labels = [Label]()
+    fileprivate let _bag = DisposeBag()
+    fileprivate var _database = AppDelegate.sharedDatabase
+    fileprivate var _labels = [BECLabel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        _cache.labels
-            .bind(onNext: { [unowned self] updates in
+
+        _database.labels
+            .bind(onNext: { [unowned self] labels in
+                if self._labels.isEmpty {
+                    self._labels = labels
+                    self.tableView.reloadData()
+                    
+                    return
+                }
+
                 let old = self._labels
-                self._labels = updates
+                self._labels = labels
 
                 // Update table view
                 self.tableView.animateRowChanges(
                     oldData: old,
-                    newData: updates,
+                    newData: labels,
                     deletionAnimation: [.effectFade],
                     insertionAnimation: [.effectGap],
                     indexPathTransform: self._indexPathTransform)
             })
-            .disposed(by: _disposeBag)
+            .disposed(by: _bag)
 
-        _cache.currentFormulaeLabelUpdated
-            .subscribe { e in
-                self.tableView.reloadData()
-            }
-            .disposed(by: _disposeBag)
+        self.tableView.rx.selectedRow
+            .bind(onNext: { [unowned self] row in
+                if row == 0 {
+                    self._database.selectLabel(nil)
+                    return
+                }
+
+                let actualRow = row - 1
+
+                if actualRow < self._labels.count && actualRow > -1 {
+                    self._database.selectLabel(self._labels[actualRow])
+                    return
+                }
+
+                self._database.selectLabel(nil)
+            })
+            .disposed(by: _bag)
     }
 
     fileprivate func _indexPathTransform(_ index: IndexPath) -> IndexPath {
@@ -53,11 +73,20 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         return i
     }
 
+    @IBAction func removeSelectedLabel(_ sender: Any) {
+        let index = self.tableView.selectedRow - 1
+        guard index >= 0 && index < _labels.count else { return }
+
+        _database.deleteLabel(_labels[index])
+    }
+
     // MARK: NSTableView Related
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-        guard rowIndex > 0 else { return }
-        _cache.removeLabel(_labels[rowIndex - 1].name)
+        let index = rowIndex - 1
+        guard index >= 0 else { return }
+
+        _database.deleteLabel(_labels[index])
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -72,20 +101,17 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         let view = tableView.makeView(withIdentifier: .init("labelCellView"), owner: nil) as! LabelCellView
 
         if row == 0 {
-            view.titleTextField.stringValue = "All"
-            view.formulaesCountTextField.stringValue = "\(_cache.numberOfFormulaes()) formulaes"
+            view.setupUsing(
+                formulaesCount: _database.formulaesCount.asDriver(),
+                title: "All")
 
             return view
         }
 
         let labelsIndex = row - 1
-
         guard labelsIndex < _labels.count else { return nil }
 
-        let label = _labels[labelsIndex]
-
-        view.titleTextField.stringValue = label.name
-        view.formulaesCountTextField.stringValue = "\(label.numberOfFormulaes) formulaes"
+        view.setup(using: _labels[labelsIndex])
 
         return view
     }
@@ -106,15 +132,6 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
             return [.init(style: .destructive, title: "Delete", handler: self.onDeleteRowActionFired)]
         @unknown default:
             return []
-        }
-    }
-
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        let row = self.tableView.selectedRow
-        if row == 0 || row >= _labels.count {
-            _cache.currentLabel.onNext(nil)
-        } else {
-            _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])
         }
     }
 }
