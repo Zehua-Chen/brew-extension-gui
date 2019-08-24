@@ -14,9 +14,7 @@ import RxSwift
 class MainSplitViewController: NSSplitViewController {
 
     lazy var addLabelViewController: AddLabelViewController = {
-        let controller = self.storyboard?.instantiateController(withIdentifier: "addLabelViewController") as! AddLabelViewController
-
-        return controller
+        return self.storyboard?.instantiateController(withIdentifier: "addLabelViewController") as! AddLabelViewController
     }()
 
     lazy var syncViewController: SyncViewController = {
@@ -28,9 +26,6 @@ class MainSplitViewController: NSSplitViewController {
 
         return controller
     }()
-
-    fileprivate var _cache = AppDelegate.sharedDatabase
-    fileprivate var _disposeBag = DisposeBag()
 
     override func responds(to aSelector: Selector!) -> Bool {
         switch aSelector {

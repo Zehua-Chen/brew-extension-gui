@@ -681,12 +681,12 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="D363D5B2-A373-49CD-8AC7-2A8E4C0C5B8C" label="Sidebar" paletteLabel="Sidebar" sizingBehavior="auto" id="8Bd-UC-BHI">
+                                <toolbarItem implicitItemIdentifier="D363D5B2-A373-49CD-8AC7-2A8E4C0C5B8C" label="Sidebar" paletteLabel="Sidebar" image="NSListViewTemplate" sizingBehavior="auto" id="8Bd-UC-BHI">
                                     <nil key="toolTip"/>
-                                    <button key="view" verticalHuggingPriority="750" id="oe0-QE-3Gx">
-                                        <rect key="frame" x="0.0" y="14" width="68" height="25"/>
+                                    <button key="view" toolTip="Toggle Side Bar" verticalHuggingPriority="750" id="oe0-QE-3Gx">
+                                        <rect key="frame" x="1" y="14" width="46" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Sidebar" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9WB-52-4lO">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSListViewTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9WB-52-4lO">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1324,7 +1324,7 @@ DQ
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="outcomingDepsColum" width="200" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
+                                                        <tableColumn identifier="outcomingDepsColum" width="200.5" minWidth="40" maxWidth="1000" id="1q6-KZ-45l">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depending on">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1338,11 +1338,11 @@ DQ
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="outcomingDepsCellView" id="t47-7Y-QqV">
-                                                                    <rect key="frame" x="1" y="1" width="200" height="17"/>
+                                                                    <rect key="frame" x="1" y="1" width="201" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ECa-hH-AIQ">
-                                                                            <rect key="frame" x="-2" y="0.0" width="204" height="17"/>
+                                                                            <rect key="frame" x="-2" y="0.0" width="205" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="lk0-WY-6mk">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1362,7 +1362,7 @@ DQ
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
-                                                        <tableColumn identifier="incomingDepsColum" width="201" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
+                                                        <tableColumn identifier="incomingDepsColum" width="201.5" minWidth="40" maxWidth="1000" id="mYA-am-bxM">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Depended by">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1376,7 +1376,7 @@ DQ
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="incomingDepsCellView" id="8uq-u0-zo7">
-                                                                    <rect key="frame" x="204" y="1" width="201" height="17"/>
+                                                                    <rect key="frame" x="204.5" y="1" width="201" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Gsa-u8-bU2">
@@ -1533,6 +1533,7 @@ DQ
     </scenes>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSListViewTemplate" width="14" height="10"/>
         <image name="NSLockLockedTemplate" width="10" height="14"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
