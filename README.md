@@ -14,6 +14,7 @@ This is a GUI Client of the swift package [Zehua-Chen/brew-extension](https://gi
 
 ### What I have learned
 
+- How to use Cocoapod
 - Basic ideas in RxSwift: Observables, Subjects, Drivers
 - Present and dismiss view controllers as sheets;
 - Using `NSSplitView` and `NSSplitViewController` (add children view
