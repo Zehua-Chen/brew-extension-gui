@@ -57,16 +57,10 @@ class MainSplitViewController: NSSplitViewController {
         self.presentAsSheet(self.addLabelViewController)
     }
 
-    /// Remove a formulae
+    /// Remove the selected formulae
     ///
     /// - Parameter formulae: the formulae to delete
     @IBAction func removeSelectedFormulae(_ formulae: Any) {
         self.presentAsSheet(self.removeFormulaeViewController)
     }
-
-//    func removeFormulae(_ formulae: Formulae) {
-//        // TODO Remove
-//        self.removeFormulaeViewController.formulae = formulae
-//        self.presentAsSheet(self.removeFormulaeViewController)
-//    }
 }

@@ -14,16 +14,16 @@ class ObservableDatabase: Database {
     var labels: BehaviorRelay<[BECLabel]> = .init(value: [])
     var formulaesCount: BehaviorRelay<Int> = .init(value: 0)
 
-    var currentLabel: BECLabel?
-    var currentFormulaes: BehaviorRelay<[BECFormulae]> = .init(value: [])
-    var currentFormulae: BehaviorRelay<BECFormulae?> = .init(value: nil)
+    var selectedLabel: BECLabel?
+    var selectedFormulaes: BehaviorRelay<[BECFormulae]> = .init(value: [])
+    var selectedFormulae: BehaviorRelay<BECFormulae?> = .init(value: nil)
 
     fileprivate var _bag: DisposeBag = DisposeBag()
 
     override init(context: NSManagedObjectContext) {
         super.init(context: context)
 
-        self.currentFormulaes
+        self.selectedFormulaes
             .map({ formulaes -> BECFormulae? in
                 if formulaes.isEmpty {
                     return nil
@@ -31,7 +31,7 @@ class ObservableDatabase: Database {
 
                 return formulaes[0]
             })
-            .bind(to: self.currentFormulae)
+            .bind(to: self.selectedFormulae)
             .disposed(by: _bag)
 
         self.labels.accept(self.fetchLabels())
@@ -49,16 +49,16 @@ class ObservableDatabase: Database {
     }
 
     func selectLabel(_ label: BECLabel?) {
-        currentLabel = label
+        selectedLabel = label
 
-        if currentLabel != nil {
-            self.currentFormulaes.accept(self.fetchFormulaes(in: currentLabel!))
+        if selectedLabel != nil {
+            self.selectedFormulaes.accept(self.fetchFormulaes(in: selectedLabel!))
         } else {
-            self.currentFormulaes.accept(self.fetchFormulaes())
+            self.selectedFormulaes.accept(self.fetchFormulaes())
         }
     }
 
     func selectFormulae(_ formulae: BECFormulae?) {
-        self.currentFormulae.accept(formulae)
+        self.selectedFormulae.accept(formulae)
     }
 }

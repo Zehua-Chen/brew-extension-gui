@@ -41,7 +41,7 @@ class FormulaeInspectorViewController:
             })
             .disposed(by: _persistantBag)
 
-        let currentFormulaeDriver = _database.currentFormulae.asDriver()
+        let currentFormulaeDriver = _database.selectedFormulae.asDriver()
 
         currentFormulaeDriver
             .map({ formulae -> String in

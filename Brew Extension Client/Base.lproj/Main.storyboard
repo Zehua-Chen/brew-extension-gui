@@ -65,6 +65,12 @@
                                                 <action selector="addLabel:" target="Ady-hI-5gd" id="z13-9j-V8c"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Remove Selected Label" id="v5o-zk-eVU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="removeSelectedLabel:" target="Ady-hI-5gd" id="d4E-22-cYg"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Ctb-JJ-1Sd"/>
                                         <menuItem title="Remove Selected Formulae" id="rBM-ha-dNt">
                                             <modifierMask key="keyEquivalentModifierMask"/>

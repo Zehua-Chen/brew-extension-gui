@@ -41,7 +41,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         _unprotectRowAction.backgroundColor = .systemOrange
         _unprotectRowAction.image = NSImage(named: NSImage.lockUnlockedTemplateName)
 
-        _database.currentFormulaes
+        _database.selectedFormulaes
             .asDriver()
             .drive(onNext: { [unowned self] formulaes in
                 self._formulaes = formulaes
@@ -64,7 +64,7 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
             .drive(onNext: { [unowned self] in
                 var newFormulaes = [BECFormulae]()
 
-                if let label = self._database.currentLabel {
+                if let label = self._database.selectedLabel {
                     newFormulaes = self._database.fetchFormulaes(in: label)
                 } else {
                     newFormulaes = self._database.fetchFormulaes()
@@ -132,11 +132,4 @@ class FormulaesViewController: NSViewController, NSTableViewDataSource, NSTableV
         }
     }
 
-    func tableViewSelectionDidChange(_ notification: Notification) {
-//        guard self.tableView.selectedRow < _formulaes.count else { return }
-//        guard self.tableView.selectedRow > 0 else { return }
-//        
-//        _cache.currentFormulae.onNext(_formulaes[self.tableView.selectedRow])
-    }
-    
 }

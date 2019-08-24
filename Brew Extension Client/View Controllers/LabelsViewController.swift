@@ -73,13 +73,20 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         return i
     }
 
+    @IBAction func removeSelectedLabel(_ sender: Any) {
+        let index = self.tableView.selectedRow - 1
+        guard index >= 0 && index < _labels.count else { return }
+
+        _database.deleteLabel(_labels[index])
+    }
+
     // MARK: NSTableView Related
 
     func onDeleteRowActionFired(_ action: NSTableViewRowAction, _ rowIndex: Int) {
-        let labelIndex = rowIndex - 1
-        guard labelIndex >= 0 else { return }
+        let index = rowIndex - 1
+        guard index >= 0 else { return }
 
-        _database.deleteLabel(_labels[labelIndex])
+        _database.deleteLabel(_labels[index])
     }
 
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -126,15 +133,5 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         @unknown default:
             return []
         }
-    }
-
-    func tableViewSelectionDidChange(_ notification: Notification) {
-//        let actualRow = self.tableView.selectedRow - 1
-//
-//        if actualRow < 0 || actualRow >= _labels.count {
-//            _cache.currentLabel.onNext(nil)
-//        } else {
-//            _cache.currentLabel.onNext(_labels[self.tableView.selectedRow - 1])
-//        }
     }
 }

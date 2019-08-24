@@ -31,7 +31,7 @@ class RemoveFormulaeViewController:
         super.viewDidAppear()
 
         let wrapper = _database.makeDataSourceWrapper()
-        guard let name = _database.currentFormulae.value?.name else { return }
+        guard let name = _database.selectedFormulae.value?.name else { return }
 
         _removes = self.findUninstallableFormulaes(for: name, using: wrapper)
         self.titleTextField.stringValue = "The following formulaes will be removed"
