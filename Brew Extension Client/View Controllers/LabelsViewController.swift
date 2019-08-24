@@ -28,6 +28,7 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
                 if self._labels.isEmpty {
                     self._labels = labels
                     self.tableView.reloadData()
+                    self.tableView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
                     
                     return
                 }
@@ -71,6 +72,15 @@ class LabelsViewController: NSViewController, NSTableViewDelegate, NSTableViewDa
         i[1] = i[1] + 1
 
         return i
+    }
+
+    override func responds(to aSelector: Selector!) -> Bool {
+        switch aSelector {
+        case #selector(removeSelectedLabel(_:)):
+            return true
+        default:
+            return super.responds(to: aSelector)
+        }
     }
 
     @IBAction func removeSelectedLabel(_ sender: Any) {
