@@ -23,15 +23,16 @@ class FormulaeCellView: NSTableCellView {
         _bag = DisposeBag()
         
         titleTextField.stringValue = formulae.name ?? "Error"
+
+        let observableLabels = formulae.observalbleLabels.asDriver()
         
-        formulae.observalbleLabels
-            .asDriver()
+        observableLabels
             .map({ labels -> String in
                 let labelsText = labels
                     .map({ return $0.name! })
                     .joined(separator: ",")
 
-                guard labelsText.isEmpty else { return "Labels" }
+                guard !labelsText.isEmpty else { return "None" }
                 return labelsText
             })
             .drive(self.labelsTextField.rx.text)

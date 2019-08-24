@@ -1317,7 +1317,7 @@ DQ
                                             <rect key="frame" x="1" y="0.0" width="408" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1B4-Hg-fiV" viewBased="YES" id="n4S-Zo-hRk">
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="143"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -1421,13 +1421,13 @@ DQ
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
                                     </scrollView>
-                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mM3-9W-mLA">
+                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mM3-9W-mLA">
                                         <rect key="frame" x="0.0" y="0.0" width="410" height="135"/>
                                         <clipView key="contentView" id="cLu-o1-8SP">
                                             <rect key="frame" x="1" y="0.0" width="408" height="134"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" ambiguous="YES" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="j17-W0-KAe" viewBased="YES" id="Uar-FZ-Ebj">
+                                                <tableView verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="j17-W0-KAe" viewBased="YES" id="Uar-FZ-Ebj">
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="109"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -1448,14 +1448,11 @@ DQ
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="labelCellView" id="hmk-S5-9tL" customClass="CheckboxCellView" customModule="BrewExtensionClient" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="405" height="17"/>
+                                                                    <rect key="frame" x="1" y="1" width="405" height="18"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FYB-cj-aH9">
-                                                                            <rect key="frame" x="-2" y="-2" width="409" height="19"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="15" id="1Zp-JL-pgD"/>
-                                                                            </constraints>
+                                                                            <rect key="frame" x="2" y="0.0" width="401" height="18"/>
                                                                             <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yOA-Ei-cba">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -1466,10 +1463,10 @@ DQ
                                                                         </button>
                                                                     </subviews>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="trailing" secondItem="FYB-cj-aH9" secondAttribute="trailing" id="04S-9X-4Kd"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="FYB-cj-aH9" secondAttribute="bottom" id="3HM-QI-ENK"/>
-                                                                        <constraint firstItem="FYB-cj-aH9" firstAttribute="leading" secondItem="hmk-S5-9tL" secondAttribute="leading" id="9gk-Qt-atz"/>
-                                                                        <constraint firstItem="FYB-cj-aH9" firstAttribute="top" secondItem="hmk-S5-9tL" secondAttribute="top" constant="2" id="LVU-My-s50"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="FYB-cj-aH9" secondAttribute="trailing" constant="4" id="eL1-m3-zmB"/>
+                                                                        <constraint firstItem="FYB-cj-aH9" firstAttribute="leading" secondItem="hmk-S5-9tL" secondAttribute="leading" constant="4" id="iU9-Bj-jPt"/>
+                                                                        <constraint firstItem="FYB-cj-aH9" firstAttribute="top" secondItem="hmk-S5-9tL" secondAttribute="top" constant="2" id="keo-br-PW8"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="FYB-cj-aH9" secondAttribute="bottom" constant="2" id="rf3-JR-sVq"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="checkboxButton" destination="FYB-cj-aH9" id="Ff3-dQ-Qh7"/>
